@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildTrack — Sistema de Gestión de Obra</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #111318;
+    --bg3: #181c23;
+    --border: #1e2530;
+    --border2: #2a3340;
+    --accent: #f0a500;
+    --accent2: #ff6b35;
+    --text: #e8ecf0;
+    --text2: #8a95a3;
+    --text3: #4a5568;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --red: #ef4444;
+    --purple: #a855f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* LAYOUT */
+  .app { display: flex; height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 240px;
+    min-width: 240px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .logo-text { font-weight: 800; font-size: 16px; letter-spacing: -0.5px; }
+  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; }
+
+  .nav { flex: 1; padding: 16px 0; }
+  .nav-section { margin-bottom: 24px; }
+  .nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text3); padding: 0 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 20px; cursor: pointer;
+    color: var(--text2); font-size: 13px; font-weight: 500;
+    transition: all 0.2s; border-left: 2px solid transparent;
+    position: relative;
+  }
+  .nav-item:hover { color: var(--text); background: var(--bg3); }
+  .nav-item.active {
+    color: var(--accent); background: rgba(240,165,0,0.08);
+    border-left-color: var(--accent);
+  }
+  .nav-item .icon { width: 16px; text-align: center; font-size: 14px; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent); color: #000;
+    font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 10px;
+  }
+
+  .sidebar-footer {
+    padding: 16px 20px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #000;
+  }
+  .user-info { flex: 1; }
+  .user-name { font-size: 12px; font-weight: 600; }
+  .user-role { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+  /* MAIN */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .topbar {
+    height: 56px; background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; flex-shrink: 0;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; color: var(--text2); }
+  .topbar-title span { color: var(--text); }
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    padding: 7px 16px; border-radius: 6px; border: none;
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+  }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #ffb820; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
+  .btn-ghost:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+  .btn-danger { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+  /* CONTENT */
+  .content { flex: 1; overflow-y: auto; padding: 24px; }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── DASHBOARD ── */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+  }
+  .stat-card.c1::before { background: var(--accent); }
+  .stat-card.c2::before { background: var(--green); }
+  .stat-card.c3::before { background: var(--blue); }
+  .stat-card.c4::before { background: var(--purple); }
+  .stat-label { font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+  .stat-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+  .stat-card.c1 .stat-value { color: var(--accent); }
+  .stat-card.c2 .stat-value { color: var(--green); }
+  .stat-card.c3 .stat-value { color: var(--blue); }
+  .stat-card.c4 .stat-value { color: var(--purple); }
+  .stat-sub { font-size: 11px; color: var(--text3); }
+  .stat-icon { position: absolute; bottom: 16px; right: 16px; font-size: 32px; opacity: 0.12; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-title { font-size: 13px; font-weight: 700; }
+  .card-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 4px;
+    background: var(--bg3); color: var(--text2);
+  }
+
+  /* PROJECT LIST */
+  .project-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px; border-radius: 8px; cursor: pointer;
+    border: 1px solid transparent; transition: all 0.2s;
+    margin-bottom: 8px;
+  }
+  .project-item:hover { background: var(--bg3); border-color: var(--border2); }
+  .project-thumb {
+    width: 44px; height: 44px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .project-info { flex: 1; }
+  .project-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .project-meta { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+  .project-prog { width: 80px; text-align: right; }
+  .prog-num { font-size: 16px; font-weight: 700; }
+  .prog-bar-wrap { height: 3px; background: var(--bg3); border-radius: 2px; margin-top: 4px; }
+  .prog-bar { height: 3px; border-radius: 2px; transition: width 0.5s; }
+
+  /* PHASE TIMELINE */
+  .phase-timeline { display: flex; flex-direction: column; gap: 0; }
+  .phase-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .phase-row:last-child { border-bottom: none; }
+  .phase-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .phase-dot.done { background: var(--green); }
+  .phase-dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .phase-dot.pending { background: var(--border2); }
+  .phase-name { flex: 1; font-size: 12px; font-weight: 500; }
+  .phase-pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2); }
+  .phase-status {
+    font-size: 10px; padding: 2px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .phase-status.done { background: rgba(34,197,94,0.15); color: var(--green); }
+  .phase-status.active { background: rgba(240,165,0,0.15); color: var(--accent); }
+  .phase-status.pending { background: var(--bg3); color: var(--text3); }
+
+  /* ── 3D VIEWER ── */
+  #viewer-screen .viewer-layout {
+    display: grid; grid-template-columns: 1fr 300px; gap: 16px; height: calc(100vh - 120px);
+  }
+  .canvas-wrap {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; position: relative;
+  }
+  canvas { display: block; width: 100% !important; height: 100% !important; }
+
+  .viewer-controls {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; background: rgba(10,12,15,0.8);
+    backdrop-filter: blur(8px); padding: 8px; border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .ctrl-btn {
+    padding: 6px 14px; background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 5px; color: var(--text2); font-size: 11px; cursor: pointer;
+    font-family: 'Syne', sans-serif; font-weight: 600; transition: all 0.2s;
+  }
+  .ctrl-btn:hover, .ctrl-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+  .phase-tag {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(10,12,15,0.8); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+  }
+  .phase-tag span { color: var(--accent); }
+
+  .viewer-panel { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+  .panel-section {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .panel-section h3 { font-size: 12px; font-weight: 700; margin-bottom: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; }
+
+  .phase-list { display: flex; flex-direction: column; gap: 6px; }
+  .phase-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 6px; cursor: pointer;
+    border: 1px solid transparent; transition: all 0.2s;
+  }
+  .phase-btn.selected { background: rgba(240,165,0,0.1); border-color: rgba(240,165,0,0.3); }
+  .phase-btn:hover:not(.selected) { background: var(--bg3); }
+  .phase-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; background: var(--bg3); color: var(--text3);
+  }
+  .phase-btn.selected .phase-num { background: var(--accent); color: #000; }
+  .phase-btn.completed .phase-num { background: var(--green); color: #000; }
+  .phase-info { flex: 1; }
+  .phase-btn-name { font-size: 12px; font-weight: 600; }
+  .phase-btn-sub { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+  /* MATERIALS TABLE */
+  .mat-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .mat-table th {
+    text-align: left; padding: 8px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+  .mat-table td {
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .mat-table tr:last-child td { border-bottom: none; }
+  .mat-color {
+    width: 10px; height: 10px; border-radius: 2px;
+    display: inline-block; margin-right: 6px; vertical-align: middle;
+  }
+  .mat-pct { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .mat-cost { font-family: 'JetBrains Mono', monospace; color: var(--text2); font-size: 11px; }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .proj-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .proj-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .proj-thumb-big {
+    height: 140px; display: flex; align-items: center; justify-content: center;
+    font-size: 56px; position: relative;
+  }
+  .proj-status-badge {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
+  }
+  .proj-status-badge.active { background: rgba(240,165,0,0.2); color: var(--accent); border: 1px solid rgba(240,165,0,0.3); }
+  .proj-status-badge.planning { background: rgba(59,130,246,0.2); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+  .proj-status-badge.done { background: rgba(34,197,94,0.2); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .proj-body { padding: 16px; }
+  .proj-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .proj-type { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-bottom: 12px; }
+  .proj-stats { display: flex; gap: 16px; margin-bottom: 12px; }
+  .proj-stat { font-size: 11px; color: var(--text3); }
+  .proj-stat strong { display: block; font-size: 16px; font-weight: 700; color: var(--text); }
+  .prog-full { height: 4px; background: var(--bg3); border-radius: 2px; margin-bottom: 8px; }
+  .proj-meta-row { display: flex; justify-content: space-between; align-items: center; }
+  .proj-pm { font-size: 11px; color: var(--text3); }
+  .proj-pm strong { color: var(--text2); }
+
+  /* HEADER with add */
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .page-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  .page-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+  /* ── MATERIALS MODULE ── */
+  .mat-module-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  .big-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .big-table th {
+    text-align: left; padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--text3);
+    background: var(--bg3); border-bottom: 1px solid var(--border);
+  }
+  .big-table td { padding: 12px; border-bottom: 1px solid var(--border); }
+  .big-table tr:last-child td { border-bottom: none; }
+  .big-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .mat-name { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .qty { font-family: 'JetBrains Mono', monospace; color: var(--text2); }
+  .cost-val { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .stock-ok { color: var(--green); font-size: 10px; }
+  .stock-low { color: var(--red); font-size: 10px; }
+  .stock-mid { color: var(--accent); font-size: 10px; }
+
+  /* Budget donuts */
+  .donut-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .budget-item { display: flex; align-items: center; gap: 12px; }
+  .budget-label { flex: 1; font-size: 12px; }
+  .budget-label span { display: block; font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+  .budget-bar-outer { flex: 2; height: 6px; background: var(--bg3); border-radius: 3px; }
+  .budget-bar-inner { height: 6px; border-radius: 3px; }
+  .budget-cost { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2); min-width: 80px; text-align: right; }
+
+  /* ── PM MODULE ── */
+  .pm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pm-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .pm-avatar-big {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; margin-bottom: 12px;
+  }
+  .pm-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .pm-title { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; }
+  .pm-stats-row { display: flex; gap: 16px; margin-bottom: 16px; }
+  .pm-stat { }
+  .pm-stat .val { font-size: 20px; font-weight: 700; }
+  .pm-stat .lbl { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+  .pm-projects { display: flex; flex-direction: column; gap: 6px; }
+  .pm-proj-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; background: var(--bg3); border-radius: 6px; font-size: 11px;
+  }
+  .pm-proj-name { font-weight: 600; }
+  .pm-proj-pct { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* ANIMATIONS */
+  .screen.active { animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px); z-index: 100;
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 16px; width: 480px; max-width: 90vw;
+    padding: 28px; position: relative;
+  }
+  .modal h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+  .modal p { font-size: 12px; color: var(--text3); margin-bottom: 20px; }
+  .form-row { margin-bottom: 14px; }
+  .form-label { font-size: 11px; color: var(--text2); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .form-input, .form-select {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 8px; color: var(--text); font-family: 'Syne', sans-serif; font-size: 13px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--accent); }
+  .form-select option { background: var(--bg2); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+  .close-modal { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text3); font-size: 18px; cursor: pointer; }
+  .close-modal:hover { color: var(--text); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* date inputs dark */
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); cursor: pointer; }
+  input[type="date"] { color-scheme: dark; }
+  .mat-table tfoot td { border-top: 1px solid var(--border); padding-top:8px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🏗</div>
+      <div>
+        <div class="logo-text">BuildTrack</div>
+        <div class="logo-sub">Constructora PM</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <div class="nav-label">Principal</div>
+        <div class="nav-item active" onclick="navigate('dashboard')">
+          <span class="icon">⬡</span> Dashboard
+        </div>
+        <div class="nav-item" onclick="navigate('projects')">
+          <span class="icon">🏠</span> Proyectos
+          <span class="nav-badge">7</span>
+        </div>
+        <div class="nav-item" onclick="navigate('viewer')">
+          <span class="icon">◈</span> Visor 3D
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Gestión</div>
+        <div class="nav-item" onclick="navigate('materials')">
+          <span class="icon">⬡</span> Materiales
+        </div>
+        <div class="nav-item" onclick="navigate('pms')">
+          <span class="icon">👤</span> Equipo PM
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar">GK</div>
+      <div class="user-info">
+        <div class="user-name">Gus Katan</div>
+        <div class="user-role">Tech Manager</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">
+        BuildTrack / <span>Dashboard</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" onclick="openModal()">+ Nuevo Proyecto</button>
+        <button class="btn btn-primary">📊 Reportes</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- ════════════ DASHBOARD ════════════ -->
+      <div class="screen active" id="screen-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card c1">
+            <div class="stat-label">Proyectos Activos</div>
+            <div class="stat-value">7</div>
+            <div class="stat-sub">↑ 2 desde este mes</div>
+            <div class="stat-icon">🏗</div>
+          </div>
+          <div class="stat-card c2">
+            <div class="stat-label">Unidades Entregadas</div>
+            <div class="stat-value">124</div>
+            <div class="stat-sub">Q1 2025</div>
+            <div class="stat-icon">🏠</div>
+          </div>
+          <div class="stat-card c3">
+            <div class="stat-label">Presupuesto Total</div>
+            <div class="stat-value">Q12M</div>
+            <div class="stat-sub">78% ejecutado</div>
+            <div class="stat-icon">💰</div>
+          </div>
+          <div class="stat-card c4">
+            <div class="stat-label">PMs Asignados</div>
+            <div class="stat-value">6</div>
+            <div class="stat-sub">2 proyectos en riesgo</div>
+            <div class="stat-icon">👥</div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Proyectos en Progreso</div>
+              <div class="card-badge">ACTIVOS</div>
+            </div>
+            <div>
+              <div class="project-item" onclick="navigate('viewer')">
+                <div class="project-thumb" style="background:rgba(240,165,0,0.1);">🏠</div>
+                <div class="project-info">
+                  <div class="project-name">Residencial El Roble</div>
+                  <div class="project-meta">Zona 16 · 24 unidades · PM: Carlos R.</div>
+                </div>
+                <div class="project-prog">
+                  <div class="prog-num" style="color:var(--accent)">72%</div>
+                  <div class="prog-bar-wrap"><div class="prog-bar" style="width:72%;background:var(--accent)"></div></div>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-thumb" style="background:rgba(59,130,246,0.1);">🏢</div>
+                <div class="project-info">
+                  <div class="project-name">Torres Vista Hermosa</div>
+                  <div class="project-meta">Zona 10 · 8 apartamentos · PM: Ana M.</div>
+                </div>
+                <div class="project-prog">
+                  <div class="prog-num" style="color:var(--blue)">45%</div>
+                  <div class="prog-bar-wrap"><div class="prog-bar" style="width:45%;background:var(--blue)"></div></div>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-thumb" style="background:rgba(168,85,247,0.1);">🏡</div>
+                <div class="project-info">
+                  <div class="project-name">Villas Santa Clara</div>
+                  <div class="project-meta">Antigua · 12 villas · PM: Roberto F.</div>
+                </div>
+                <div class="project-prog">
+                  <div class="prog-num" style="color:var(--purple)">91%</div>
+                  <div class="prog-bar-wrap"><div class="prog-bar" style="width:91%;background:var(--purple)"></div></div>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-thumb" style="background:rgba(34,197,94,0.1);">🏗</div>
+                <div class="project-info">
+                  <div class="project-name">Condominio Los Pinos</div>
+                  <div class="project-meta">Zona 15 · 18 unidades · PM: Diana P.</div>
+                </div>
+                <div class="project-prog">
+                  <div class="prog-num" style="color:var(--green)">28%</div>
+                  <div class="prog-bar-wrap"><div class="prog-bar" style="width:28%;background:var(--green)"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Fases Activas</div>
+              <div class="card-badge">HOY</div>
+            </div>
+            <div class="phase-timeline">
+              <div class="phase-row">
+                <div class="phase-dot done"></div>
+                <div class="phase-name">Planos & Diseño</div>
+                <div class="phase-pct">100%</div>
+                <div class="phase-status done">LISTO</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot done"></div>
+                <div class="phase-name">Cimentación</div>
+                <div class="phase-pct">100%</div>
+                <div class="phase-status done">LISTO</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot done"></div>
+                <div class="phase-name">Estructura</div>
+                <div class="phase-pct">100%</div>
+                <div class="phase-status done">LISTO</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot active"></div>
+                <div class="phase-name">Mampostería</div>
+                <div class="phase-pct">72%</div>
+                <div class="phase-status active">EN CURSO</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot pending"></div>
+                <div class="phase-name">Instalaciones</div>
+                <div class="phase-pct">0%</div>
+                <div class="phase-status pending">PENDIENTE</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot pending"></div>
+                <div class="phase-name">Acabados</div>
+                <div class="phase-pct">0%</div>
+                <div class="phase-status pending">PENDIENTE</div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-dot pending"></div>
+                <div class="phase-name">Entrega</div>
+                <div class="phase-pct">0%</div>
+                <div class="phase-status pending">PENDIENTE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════ PROYECTOS ════════════ -->
+      <div class="screen" id="screen-projects">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Proyectos</div>
+            <div class="page-sub">7 proyectos activos · 2 en planeación</div>
+          </div>
+          <button class="btn btn-primary" onclick="openModal()">+ Nuevo Proyecto</button>
+        </div>
+        <div class="projects-grid">
+          <div class="proj-card" onclick="navigate('viewer')">
+            <div class="proj-thumb-big" style="background:linear-gradient(135deg,rgba(240,165,0,0.15),rgba(240,165,0,0.05))">
+              🏠
+              <div class="proj-status-badge active">ACTIVO</div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-title">Residencial El Roble</div>
+              <div class="proj-type">RESIDENCIAL · ZONA 16 · GUA</div>
+              <div class="proj-stats">
+                <div class="proj-stat"><strong>24</strong>Unidades</div>
+                <div class="proj-stat"><strong>Q3.2M</strong>Presupuesto</div>
+                <div class="proj-stat"><strong>8</strong>Meses</div>
+              </div>
+              <div class="prog-full"><div class="prog-bar" style="width:72%;background:var(--accent)"></div></div>
+              <div class="proj-meta-row">
+                <div class="proj-pm">PM: <strong>Carlos Ramírez</strong></div>
+                <span style="font-family:monospace;font-size:11px;color:var(--accent)">72%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-thumb-big" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(59,130,246,0.05))">
+              🏢
+              <div class="proj-status-badge active">ACTIVO</div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-title">Torres Vista Hermosa</div>
+              <div class="proj-type">APARTAMENTOS · ZONA 10 · GUA</div>
+              <div class="proj-stats">
+                <div class="proj-stat"><strong>8</strong>Aptos</div>
+                <div class="proj-stat"><strong>Q5.8M</strong>Presupuesto</div>
+                <div class="proj-stat"><strong>14</strong>Meses</div>
+              </div>
+              <div class="prog-full"><div class="prog-bar" style="width:45%;background:var(--blue)"></div></div>
+              <div class="proj-meta-row">
+                <div class="proj-pm">PM: <strong>Ana Morales</strong></div>
+                <span style="font-family:monospace;font-size:11px;color:var(--blue)">45%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-thumb-big" style="background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(168,85,247,0.05))">
+              🏡
+              <div class="proj-status-badge done">91% LISTO</div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-title">Villas Santa Clara</div>
+              <div class="proj-type">VILLAS · ANTIGUA GUATEMALA</div>
+              <div class="proj-stats">
+                <div class="proj-stat"><strong>12</strong>Villas</div>
+                <div class="proj-stat"><strong>Q2.1M</strong>Presupuesto</div>
+                <div class="proj-stat"><strong>6</strong>Meses</div>
+              </div>
+              <div class="prog-full"><div class="prog-bar" style="width:91%;background:var(--purple)"></div></div>
+              <div class="proj-meta-row">
+                <div class="proj-pm">PM: <strong>Roberto Flores</strong></div>
+                <span style="font-family:monospace;font-size:11px;color:var(--purple)">91%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-thumb-big" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05))">
+              🏗
+              <div class="proj-status-badge planning">INICIO</div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-title">Condominio Los Pinos</div>
+              <div class="proj-type">CONDOMINIO · ZONA 15 · GUA</div>
+              <div class="proj-stats">
+                <div class="proj-stat"><strong>18</strong>Unidades</div>
+                <div class="proj-stat"><strong>Q4.5M</strong>Presupuesto</div>
+                <div class="proj-stat"><strong>10</strong>Meses</div>
+              </div>
+              <div class="prog-full"><div class="prog-bar" style="width:28%;background:var(--green)"></div></div>
+              <div class="proj-meta-row">
+                <div class="proj-pm">PM: <strong>Diana Pérez</strong></div>
+                <span style="font-family:monospace;font-size:11px;color:var(--green)">28%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-thumb-big" style="background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,107,53,0.05))">
+              🏘
+              <div class="proj-status-badge planning">PLANOS</div>
+            </div>
+            <div class="proj-body">
+              <div class="proj-title">Aldea El Sauce</div>
+              <div class="proj-type">RESIDENCIAL · VILLA NUEVA</div>
+              <div class="proj-stats">
+                <div class="proj-stat"><strong>36</strong>Casas</div>
+                <div class="proj-stat"><strong>Q6.2M</strong>Presupuesto</div>
+                <div class="proj-stat"><strong>18</strong>Meses</div>
+              </div>
+              <div class="prog-full"><div class="prog-bar" style="width:8%;background:var(--accent2)"></div></div>
+              <div class="proj-meta-row">
+                <div class="proj-pm">PM: <strong>Sin asignar</strong></div>
+                <span style="font-family:monospace;font-size:11px;color:var(--accent2)">8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════ VISOR 3D ════════════ -->
+      <div class="screen" id="screen-viewer">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Visor 3D</div>
+            <div class="page-sub">Residencial El Roble — Unidad tipo A</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost">↑ Importar modelo GLB</button>
+            <button class="btn btn-primary" onclick="exportExcel()" style="background:var(--green);border-color:var(--green)">
+              ⬇ Exportar Excel
+            </button>
+          </div>
+        </div>
+        <div class="viewer-layout">
+          <div class="canvas-wrap">
+            <canvas id="three-canvas"></canvas>
+            <div class="phase-tag">Fase actual: <span id="phase-label">Mampostería</span></div>
+            <div class="viewer-controls">
+              <button class="ctrl-btn active" id="view-btn-persp" onclick="setView('perspective')">3D</button>
+              <button class="ctrl-btn" id="view-btn-front" onclick="setView('front')">Frente</button>
+              <button class="ctrl-btn" id="view-btn-top" onclick="setView('top')">Planta</button>
+              <button class="ctrl-btn" id="view-btn-side" onclick="setView('side')">Lateral</button>
+            </div>
+          </div>
+          <!-- ── VIEWER PANEL (right side) ── -->
+          <div class="viewer-panel" id="viewer-panel">
+            <!-- rendered by JS: renderPanel() -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ MODAL: Nueva Fase ══ -->
+      <div class="modal-overlay" id="modal-phase">
+        <div class="modal" style="width:520px">
+          <button class="close-modal" onclick="closePhaseModal()">×</button>
+          <h2 id="phase-modal-title">Nueva Fase</h2>
+          <p>Define nombre, fechas estimadas y el estado actual de esta fase.</p>
+          <div class="form-row">
+            <label class="form-label">Nombre de la Fase</label>
+            <input class="form-input" id="pm-name" placeholder="Ej. Cimentación, Acabados, etc.">
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Fecha de Inicio</label>
+              <input class="form-input" id="pm-start" type="date">
+            </div>
+            <div class="form-row">
+              <label class="form-label">Fecha de Fin Estimada</label>
+              <input class="form-input" id="pm-end" type="date">
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">% de Avance</label>
+              <input class="form-input" id="pm-pct" type="number" min="0" max="100" placeholder="0">
+            </div>
+            <div class="form-row">
+              <label class="form-label">Estado</label>
+              <select class="form-select" id="pm-status">
+                <option value="pending">Pendiente</option>
+                <option value="active">En Curso</option>
+                <option value="done">Completado</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Elementos 3D que muestra esta fase</label>
+            <div id="pm-parts-check" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px"></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-ghost" onclick="closePhaseModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="savePhase()">Guardar Fase →</button>
+          </div>
+          <input type="hidden" id="pm-edit-idx" value="-1">
+        </div>
+      </div>
+
+      <!-- ══ MODAL: Agregar Material a Fase ══ -->
+      <div class="modal-overlay" id="modal-mat">
+        <div class="modal" style="width:480px">
+          <button class="close-modal" onclick="closeMatModal()">×</button>
+          <h2>Agregar Material a Fase</h2>
+          <p>Selecciona del catálogo y define la cantidad necesaria para esta fase.</p>
+          <div class="form-row">
+            <label class="form-label">Material del Catálogo</label>
+            <select class="form-select" id="mm-mat-select"></select>
+          </div>
+          <div id="mm-stock-info" style="margin-bottom:14px;display:none;padding:10px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--border2);font-size:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="color:var(--text3)">Stock disponible:</span>
+              <span id="mm-stock-qty" style="font-family:'JetBrains Mono',monospace;color:var(--text)"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="color:var(--text3)">Costo unitario:</span>
+              <span id="mm-unit-cost" style="font-family:'JetBrains Mono',monospace;color:var(--accent)"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--text3)">Estado stock:</span>
+              <span id="mm-stock-status"></span>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Cantidad a usar en esta fase</label>
+              <input class="form-input" id="mm-qty" type="number" min="1" placeholder="0">
+            </div>
+            <div class="form-row">
+              <label class="form-label">% Ejecutado</label>
+              <input class="form-input" id="mm-pct" type="number" min="0" max="100" placeholder="0">
+            </div>
+          </div>
+          <div id="mm-cost-preview" style="display:none;padding:10px 12px;background:rgba(240,165,0,0.08);border:1px solid rgba(240,165,0,0.2);border-radius:8px;font-size:12px;margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--text3)">Costo total estimado:</span>
+              <span id="mm-total-cost" style="font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700"></span>
+            </div>
+          </div>
+          <div id="mm-overstock-warn" style="display:none;padding:10px 12px;background:rgba(239,68,68,0.08);
+               border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-size:11px;
+               color:var(--red);margin-bottom:14px"></div>
+          <div class="modal-actions">
+            <button class="btn btn-ghost" onclick="closeMatModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveMatToPhase()">Agregar Material →</button>
+          </div>
+          <input type="hidden" id="mm-phase-idx" value="0">
+        </div>
+      </div>
+
+      <!-- ════════════ MATERIALES ════════════ -->
+      <!-- ════════════ MATERIALES ════════════ -->
+      <div class="screen" id="screen-materials">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Control de Materiales</div>
+            <div class="page-sub">Inventario y costos por proyecto</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost" onclick="exportExcel()">⬇ Exportar Excel</button>
+            <button class="btn btn-primary">+ Agregar Material</button>
+          </div>
+        </div>
+        <div class="mat-module-grid">
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="padding:16px 16px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div class="card-title" style="padding:0">Inventario General</div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px">Exportar</button>
+              </div>
+            </div>
+            <table class="big-table">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Categoría</th>
+                  <th>Inventario</th>
+                  <th>Libre</th>
+                  <th>Total</th>
+                  <th>Stock</th>
+                </tr>
+              </thead>
+              <tbody id="mat-tbody"></tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Presupuesto por Fase</div>
+                <div class="card-badge">Q255,762 total</div>
+              </div>
+              <div class="donut-wrap">
+                <div class="budget-item">
+                  <div class="budget-label">Estructura<span>Varilla, concreto, encofrado</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:85%;background:var(--blue)"></div></div>
+                  <div class="budget-cost">Q101,850</div>
+                </div>
+                <div class="budget-item">
+                  <div class="budget-label">Cimentación<span>Cemento, piedra, arena</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:65%;background:var(--accent)"></div></div>
+                  <div class="budget-cost">Q55,760</div>
+                </div>
+                <div class="budget-item">
+                  <div class="budget-label">Mampostería<span>Block, mortero, arena</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:42%;background:var(--accent2)"></div></div>
+                  <div class="budget-cost">Q39,952</div>
+                </div>
+                <div class="budget-item">
+                  <div class="budget-label">Instalaciones<span>PVC, cable, conexiones</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:28%;background:var(--green)"></div></div>
+                  <div class="budget-cost">Q28,900</div>
+                </div>
+                <div class="budget-item">
+                  <div class="budget-label">Acabados<span>Pintura, ladrillo, cerámica</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:24%;background:var(--purple)"></div></div>
+                  <div class="budget-cost">Q25,220</div>
+                </div>
+                <div class="budget-item">
+                  <div class="budget-label">Varios<span>Alambre, clavos, otros</span></div>
+                  <div class="budget-bar-outer"><div class="budget-bar-inner" style="width:8%;background:var(--text3)"></div></div>
+                  <div class="budget-cost">Q4,080</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Alertas de Stock</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:12px">
+                  <div style="color:var(--red);font-weight:700;margin-bottom:2px">⚠ Cemento Portland</div>
+                  <div style="color:var(--text3)">Quedan 820 sacos · Req. 1,200 para fase siguiente</div>
+                </div>
+                <div style="padding:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:12px">
+                  <div style="color:var(--red);font-weight:700;margin-bottom:2px">⚠ Tubo PVC 4"</div>
+                  <div style="color:var(--text3)">Quedan 340 u · Req. 520 para instalaciones</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════ PMs ════════════ -->
+      <div class="screen" id="screen-pms">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Equipo de Project Managers</div>
+            <div class="page-sub">6 PMs activos · 7 proyectos asignados</div>
+          </div>
+          <button class="btn btn-primary">+ Agregar PM</button>
+        </div>
+        <div class="pm-grid">
+          <div class="pm-card">
+            <div class="pm-avatar-big" style="background:linear-gradient(135deg,rgba(240,165,0,0.3),rgba(240,165,0,0.1));color:var(--accent)">CR</div>
+            <div class="pm-name">Carlos Ramírez</div>
+            <div class="pm-title">SR. PROJECT MANAGER</div>
+            <div class="pm-stats-row">
+              <div class="pm-stat"><div class="val" style="color:var(--accent)">2</div><div class="lbl">PROYECTOS</div></div>
+              <div class="pm-stat"><div class="val" style="color:var(--green)">85%</div><div class="lbl">AVG AVANCE</div></div>
+            </div>
+            <div class="pm-projects">
+              <div class="pm-proj-row"><div class="pm-proj-name">Residencial El Roble</div><div class="pm-proj-pct">72%</div></div>
+              <div class="pm-proj-row"><div class="pm-proj-name">Villas del Norte</div><div class="pm-proj-pct">98%</div></div>
+            </div>
+          </div>
+
+          <div class="pm-card">
+            <div class="pm-avatar-big" style="background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(59,130,246,0.1));color:var(--blue)">AM</div>
+            <div class="pm-name">Ana Morales</div>
+            <div class="pm-title">PROJECT MANAGER</div>
+            <div class="pm-stats-row">
+              <div class="pm-stat"><div class="val" style="color:var(--blue)">1</div><div class="lbl">PROYECTOS</div></div>
+              <div class="pm-stat"><div class="val" style="color:var(--blue)">45%</div><div class="lbl">AVG AVANCE</div></div>
+            </div>
+            <div class="pm-projects">
+              <div class="pm-proj-row"><div class="pm-proj-name">Torres Vista Hermosa</div><div class="pm-proj-pct">45%</div></div>
+            </div>
+          </div>
+
+          <div class="pm-card">
+            <div class="pm-avatar-big" style="background:linear-gradient(135deg,rgba(168,85,247,0.3),rgba(168,85,247,0.1));color:var(--purple)">RF</div>
+            <div class="pm-name">Roberto Flores</div>
+            <div class="pm-title">SR. PROJECT MANAGER</div>
+            <div class="pm-stats-row">
+              <div class="pm-stat"><div class="val" style="color:var(--purple)">2</div><div class="lbl">PROYECTOS</div></div>
+              <div class="pm-stat"><div class="val" style="color:var(--green)">78%</div><div class="lbl">AVG AVANCE</div></div>
+            </div>
+            <div class="pm-projects">
+              <div class="pm-proj-row"><div class="pm-proj-name">Villas Santa Clara</div><div class="pm-proj-pct">91%</div></div>
+              <div class="pm-proj-row"><div class="pm-proj-name">Casa Modelo Tipo B</div><div class="pm-proj-pct">64%</div></div>
+            </div>
+          </div>
+
+          <div class="pm-card">
+            <div class="pm-avatar-big" style="background:linear-gradient(135deg,rgba(34,197,94,0.3),rgba(34,197,94,0.1));color:var(--green)">DP</div>
+            <div class="pm-name">Diana Pérez</div>
+            <div class="pm-title">PROJECT MANAGER</div>
+            <div class="pm-stats-row">
+              <div class="pm-stat"><div class="val" style="color:var(--green)">1</div><div class="lbl">PROYECTOS</div></div>
+              <div class="pm-stat"><div class="val" style="color:var(--green)">28%</div><div class="lbl">AVG AVANCE</div></div>
+            </div>
+            <div class="pm-projects">
+              <div class="pm-proj-row"><div class="pm-proj-name">Condominio Los Pinos</div><div class="pm-proj-pct">28%</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <h2>Nuevo Proyecto</h2>
+    <p>Ingresa los datos base del proyecto. Podrás añadir fases y materiales después.</p>
+
+    <div class="form-row">
+      <label class="form-label">Nombre del Proyecto</label>
+      <input class="form-input" type="text" placeholder="Ej. Residencial Los Altos">
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label">Tipo</label>
+        <select class="form-select">
+          <option>Residencial</option>
+          <option>Apartamentos</option>
+          <option>Villas</option>
+          <option>Condominio</option>
+          <option>Comercial</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Ubicación</label>
+        <input class="form-input" type="text" placeholder="Zona 16, Guatemala">
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label">N° de Unidades</label>
+        <input class="form-input" type="number" placeholder="24">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Presupuesto (Q)</label>
+        <input class="form-input" type="text" placeholder="Q 3,200,000">
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">PM Asignado</label>
+      <select class="form-select" id="np-pm">
+        <option>Carlos Ramírez</option>
+        <option>Ana Morales</option>
+        <option>Roberto Flores</option>
+        <option>Diana Pérez</option>
+        <option>Sin asignar</option>
+      </select>
+    </div>
+    <div style="margin:12px 0 4px;padding:10px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--border2)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:2px;margin-bottom:8px">DATOS FINANCIEROS</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label class="form-label">Costo de obra (Q)</label>
+          <input class="form-input" id="np-budget" type="number" placeholder="3200000">
+        </div>
+        <div class="form-row">
+          <label class="form-label">Precio de venta (Q)</label>
+          <input class="form-input" id="np-revenue" type="number" placeholder="4480000">
+        </div>
+      </div>
+      <div class="form-grid" style="margin-top:8px">
+        <div class="form-row">
+          <label class="form-label">% Costos indirectos</label>
+          <input class="form-input" id="np-ovhd" type="number" placeholder="12" min="0" max="100">
+        </div>
+        <div class="form-row">
+          <label class="form-label">% Contingencia</label>
+          <input class="form-input" id="np-cont" type="number" placeholder="5" min="0" max="100">
+        </div>
+      </div>
+      <div id="np-margin-preview" style="margin-top:8px;display:none;padding:8px 10px;
+           background:rgba(240,165,0,0.08);border-radius:6px;border:1px solid rgba(240,165,0,0.2);
+           font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--accent)">
+        Margen bruto estimado: <span id="np-margin-val" style="font-weight:700"></span>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="closeModal()">Crear Proyecto →</button>
+    </div>
+  </div>
+</div>
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════════
+const screenMap = {
+  dashboard:'Dashboard', projects:'Proyectos',
+  viewer:'Visor 3D — Residencial El Roble',
+  materials:'Materiales', pms:'Equipo PM'
+};
+function navigate(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.getElementById('topbar-title').innerHTML = `BuildTrack / <span>${screenMap[name]}</span>`;
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'"+name+"'")) n.classList.add('active');
+  });
+  if (name === 'viewer') {
+    setTimeout(() => {
+      if (!rendererStarted) initThree();
+      else { const w = canvas.parentElement; renderer.setSize(w.clientWidth, w.clientHeight); }
+      renderPanel();
+    }, 80);
+  }
+  if (name === 'materials') renderMaterialsTable();
+}
+function openModal()  { document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if(e.target===document.getElementById('modal')) closeModal(); });
+
+// ═══════════════════════════════════════════════════════════════════
+// STORAGE  — persist phases + catalog to window.storage
+// ═══════════════════════════════════════════════════════════════════
+const STORAGE_PHASES  = 'buildtrack-phases-v2';
+const STORAGE_CATALOG = 'buildtrack-catalog-v2';
+
+async function persistPhases() {
+  try { await window.storage.set(STORAGE_PHASES, JSON.stringify(phases)); } catch(e) {}
+}
+async function persistCatalog() {
+  try { await window.storage.set(STORAGE_CATALOG, JSON.stringify(CATALOG)); } catch(e) {}
+}
+async function loadFromStorage() {
+  try {
+    const r1 = await window.storage.get(STORAGE_PHASES);
+    if (r1?.value) { phases.length = 0; JSON.parse(r1.value).forEach(p => phases.push(p)); }
+  } catch(e) {}
+  try {
+    const r2 = await window.storage.get(STORAGE_CATALOG);
+    if (r2?.value) { CATALOG.length = 0; JSON.parse(r2.value).forEach(c => CATALOG.push(c)); }
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CATALOG  — material master data (shared with Materiales module)
+// ═══════════════════════════════════════════════════════════════════
+const CATALOG = [
+  { id:1,  name:'Block de Concreto 15cm', cat:'Mampostería',   color:'#e67e22', unit:'u',     qty:12400, unitCost:1.48  },
+  { id:2,  name:'Cemento Portland',        cat:'Cimentación',   color:'#7f8c8d', unit:'sacos', qty:820,   unitCost:68.00 },
+  { id:3,  name:'Varilla 3/8" (12m)',      cat:'Estructura',    color:'#2980b9', unit:'u',     qty:2100,  unitCost:48.50 },
+  { id:4,  name:'Ladrillo Tayuyo',         cat:'Acabados',      color:'#c0392b', unit:'u',     qty:6200,  unitCost:0.85  },
+  { id:5,  name:'Arena de río m³',         cat:'Mezclas',       color:'#f39c12', unit:'m³',    qty:180,   unitCost:120.00},
+  { id:6,  name:'Tubo PVC 4"',             cat:'Instalaciones', color:'#27ae60', unit:'u',     qty:340,   unitCost:85.00 },
+  { id:7,  name:'Alambre de amarre',       cat:'Estructura',    color:'#8e44ad', unit:'lb',    qty:480,   unitCost:8.50  },
+  { id:8,  name:'Pintura Látex',           cat:'Acabados',      color:'#e74c3c', unit:'gl',    qty:210,   unitCost:95.00 },
+  { id:9,  name:'Mortero premezclado',     cat:'Mampostería',   color:'#95a5a6', unit:'sacos', qty:540,   unitCost:48.00 },
+  { id:10, name:'Piedra 3/4"',             cat:'Cimentación',   color:'#bdc3c7', unit:'m³',    qty:95,    unitCost:140.00},
+  { id:11, name:'Cable THW #12',           cat:'Instalaciones', color:'#f1c40f', unit:'mts',   qty:1200,  unitCost:4.80  },
+  { id:12, name:'Codo PVC 4"',             cat:'Instalaciones', color:'#16a085', unit:'u',     qty:180,   unitCost:18.50 },
+  { id:13, name:'Encofrado madera',        cat:'Estructura',    color:'#d35400', unit:'m²',    qty:320,   unitCost:35.00 },
+  { id:14, name:'Cerámica 30×30',          cat:'Acabados',      color:'#9b59b6', unit:'m²',    qty:400,   unitCost:85.00 },
+];
+
+// Effective stock = catalog qty minus all quantities committed in phases
+function effectiveStock(catId) {
+  const cat = CATALOG.find(c => c.id === catId);
+  if (!cat) return 0;
+  const committed = phases.reduce((sum, ph) => {
+    const m = (ph.materials||[]).find(m => m.matId === catId);
+    return sum + (m ? m.qty : 0);
+  }, 0);
+  return cat.qty - committed;
+}
+
+function stockLevel(catId) {
+  const free = effectiveStock(catId);
+  if (free <= 0)   return 'none';
+  if (free <= 50)  return 'low';
+  if (free <= 200) return 'mid';
+  return 'ok';
+}
+
+function stockBadge(catId) {
+  const lvl = stockLevel(catId);
+  const map = {
+    ok:   `<span style="color:var(--green);font-size:10px">✓ OK</span>`,
+    mid:  `<span style="color:var(--accent);font-size:10px">~ MED</span>`,
+    low:  `<span style="color:var(--red);font-size:10px">⚠ BAJO</span>`,
+    none: `<span style="color:var(--red);font-size:10px;font-weight:700">✕ AGOTADO</span>`,
+  };
+  return map[lvl] || '';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PHASES  — dynamic, user-defined
+// { name, status, pct, start, end, parts:[], materials:[{matId,qty,pct}] }
+// ═══════════════════════════════════════════════════════════════════
+const ALL_3D_PARTS = ['foundation','columns','slab','walls','pipes','facade','windows','roof','door','details'];
+const PARTS_LABELS = {
+  foundation:'Cimentación', columns:'Columnas', slab:'Losa',
+  walls:'Muros', pipes:'Tuberías', facade:'Fachada',
+  windows:'Ventanas', roof:'Techo', door:'Puerta', details:'Detalles'
+};
+
+const phases = [
+  { name:'Planos & Diseño',  status:'done',    pct:100, start:'2025-01-10', end:'2025-01-31',
+    parts:[], materials:[] },
+  { name:'Cimentación',      status:'done',    pct:100, start:'2025-02-01', end:'2025-02-28',
+    parts:['foundation'],
+    materials:[{matId:2,qty:300,pct:100},{matId:5,qty:40,pct:100},{matId:10,qty:50,pct:100}] },
+  { name:'Estructura',       status:'done',    pct:100, start:'2025-03-01', end:'2025-04-15',
+    parts:['foundation','columns','slab'],
+    materials:[{matId:3,qty:600,pct:100},{matId:7,qty:120,pct:100},{matId:13,qty:80,pct:100}] },
+  { name:'Mampostería',      status:'active',  pct:72,  start:'2025-04-16', end:'2025-05-31',
+    parts:['foundation','columns','slab','walls'],
+    materials:[{matId:1,qty:4000,pct:72},{matId:9,qty:150,pct:68},{matId:5,qty:30,pct:80}] },
+  { name:'Instalaciones',    status:'pending', pct:0,   start:'2025-06-01', end:'2025-06-30',
+    parts:['foundation','columns','slab','walls','pipes'],
+    materials:[{matId:6,qty:120,pct:0},{matId:11,qty:400,pct:0},{matId:12,qty:60,pct:0}] },
+  { name:'Acabados',         status:'pending', pct:0,   start:'2025-07-01', end:'2025-08-15',
+    parts:['foundation','columns','slab','walls','pipes','facade','windows'],
+    materials:[{matId:8,qty:80,pct:0},{matId:14,qty:100,pct:0},{matId:4,qty:1500,pct:0}] },
+  { name:'Entrega Final',    status:'pending', pct:0,   start:'2025-08-16', end:'2025-08-31',
+    parts:['foundation','columns','slab','walls','pipes','facade','windows','roof','door','details'],
+    materials:[] },
+];
+
+let currentPhase = 3;
+let houseParts = {};
+const MAT_COLORS = {
+  foundation:0x7f6e5d, columns:0x9aadbe, slab:0xb0bec5,
+  walls:0xd4b896, pipes:0x4fc3f7, facade:0xe8c99a,
+  windows:0x80deea, roof:0x8d6e63, door:0x5d4037, details:0xffffff,
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER PANEL
+// ═══════════════════════════════════════════════════════════════════
+function renderPanel() {
+  const panel = document.getElementById('viewer-panel');
+  if (!panel) return;
+
+  // ── 1. Phase list ─────────────────────────────────────────────
+  let html = `
+  <div class="panel-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <h3 style="margin:0">Fases de Construcción</h3>
+      <button class="ctrl-btn" style="padding:4px 10px;font-size:10px" onclick="openPhaseModal(-1)">+ Nueva</button>
+    </div>
+    <div id="phase-list">`;
+
+  phases.forEach((ph, i) => {
+    const sel  = i === currentPhase;
+    const done = ph.status === 'done';
+    const numLbl = done ? '✓' : (i+1);
+    const accentStyle = done ? 'background:var(--green);color:#000'
+                      : sel  ? 'background:var(--accent);color:#000' : '';
+    const rowClass = `phase-btn${done?' completed':''}${sel?' selected':''}`;
+    html += `
+    <div class="${rowClass}" onclick="selectPhase(${i})" style="position:relative">
+      <div class="phase-num" style="${accentStyle}">${numLbl}</div>
+      <div class="phase-info" style="flex:1;min-width:0;overflow:hidden">
+        <div class="phase-btn-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ph.name}</div>
+        <div class="phase-btn-sub">${ph.pct}% · ${ph.start ? formatDate(ph.start) : '—'}</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-shrink:0;margin-left:4px">
+        <button onclick="event.stopPropagation();openPhaseModal(${i})"
+          style="background:rgba(255,255,255,0.06);border:none;color:var(--text3);border-radius:4px;
+                 padding:3px 6px;font-size:9px;cursor:pointer">✎</button>
+        <button onclick="event.stopPropagation();deletePhase(${i})"
+          style="background:rgba(239,68,68,0.1);border:none;color:var(--red);border-radius:4px;
+                 padding:3px 6px;font-size:9px;cursor:pointer">✕</button>
+      </div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // ── 2. Selected phase detail ───────────────────────────────────
+  const ph = phases[currentPhase];
+  if (!ph) { panel.innerHTML = html; return; }
+  const statusLabel = {done:'Completado',active:'En Curso',pending:'Pendiente'}[ph.status];
+  const statusCol   = {done:'var(--green)',active:'var(--accent)',pending:'var(--text3)'}[ph.status];
+
+  html += `
+  <div class="panel-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <h3 style="margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:155px"
+          title="${ph.name}">${ph.name}</h3>
+      <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;
+            background:rgba(255,255,255,0.06);color:${statusCol};flex-shrink:0">${statusLabel}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+      <div>
+        <div style="font-size:9px;color:var(--text3);font-family:'JetBrains Mono',monospace;
+                    letter-spacing:1px;margin-bottom:3px">INICIO</div>
+        <input type="date" value="${ph.start||''}" id="inp-start"
+          onchange="updatePhaseDate(${currentPhase},'start',this.value)"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
+                 color:var(--text);font-family:'Syne',sans-serif;font-size:11px;padding:5px 7px;outline:none">
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--text3);font-family:'JetBrains Mono',monospace;
+                    letter-spacing:1px;margin-bottom:3px">FIN ESTIMADO</div>
+        <input type="date" value="${ph.end||''}" id="inp-end"
+          onchange="updatePhaseDate(${currentPhase},'end',this.value)"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;
+                 color:var(--text);font-family:'Syne',sans-serif;font-size:11px;padding:5px 7px;outline:none">
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:9px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1px">AVANCE</span>
+      <span style="font-size:11px;font-weight:700;color:${statusCol}">${ph.pct}%</span>
+    </div>
+    <div style="height:4px;background:var(--bg3);border-radius:2px;margin-bottom:6px">
+      <div style="height:4px;border-radius:2px;background:${statusCol};width:${ph.pct}%"></div>
+    </div>
+    ${ph.start && ph.end ? `<div style="font-size:10px;color:var(--text3)">${dateDiff(ph.start,ph.end)}</div>` : ''}
+  </div>`;
+
+  // ── 3. Materials in phase ──────────────────────────────────────
+  html += `
+  <div class="panel-section" style="overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <h3 style="margin:0">Materiales en Fase</h3>
+      <button class="ctrl-btn" style="padding:4px 10px;font-size:10px"
+              onclick="openMatModal(${currentPhase})">+ Agregar</button>
+    </div>`;
+
+  if (!ph.materials || ph.materials.length === 0) {
+    html += `<div style="color:var(--text3);font-size:11px;text-align:center;padding:16px 0">
+      Sin materiales asignados.<br>
+      <span style="color:var(--accent);cursor:pointer" onclick="openMatModal(${currentPhase})">
+        + Agregar del catálogo</span></div>`;
+  } else {
+    html += `<table class="mat-table" style="width:100%">
+      <thead><tr>
+        <th>Material</th>
+        <th style="text-align:center">%</th>
+        <th style="text-align:right">Costo</th>
+        <th style="text-align:center">Stock</th>
+        <th></th>
+      </tr></thead><tbody>`;
+
+    let total = 0;
+    ph.materials.forEach((m, mi) => {
+      const cat = CATALOG.find(c => c.id === m.matId);
+      if (!cat) return;
+      const cost = cat.unitCost * m.qty;
+      total += cost;
+      const free = effectiveStock(m.matId);
+      const overCommit = free < 0;
+
+      html += `<tr>
+        <td style="padding:7px 0">
+          <div style="display:flex;align-items:flex-start;gap:6px">
+            <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};
+                         flex-shrink:0;display:inline-block;margin-top:2px"></span>
+            <div>
+              <div style="font-size:11px;font-weight:600;line-height:1.3">${cat.name}</div>
+              <div style="font-size:9px;color:var(--text3);font-family:'JetBrains Mono',monospace">
+                ${m.qty.toLocaleString()} ${cat.unit}
+                ${overCommit ? `<span style="color:var(--red)"> · stock: ${cat.qty.toLocaleString()}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        </td>
+        <td style="text-align:center;padding:7px 3px">
+          <input type="number" value="${m.pct}" min="0" max="100"
+            onchange="updateMatPct(${currentPhase},${mi},this.value)"
+            style="width:42px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+                   color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;
+                   padding:2px 3px;text-align:center;outline:none">
+        </td>
+        <td style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;
+                   color:var(--text2);padding:7px 0;white-space:nowrap">${fmtCost(cost)}</td>
+        <td style="text-align:center;padding:7px 3px">${stockBadge(m.matId)}</td>
+        <td style="padding:7px 0 7px 3px">
+          <button onclick="removeMatFromPhase(${currentPhase},${mi})"
+            title="Quitar material"
+            style="background:rgba(239,68,68,0.1);border:none;color:var(--red);
+                   border-radius:4px;padding:2px 5px;font-size:10px;cursor:pointer">✕</button>
+        </td>
+      </tr>`;
+    });
+
+    html += `</tbody><tfoot><tr>
+      <td colspan="2" style="padding:8px 0;font-size:9px;color:var(--text3);
+          font-family:'JetBrains Mono',monospace;letter-spacing:1px">TOTAL FASE</td>
+      <td colspan="3" style="text-align:right;font-family:'JetBrains Mono',monospace;
+          font-size:13px;font-weight:700;color:var(--accent);padding:8px 0">${fmtCost(total)}</td>
+    </tr></tfoot></table>`;
+  }
+
+  html += `</div>`;
+  panel.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+function fmtCost(n) {
+  return 'Q' + Math.round(n).toLocaleString('es-GT');
+}
+function formatDate(d) {
+  if (!d) return '—';
+  const [y,mo,dd] = d.split('-');
+  return `${parseInt(dd)} ${['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][parseInt(mo)-1]} ${y}`;
+}
+function dateDiff(s, e) {
+  const d = Math.round((new Date(e)-new Date(s))/86400000);
+  if (d < 0) return '';
+  if (d < 30) return `${d} días`;
+  if (d < 56) return `${Math.round(d/7)} semanas`;
+  return `${Math.round(d/30)} meses`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PHASE ACTIONS
+// ═══════════════════════════════════════════════════════════════════
+function selectPhase(idx) {
+  currentPhase = idx;
+  showPhase(idx);
+  renderPanel();
+}
+function showPhase(idx) {
+  const ph = phases[idx];
+  if (!ph) return;
+  for (const [name, obj] of Object.entries(houseParts)) {
+    obj.visible = (ph.parts||[]).includes(name);
+  }
+  const lbl = document.getElementById('phase-label');
+  if (lbl) lbl.textContent = ph.name;
+}
+function updatePhaseDate(idx, field, val) {
+  phases[idx][field] = val;
+  persistPhases();
+  renderPanel();
+}
+function updateMatPct(phIdx, matIdx, val) {
+  phases[phIdx].materials[matIdx].pct = Math.max(0, Math.min(100, parseInt(val)||0));
+  persistPhases();
+}
+function removeMatFromPhase(phIdx, matIdx) {
+  // Return qty to stock (conceptually — catalog qty stays, committed decreases)
+  phases[phIdx].materials.splice(matIdx, 1);
+  persistPhases();
+  renderPanel();
+}
+function deletePhase(idx) {
+  if (!confirm(`¿Eliminar la fase "${phases[idx].name}"?\nLos materiales asignados serán devueltos al inventario disponible.`)) return;
+  phases.splice(idx, 1);
+  currentPhase = Math.min(currentPhase, phases.length - 1);
+  if (currentPhase < 0) currentPhase = 0;
+  showPhase(currentPhase);
+  persistPhases();
+  renderPanel();
+}
+function reorderPhase(idx, dir) {
+  const swap = idx + dir;
+  if (swap < 0 || swap >= phases.length) return;
+  [phases[idx], phases[swap]] = [phases[swap], phases[idx]];
+  if (currentPhase === idx) currentPhase = swap;
+  else if (currentPhase === swap) currentPhase = idx;
+  showPhase(currentPhase);
+  persistPhases();
+  renderPanel();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PHASE MODAL
+// ═══════════════════════════════════════════════════════════════════
+function openPhaseModal(idx) {
+  document.getElementById('modal-phase').classList.add('open');
+  document.getElementById('pm-edit-idx').value = idx;
+  const ph = idx >= 0 ? phases[idx] : null;
+  document.getElementById('phase-modal-title').textContent = ph ? 'Editar Fase' : 'Nueva Fase';
+  document.getElementById('pm-name').value   = ph?.name    || '';
+  document.getElementById('pm-start').value  = ph?.start   || '';
+  document.getElementById('pm-end').value    = ph?.end     || '';
+  document.getElementById('pm-pct').value    = ph?.pct     ?? 0;
+  document.getElementById('pm-status').value = ph?.status  || 'pending';
+
+  // 3D parts checkboxes with labels
+  const cur = ph?.parts || [];
+  document.getElementById('pm-parts-check').innerHTML = ALL_3D_PARTS.map(p => `
+    <label style="display:flex;align-items:center;gap:5px;padding:5px 9px;background:var(--bg3);
+                  border-radius:5px;border:1px solid ${cur.includes(p)?'var(--accent)':'var(--border2)'};
+                  cursor:pointer;font-size:11px;transition:border-color 0.15s"
+           onmouseenter="this.style.borderColor='var(--accent)'"
+           onmouseleave="this.style.borderColor=this.querySelector('input').checked?'var(--accent)':'var(--border2)'">
+      <input type="checkbox" value="${p}" ${cur.includes(p)?'checked':''}
+        onchange="this.parentElement.style.borderColor=this.checked?'var(--accent)':'var(--border2)'">
+      ${PARTS_LABELS[p]}
+    </label>`).join('');
+}
+function closePhaseModal() {
+  document.getElementById('modal-phase').classList.remove('open');
+}
+function savePhase() {
+  const idx  = parseInt(document.getElementById('pm-edit-idx').value);
+  const name = document.getElementById('pm-name').value.trim();
+  if (!name) { alert('El nombre de la fase es requerido.'); return; }
+  const parts = [...document.querySelectorAll('#pm-parts-check input:checked')].map(c => c.value);
+  const ph = {
+    name,
+    start:  document.getElementById('pm-start').value,
+    end:    document.getElementById('pm-end').value,
+    pct:    parseInt(document.getElementById('pm-pct').value) || 0,
+    status: document.getElementById('pm-status').value,
+    parts,
+    materials: idx >= 0 ? (phases[idx].materials||[]) : [],
+  };
+  if (idx >= 0) { phases[idx] = ph; }
+  else { phases.push(ph); currentPhase = phases.length - 1; }
+  closePhaseModal();
+  showPhase(currentPhase);
+  persistPhases();
+  renderPanel();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATERIAL MODAL
+// ═══════════════════════════════════════════════════════════════════
+function openMatModal(phIdx) {
+  document.getElementById('modal-mat').classList.add('open');
+  document.getElementById('mm-phase-idx').value = phIdx;
+  document.getElementById('mm-qty').value  = '';
+  document.getElementById('mm-pct').value  = '0';
+  document.getElementById('mm-stock-info').style.display   = 'none';
+  document.getElementById('mm-cost-preview').style.display = 'none';
+  document.getElementById('mm-overstock-warn').style.display = 'none';
+
+  // Populate select — show all catalog, mark already added
+  const added = new Set((phases[phIdx].materials||[]).map(m => m.matId));
+  const sel = document.getElementById('mm-mat-select');
+  sel.innerHTML = '<option value="">— Seleccionar material —</option>';
+  CATALOG.forEach(c => {
+    const free = effectiveStock(c.id);
+    const tag  = added.has(c.id) ? ' [ya agregado]' : free <= 0 ? ' [sin stock]' : '';
+    sel.innerHTML += `<option value="${c.id}" ${added.has(c.id)?'disabled':''}>
+      [${c.cat}] ${c.name} · ${c.unit}${tag}</option>`;
+  });
+  sel.onchange = () => updateMatInfo();
+  document.getElementById('mm-qty').oninput = () => updateCostPreview();
+}
+function updateMatInfo() {
+  const id = parseInt(document.getElementById('mm-mat-select').value);
+  const infoEl = document.getElementById('mm-stock-info');
+  if (!id) { infoEl.style.display='none'; return; }
+  const cat  = CATALOG.find(c => c.id === id);
+  if (!cat) return;
+  const free = effectiveStock(id);
+  const lvl  = stockLevel(id);
+  document.getElementById('mm-stock-qty').textContent  = `${free.toLocaleString()} ${cat.unit} libres`;
+  document.getElementById('mm-unit-cost').textContent  = `Q${cat.unitCost.toFixed(2)} / ${cat.unit}`;
+  const statusMap = {
+    ok:   `<span style="color:var(--green)">✓ Suficiente</span>`,
+    mid:  `<span style="color:var(--accent)">~ Stock medio</span>`,
+    low:  `<span style="color:var(--red)">⚠ Stock bajo</span>`,
+    none: `<span style="color:var(--red);font-weight:700">✕ Sin stock disponible</span>`,
+  };
+  document.getElementById('mm-stock-status').innerHTML = statusMap[lvl]||'';
+  infoEl.style.display = 'block';
+  updateCostPreview();
+}
+function updateCostPreview() {
+  const id  = parseInt(document.getElementById('mm-mat-select').value);
+  const qty = parseInt(document.getElementById('mm-qty').value) || 0;
+  const prev = document.getElementById('mm-cost-preview');
+  const warn = document.getElementById('mm-overstock-warn');
+  if (!id || qty <= 0) { prev.style.display='none'; warn.style.display='none'; return; }
+  const cat  = CATALOG.find(c => c.id === id);
+  if (!cat) return;
+  const free = effectiveStock(id);
+  document.getElementById('mm-total-cost').textContent = fmtCost(cat.unitCost * qty);
+  prev.style.display = 'block';
+  if (qty > free) {
+    warn.innerHTML = `⚠ La cantidad ingresada (<strong>${qty}</strong>) supera el stock libre (<strong>${free} ${cat.unit}</strong>). Se registrará el déficit.`;
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+function closeMatModal() { document.getElementById('modal-mat').classList.remove('open'); }
+
+function saveMatToPhase() {
+  const phIdx = parseInt(document.getElementById('mm-phase-idx').value);
+  const matId = parseInt(document.getElementById('mm-mat-select').value);
+  const qty   = parseInt(document.getElementById('mm-qty').value) || 0;
+  const pct   = parseInt(document.getElementById('mm-pct').value) || 0;
+  if (!matId) { alert('Selecciona un material.'); return; }
+  if (qty <= 0) { alert('Ingresa una cantidad válida.'); return; }
+
+  const free = effectiveStock(matId);
+  if (qty > free) {
+    const cat = CATALOG.find(c => c.id === matId);
+    if (!confirm(`La cantidad (${qty} ${cat?.unit}) supera el stock libre (${free} ${cat?.unit}).\n¿Continuar y registrar el déficit?`)) return;
+  }
+
+  phases[phIdx].materials = phases[phIdx].materials || [];
+  phases[phIdx].materials.push({ matId, qty, pct });
+  closeMatModal();
+  persistPhases();
+  renderPanel();
+  // Refresh materials table if visible
+  if (document.getElementById('screen-materials').classList.contains('active')) renderMaterialsTable();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATERIALS TABLE (dynamic, reflects committed stock)
+// ═══════════════════════════════════════════════════════════════════
+function renderMaterialsTable() {
+  const tbody = document.getElementById('mat-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = CATALOG.map(c => {
+    const free = effectiveStock(c.id);
+    const total = c.unitCost * c.qty;
+    const lvl = stockLevel(c.id);
+    const stockEl = lvl==='ok' ? `<span class="stock-ok">✓ OK</span>`
+                 : lvl==='mid' ? `<span class="stock-mid">~ MED</span>`
+                 : lvl==='none'? `<span class="stock-low" style="font-weight:700">✕ AGOTADO</span>`
+                               : `<span class="stock-low">⚠ BAJO</span>`;
+    return `<tr>
+      <td><div class="mat-name"><span class="dot" style="background:${c.color}"></span>${c.name}</div></td>
+      <td style="color:var(--text3);font-size:11px">${c.cat}</td>
+      <td class="qty">${c.qty.toLocaleString()} ${c.unit}</td>
+      <td class="qty" style="color:${free<0?'var(--red)':free<50?'var(--accent)':'var(--text2)'}">${free.toLocaleString()} ${c.unit}</td>
+      <td class="cost-val">Q${c.unitCost.toFixed(2)}</td>
+      <td class="cost-val">${fmtCost(total)}</td>
+      <td>${stockEl}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// THREE.JS — 3D HOUSE VIEWER
+// ═══════════════════════════════════════════════════════════════════
+let scene, camera, renderer, animId;
+let rendererStarted = false;
+let isDragging = false, prevMouse = {x:0,y:0};
+let camTheta = 0.6, camPhi = 1.05, camRadius = 20;
+let canvas;
+
+function initThree() {
+  rendererStarted = true;
+  canvas = document.getElementById('three-canvas');
+  const wrap = canvas.parentElement;
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0d1117);
+  scene.fog = new THREE.Fog(0x0d1117, 30, 60);
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 100);
+  updateCamera();
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setSize(w, h);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // Lights
+  scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+  const sun = new THREE.DirectionalLight(0xfff5e0, 1.2);
+  sun.position.set(10, 20, 10); sun.castShadow = true;
+  sun.shadow.mapSize.set(1024,1024); scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xaabfcc, 0.4);
+  fill.position.set(-8,5,-8); scene.add(fill);
+  scene.add(new THREE.GridHelper(30, 30, 0x1e2530, 0x1e2530));
+  buildHouse();
+  showPhase(currentPhase);
+  // Mouse
+  canvas.addEventListener('mousedown', e => { isDragging=true; prevMouse={x:e.clientX,y:e.clientY}; });
+  window.addEventListener('mouseup',   () => isDragging=false);
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    camTheta -= (e.clientX-prevMouse.x)*0.01;
+    camPhi = Math.max(0.15, Math.min(1.5, camPhi+(e.clientY-prevMouse.y)*0.01));
+    prevMouse = {x:e.clientX,y:e.clientY};
+    updateCamera();
+  });
+  canvas.addEventListener('wheel', e => {
+    camRadius = Math.max(6, Math.min(35, camRadius+e.deltaY*0.02));
+    updateCamera();
+  });
+  // Touch
+  let lastT = null;
+  canvas.addEventListener('touchstart', e => { lastT=e.touches[0]; });
+  canvas.addEventListener('touchmove',  e => {
+    if (!lastT) return;
+    const t = e.touches[0];
+    camTheta -= (t.clientX-lastT.clientX)*0.01;
+    camPhi = Math.max(0.15,Math.min(1.5,camPhi+(t.clientY-lastT.clientY)*0.01));
+    lastT=t; updateCamera(); e.preventDefault();
+  }, {passive:false});
+  animate();
+}
+
+function updateCamera() {
+  if (!camera) return;
+  camera.position.x = camRadius*Math.sin(camPhi)*Math.sin(camTheta);
+  camera.position.y = camRadius*Math.cos(camPhi);
+  camera.position.z = camRadius*Math.sin(camPhi)*Math.cos(camTheta);
+  camera.lookAt(0,3,0);
+}
+
+function buildHouse() {
+  const T=0.3, BASE=0.95, WH=5.0, HW=5.0, HD=4.0;
+  const Zf=+HD,Zb=-HD,Xr=+HW,Xl=-HW;
+  const Zfc=Zf-T/2, Zbc=Zb+T/2, Xrc=Xr-T/2, Xlc=Xl+T/2;
+  const IW=HW*2-T*2, ID=HD*2-T*2;
+
+  const make = (geo,color,x,y,z) => {
+    const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color}));
+    m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true;
+    return m;
+  };
+  const box = (w,h,d,col,x,y,z) => make(new THREE.BoxGeometry(w,h,d),col,x,y,z);
+  const cyl = (r,h,col,x,y,z)   => make(new THREE.CylinderGeometry(r,r,h,8),col,x,y,z);
+  const grp = name => { const g=new THREE.Group(); houseParts[name]=g; scene.add(g); return g; };
+
+  // 1. Foundation
+  const fg=grp('foundation');
+  fg.add(box(HW*2,0.5,HD*2,MAT_COLORS.foundation,0,0.25,0));
+  fg.add(box(HW*2,0.4,T,0x6b5c4d,0,0.7,Zfc));
+  fg.add(box(HW*2,0.4,T,0x6b5c4d,0,0.7,Zbc));
+  fg.add(box(T,0.4,HD*2,0x6b5c4d,Xrc,0.7,0));
+  fg.add(box(T,0.4,HD*2,0x6b5c4d,Xlc,0.7,0));
+
+  // 2. Columns (inside walls)
+  const cg=grp('columns'); const CS=0.26;
+  for(const[cx,cz]of[[Xlc,Zfc],[Xrc,Zfc],[Xlc,Zbc],[Xrc,Zbc],[0,Zfc],[0,Zbc],[Xlc,0],[Xrc,0]])
+    cg.add(box(CS,WH,CS,MAT_COLORS.columns,cx,BASE+WH/2,cz));
+
+  // 3. Slab (fits inside outer walls)
+  const sg=grp('slab'); const slY=BASE+WH+0.15;
+  sg.add(box(HW*2,0.22,HD*2,MAT_COLORS.slab,0,slY,0));
+  const bY=slY-0.12;
+  for(const xi of[-3,0,3]) sg.add(box(0.2,0.35,ID,0xa0b0bb,xi,bY,0));
+  for(const zi of[-2,0,2]) sg.add(box(IW,0.35,0.2,0xa0b0bb,0,bY,zi));
+
+  // 4. Walls
+  const wg=grp('walls');
+  const addFW=(cx,cy0,w,h)=>wg.add(box(w,h,T,MAT_COLORS.walls,cx,BASE+cy0+h/2,Zfc));
+  addFW(0,0,HW*2,1.4);                             // base
+  addFW(-4.25,1.4,1.5,1.45);                       // left pier
+  addFW(-1.375,1.4,1.25,1.45);                     // pier L-win/door
+  addFW(1.375,1.4,1.25,1.45);                      // pier door/R-win
+  addFW(4.25,1.4,1.5,1.45);                        // right pier
+  addFW(-2.875,2.3,4.25,0.55);                     // door spandrel L
+  addFW(2.875,2.3,4.25,0.55);                      // door spandrel R
+  addFW(0,2.85,HW*2,2.15);                         // top
+
+  const addBW=(cx,cy0,w,h)=>wg.add(box(w,h,T,MAT_COLORS.walls,cx,BASE+cy0+h/2,Zbc));
+  addBW(0,0,HW*2,1.4); addBW(-2.875,1.4,4.25,1.45); addBW(2.875,1.4,4.25,1.45); addBW(0,2.85,HW*2,2.15);
+
+  const addLW=(cz,cy0,d,h)=>wg.add(box(T,h,d,MAT_COLORS.walls,Xlc,BASE+cy0+h/2,cz));
+  addLW(0,0,HD*2,1.4); addLW(-2.375,1.4,3.25,1.45); addLW(2.375,1.4,3.25,1.45); addLW(0,2.85,HD*2,2.15);
+
+  const addRW=(cz,cy0,d,h)=>wg.add(box(T,h,d,MAT_COLORS.walls,Xrc,BASE+cy0+h/2,cz));
+  addRW(0,0,HD*2,1.4); addRW(-2.375,1.4,3.25,1.45); addRW(2.375,1.4,3.25,1.45); addRW(0,2.85,HD*2,2.15);
+
+  // 5. Pipes (inside building)
+  const pg=grp('pipes'); const pi=T+0.12;
+  for(const[px,pz]of[[-3.5,Zf-pi],[3.5,Zf-pi],[-3.5,Zb+pi],[3.5,Zb+pi]])
+    pg.add(cyl(0.05,3.5,MAT_COLORS.pipes,px,BASE+1.75,pz));
+  for(const pz of[-2,0,2]){ const p=cyl(0.04,IW,MAT_COLORS.pipes,0,BASE+0.18,pz); p.rotation.z=Math.PI/2; pg.add(p); }
+
+  // 6. Facade bands
+  const facG=grp('facade'); const bC=0xc8a870;
+  for(let fy=BASE+0.6;fy<BASE+WH-0.1;fy+=1.1){
+    facG.add(box(HW*2+0.02,0.06,0.01,bC,0,fy,Zf+0.005));
+    facG.add(box(HW*2+0.02,0.06,0.01,bC,0,fy,Zb-0.005));
+    facG.add(box(0.01,0.06,HD*2+0.02,bC,Xl-0.005,fy,0));
+    facG.add(box(0.01,0.06,HD*2+0.02,bC,Xr+0.005,fy,0));
+  }
+
+  // 7. Windows
+  const winG=grp('windows');
+  const WW=1.35,WH2=1.38,winCY=BASE+1.4+WH2/2+0.035;
+  const addWin=(cx,cy,cz,ry)=>{
+    const gl=box(WW,WH2,0.05,MAT_COLORS.windows,cx,cy,cz); gl.rotation.y=ry; winG.add(gl);
+    const fr=box(WW+0.14,WH2+0.14,0.05,0x6a5040,cx,cy,cz); fr.rotation.y=ry; winG.add(fr);
+    const mh=box(WW,0.05,0.07,0x5a4030,cx,cy,cz); mh.rotation.y=ry; winG.add(mh);
+    const mv=box(0.05,WH2,0.07,0x5a4030,cx,cy,cz); mv.rotation.y=ry; winG.add(mv);
+  };
+  addWin(-2.75,winCY,Zf+0.02,0); addWin(2.75,winCY,Zf+0.02,0);
+  addWin(0,winCY,Zb-0.02,0);
+  addWin(Xl-0.02,winCY,-2.375,Math.PI/2); addWin(Xl-0.02,winCY,2.375,Math.PI/2);
+  addWin(Xr+0.02,winCY,-2.375,Math.PI/2); addWin(Xr+0.02,winCY,2.375,Math.PI/2);
+
+  // 8. Roof
+  const rg=grp('roof'); const rfY=BASE+WH+0.28;
+  const cone=make(new THREE.ConeGeometry(7.6,2.9,4),MAT_COLORS.roof,0,rfY+1.45,0);
+  cone.rotation.y=Math.PI/4; rg.add(cone);
+  rg.add(box(HW*2+1.3,0.1,HD*2+1.3,0x6d4c41,0,rfY+0.04,0));
+
+  // 9. Door
+  const dg=grp('door'); const DW=1.35,DH=2.25,dY=BASE+DH/2+0.02;
+  dg.add(box(DW,DH,0.06,MAT_COLORS.door,0,dY,Zf+0.04));
+  dg.add(box(DW+0.14,DH+0.1,0.04,0x3e2723,0,dY-0.04,Zf+0.03));
+  dg.add(make(new THREE.SphereGeometry(0.07,8,6),0xd4a017,0.48,dY,Zf+0.08));
+
+  // 10. Details
+  const detG=grp('details'); const rfY2=BASE+WH+0.28;
+  for(let i=0;i<3;i++) detG.add(box(1.9-i*0.15,0.13,0.42,0xa0a0a0,0,BASE-i*0.13-0.065,Zf+0.38+i*0.42));
+  detG.add(box(0.65,1.7,0.65,0x8d6e63,2.0,rfY2+1.7+0.85,0.8));
+  detG.add(box(0.85,0.14,0.85,0x5d4037,2.0,rfY2+1.7+1.77,0.8));
+  for(const[bx,bz]of[[-3.5,Zf+1.1],[3.5,Zf+1.1],[-3.5,Zb-1.1],[3.5,Zb-1.1]]){
+    detG.add(make(new THREE.SphereGeometry(0.52,8,6),0x2e7d32,bx,1.05,bz));
+    detG.add(box(0.18,0.65,0.18,0x4e342e,bx,0.67,bz));
+  }
+}
+
+function setView(v) {
+  document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-btn-'+v)?.classList.add('active');
+  cancelAnimationFrame(animId);
+  const views = { perspective:[0.6,1.05,20], front:[0,Math.PI/2-0.01,16], top:[0,0.05,20], side:[Math.PI/2,1.0,16] };
+  if (views[v]) { [camTheta,camPhi,camRadius]=views[v]; updateCamera(); }
+  animate();
+}
+function animate() { animId=requestAnimationFrame(animate); renderer.render(scene,camera); }
+
+window.addEventListener('resize', () => {
+  if (!renderer) return;
+  const w=canvas.parentElement; renderer.setSize(w.clientWidth,w.clientHeight);
+  camera.aspect=w.clientWidth/w.clientHeight; camera.updateProjectionMatrix();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// MARGIN PREVIEW in new project modal
+// ═══════════════════════════════════════════════════════════════════
+function updateMarginPreview() {
+  const budget  = parseFloat(document.getElementById('np-budget')?.value) || 0;
+  const revenue = parseFloat(document.getElementById('np-revenue')?.value) || 0;
+  const ovhd    = (parseFloat(document.getElementById('np-ovhd')?.value) || 0) / 100;
+  const cont    = (parseFloat(document.getElementById('np-cont')?.value) || 0) / 100;
+  const prev = document.getElementById('np-margin-preview');
+  if (!prev) return;
+  if (!budget || !revenue) { prev.style.display='none'; return; }
+  const totalCost = budget * (1 + ovhd + cont);
+  const margin = (revenue - totalCost) / revenue;
+  const utilidad = revenue - totalCost;
+  const mVal = document.getElementById('np-margin-val');
+  mVal.textContent = `${(margin*100).toFixed(1)}%  (Q${Math.round(utilidad).toLocaleString('es-GT')})`;
+  mVal.style.color = margin > 0 ? 'var(--green)' : 'var(--red)';
+  prev.style.display = 'block';
+}
+// Wire up live preview
+setTimeout(() => {
+  ['np-budget','np-revenue','np-ovhd','np-cont'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateMarginPreview);
+  });
+}, 500);
+
+// ═══════════════════════════════════════════════════════════════════
+// EXCEL EXPORT  — uses SheetJS (xlsx) loaded from CDN
+// Generates a real .xlsx with 4 sheets from current app state
+// ═══════════════════════════════════════════════════════════════════
+function exportExcel() {
+  // Lazy-load SheetJS
+  if (typeof XLSX === 'undefined') {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = () => _doExport();
+    document.head.appendChild(s);
+  } else {
+    _doExport();
+  }
+}
+
+function _doExport() {
+  const wb = XLSX.utils.book_new();
+  const now = new Date();
+  const today = now.toLocaleDateString('es-GT');
+
+  // ── Read financial inputs from project modal (or use defaults) ──
+  const sale    = parseFloat(document.getElementById('np-revenue')?.value) || 3200000;
+  const budget  = parseFloat(document.getElementById('np-budget')?.value)  || 2600000;
+  const ovhdPct = (parseFloat(document.getElementById('np-ovhd')?.value)   || 12) / 100;
+  const contPct = (parseFloat(document.getElementById('np-cont')?.value)   || 5)  / 100;
+  const marginObj = sale > 0 ? (sale - budget*(1+ovhdPct+contPct)) / sale : 0.22;
+
+  // ── Aggregate costs from live phases ──
+  const phCost  = ph => (ph.materials||[]).reduce((s,m)=>{const c=CATALOG.find(x=>x.id===m.matId);return s+(c?c.unitCost*m.qty:0);},0);
+  const phExec  = ph => (ph.materials||[]).reduce((s,m)=>{const c=CATALOG.find(x=>x.id===m.matId);return s+(c?c.unitCost*m.qty*(m.pct/100):0);},0);
+  const totalMatCost = phases.reduce((s,ph)=>s+phCost(ph),0);
+  const totalExec    = phases.reduce((s,ph)=>s+phExec(ph),0);
+  const costoInd     = totalMatCost * ovhdPct;
+  const costoCont    = totalMatCost * contPct;
+  const costoTotal   = totalMatCost + costoInd + costoCont;
+  const utilidad     = sale - costoTotal;
+  const marginReal   = sale > 0 ? utilidad / sale : 0;
+  const verde        = utilidad >= 0 && marginReal >= marginObj;
+  const amarillo     = utilidad >= 0 && marginReal < marginObj;
+
+  const Qf = v => Math.round(v);
+  const Pp = v => (v*100).toFixed(1)+'%';
+
+  // ════════════════════════════════════════════════
+  // SHEET 1 — RESUMEN EJECUTIVO
+  // ════════════════════════════════════════════════
+  const veredicto = verde ? '✅ EN VERDE — Proyecto RENTABLE'
+                 : amarillo ? '⚠ ATENCIÓN — Utilidad OK pero margen bajo objetivo'
+                 : '🔴 EN ROJO — PÉRDIDA PROYECTADA';
+
+  const s1 = [
+    ['BUILDTRACK — REPORTE FINANCIERO DE PROYECTO','','','','','',''],
+    [`Proyecto: Residencial El Roble  ·  PM: Carlos Ramírez  ·  Generado: ${today}`,'','','','','',''],
+    [''],
+    ['A.  SUPUESTOS DEL PROYECTO','','','','','',''],
+    ['Concepto','Valor','','Concepto','Valor','',''],
+    ['Nombre del Proyecto','Residencial El Roble','','Tipo','Residencial','',''],
+    ['Ubicación','Zona 16, Guatemala','','PM Asignado','Carlos Ramírez','',''],
+    ['Número de Unidades',24,'','Total Fases',phases.length,'',''],
+    ['Precio de Venta',Qf(sale),'','Costo Objetivo (Máx.)',Qf(budget),'',''],
+    ['% Costos Indirectos',Pp(ovhdPct),'','% Contingencia',Pp(contPct),'',''],
+    ['Margen Objetivo',Pp(marginObj),'','Costo Máx. Permitido (cálc.)',Qf(sale*(1-marginObj)),'',''],
+    [''],
+    ['B.  INDICADORES FINANCIEROS CLAVE','','','','','',''],
+    ['Indicador','Valor (Q)','','Indicador','Valor (Q)','',''],
+    ['Precio de Venta',Qf(sale),'','Costo Ejecutado a la Fecha',Qf(totalExec),'',''],
+    ['Costo Total Comprometido',Qf(costoTotal),'','Costo Objetivo Máx.',Qf(budget),'',''],
+    ['Utilidad Proyectada',Qf(utilidad),'','Margen Real Proyectado',Pp(marginReal),'',''],
+    ['Costos Indirectos',Qf(costoInd),'','Margen Objetivo',Pp(marginObj),'',''],
+    ['Contingencia',Qf(costoCont),'','Desviación de Margen',Pp(marginReal-marginObj),'',''],
+    [''],
+    ['C.  SEMÁFORO FINANCIERO','','','','','',''],
+    ['VEREDICTO', veredicto,'','','','',''],
+    ['Utilidad Proyectada (Q)', Qf(utilidad),'', verde?'▲ FAVORABLE':'▼ DESFAVORABLE','','',''],
+    ['Variación Costo vs Objetivo (Q)', Qf(costoTotal-budget),'', costoTotal<=budget?'▲ BAJO PRESUPUESTO':'▼ SOBRE PRESUPUESTO','','',''],
+    ['Desviación de Margen', Pp(marginReal-marginObj),'', marginReal>=marginObj?'▲ FAVORABLE':'▼ DESFAVORABLE','','',''],
+  ];
+  const ws1 = XLSX.utils.aoa_to_sheet(s1);
+  ws1['!cols'] = [{wch:30},{wch:20},{wch:4},{wch:26},{wch:20},{wch:4},{wch:4}];
+  XLSX.utils.book_append_sheet(wb, ws1, '1. Resumen Ejecutivo');
+
+  // ════════════════════════════════════════════════
+  // SHEET 2 — MATERIALES POR FASE
+  // ════════════════════════════════════════════════
+  const s2 = [
+    ['CUANTIFICACIÓN DE MATERIALES POR FASE','','','','','','','','',''],
+    [`Corte: ${today}  ·  Costos en Quetzales (Q)`,'','','','','','','','',''],
+    [''],
+    ['A.  RESUMEN POR FASE','','','','','','','','',''],
+    ['#','Fase','Estado','% Avance','Inicio','Fin Estimado','Costo Comprometido (Q)','Costo Ejecutado (Q)','Pendiente (Q)','% Ejec. $'],
+    ...phases.map((ph,i) => {
+      const c=phCost(ph); const e=phExec(ph);
+      return [i+1, ph.name,
+        {done:'Completado',active:'En Curso',pending:'Pendiente'}[ph.status],
+        (ph.pct/100), ph.start||'', ph.end||'', Qf(c), Qf(e), Qf(c-e), c>0?e/c:0];
+    }),
+    ['','TOTAL','','', '', '',Qf(totalMatCost),Qf(totalExec),Qf(totalMatCost-totalExec),totalMatCost>0?totalExec/totalMatCost:0],
+    [''],
+  ];
+
+  // Per-phase detail
+  phases.forEach((ph,pidx) => {
+    if (!ph.materials || ph.materials.length===0) return;
+    s2.push([`FASE ${pidx+1}: ${ph.name.toUpperCase()}  ·  ${({done:'COMPLETADO',active:'EN CURSO',pending:'PENDIENTE'})[ph.status]}  ·  ${ph.pct}%`,'','','','','','','','','']);
+    s2.push(['#','Material','Categoría','Unidad','Cantidad','Costo Unit. (Q)','Costo Total (Q)','% Ejecutado','Costo Ejec. (Q)','Stock Inventario']);
+    ph.materials.forEach((m,j) => {
+      const cat=CATALOG.find(c=>c.id===m.matId); if(!cat) return;
+      const ct=cat.unitCost*m.qty; const ex=ct*(m.pct/100);
+      const free=effectiveStock(cat.id);
+      s2.push([j+1,cat.name,cat.cat,cat.unit,m.qty,cat.unitCost,Qf(ct),m.pct/100,Qf(ex),`${cat.qty} ${cat.unit} (libre: ${free})`]);
+    });
+    s2.push(['','Subtotal Fase','','','','',Qf(phCost(ph)),'',Qf(phExec(ph)),'']);
+    s2.push(['']);
+  });
+
+  s2.push(['']);
+  s2.push(['B.  INVENTARIO GENERAL DE MATERIALES','','','','','','','','','']);
+  s2.push(['#','Material','Categoría','Unidad','Inventario Total','Comprometido','Stock Libre','Costo Unit. (Q)','Valor Inventario (Q)','Estado']);
+  CATALOG.forEach((c,i) => {
+    const comm=phases.reduce((s,ph)=>{const m=(ph.materials||[]).find(m=>m.matId===c.id);return s+(m?m.qty:0);},0);
+    const free=c.qty-comm;
+    const st=free>200?'✓ OK':free>50?'~ MEDIO':free>=0?'⚠ BAJO':'✕ DÉFICIT';
+    s2.push([i+1,c.name,c.cat,c.unit,c.qty,comm,free,c.unitCost,Qf(c.qty*c.unitCost),st]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(s2);
+  ws2['!cols'] = [{wch:4},{wch:28},{wch:16},{wch:10},{wch:14},{wch:14},{wch:13},{wch:14},{wch:16},{wch:24}];
+  XLSX.utils.book_append_sheet(wb, ws2, '2. Materiales por Fase');
+
+  // ════════════════════════════════════════════════
+  // SHEET 3 — CRONOGRAMA
+  // ════════════════════════════════════════════════
+  const s3 = [
+    ['CRONOGRAMA DE FASES  ·  Residencial El Roble','','','','','','','','',''],
+    [`Fecha de corte: ${today}`,'','','','','','','','',''],
+    [''],
+    ['#','Fase','Estado','% Avance','Inicio Planificado','Fin Estimado','Duración (días)','Costo Fase (Q)','Costo Ejec. (Q)','Variación (Q)'],
+    ...phases.map((ph,i) => {
+      const ds=ph.start?new Date(ph.start):null;
+      const de=ph.end?new Date(ph.end):null;
+      const dur=ds&&de?Math.round((de-ds)/86400000)+1:0;
+      const c=phCost(ph); const e=phExec(ph); const v=e-c*(ph.pct/100);
+      return [i+1, ph.name,
+        {done:'✓ Completado',active:'⚡ En Curso',pending:'○ Pendiente'}[ph.status],
+        ph.pct/100, ph.start||'', ph.end||'', dur, Qf(c), Qf(e), Qf(v)];
+    }),
+    ['','TOTAL','','',
+      phases[0]?.start||'',
+      phases[phases.length-1]?.end||'',
+      phases.reduce((s,ph)=>{const ds=ph.start?new Date(ph.start):null;const de=ph.end?new Date(ph.end):null;return s+(ds&&de?Math.round((de-ds)/86400000)+1:0);},0),
+      Qf(totalMatCost), Qf(totalExec), Qf(totalExec-totalMatCost)
+    ],
+    [''],
+    ['Leyenda de estados:','✓ Completado = fase terminada','','⚡ En Curso = fase activa','','○ Pendiente = no iniciada','','','',''],
+  ];
+  const ws3 = XLSX.utils.aoa_to_sheet(s3);
+  ws3['!cols'] = [{wch:4},{wch:26},{wch:16},{wch:12},{wch:18},{wch:18},{wch:14},{wch:16},{wch:16},{wch:16}];
+  XLSX.utils.book_append_sheet(wb, ws3, '3. Cronograma de Fases');
+
+  // ════════════════════════════════════════════════
+  // SHEET 4 — PROYECCIÓN DE COSTOS AL CIERRE
+  // ════════════════════════════════════════════════
+  let acum = 0;
+  const proyRows = phases.map((ph,i) => {
+    const c = phCost(ph); acum += c;
+    const pctT = totalMatCost>0?acum/totalMatCost:0;
+    const mHere = sale>0?(sale-acum)/sale:0;
+    return [i+1, ph.name, Qf(c), Qf(acum), pctT, Qf(sale), mHere,
+            mHere >= marginObj ? '✅ OK' : '🔴 RIESGO'];
+  });
+
+  const s4 = [
+    ['PROYECCIÓN DE COSTOS AL CIERRE  ·  Residencial El Roble','','','','','','',''],
+    [`Generado: ${today}  ·  Proyección basada en costos comprometidos en fases`,'','','','','','',''],
+    [''],
+    ['A.  CURVA DE GASTO ACUMULADO POR FASE','','','','','','',''],
+    ['#','Fase','Costo Fase (Q)','Costo Acumulado (Q)','% del Total','Precio Venta (Q)','Margen a este punto','Semáforo'],
+    ...proyRows,
+    ['','CIERRE',Qf(totalMatCost),Qf(totalMatCost),1.0,Qf(sale),marginReal, verde?'✅ EN VERDE':'🔴 EN ROJO'],
+    [''],
+    ['B.  DESGLOSE DE COSTOS PROYECTADOS','','','','','','',''],
+    ['Concepto','Costo Total (Q)','% del Total','Costo Ejecutado (Q)','Por Ejecutar (Q)','','',''],
+    ['Costo directo materiales',Qf(totalMatCost),totalMatCost/costoTotal,Qf(totalExec),Qf(totalMatCost-totalExec),'','',''],
+    ['Costos indirectos',Qf(costoInd),costoInd/costoTotal,Qf(costoInd*(totalExec/totalMatCost||0)),Qf(costoInd*(1-totalExec/totalMatCost||1)),'','',''],
+    ['Contingencia',Qf(costoCont),costoCont/costoTotal,Qf(costoCont*(totalExec/totalMatCost||0)),Qf(costoCont*(1-totalExec/totalMatCost||1)),'','',''],
+    ['COSTO TOTAL',Qf(costoTotal),1.0,'','','','',''],
+    [''],
+    ['C.  RESUMEN FINANCIERO FINAL PROYECTADO','','','','','','',''],
+    ['Concepto','Valor (Q)','','Referencia','','','',''],
+    ['Precio de Venta (Ingreso)', Qf(sale),'','Supuesto del proyecto','','','',''],
+    ['Costo Total Comprometido',  Qf(costoTotal),'','Calculado de fases','','','',''],
+    ['Costo Objetivo Máx.',       Qf(budget),'','Supuesto del proyecto','','','',''],
+    ['Variación vs Objetivo',     Qf(costoTotal-budget),'',costoTotal<=budget?'▲ Bajo presupuesto':'▼ Sobre presupuesto','','','',''],
+    [''],
+    ['Utilidad Proyectada',       Qf(utilidad),'',utilidad>=0?'▲ Positiva':'▼ Negativa','','','',''],
+    ['Utilidad Objetivo (Q)',      Qf(sale*marginObj),'','','','','',''],
+    ['Diferencia vs Objetivo',    Qf(utilidad-sale*marginObj),'',utilidad>=sale*marginObj?'▲ Sobre meta':'▼ Bajo meta','','','',''],
+    [''],
+    ['Margen Real Proyectado',    Pp(marginReal),'',marginReal>=marginObj?'▲ FAVORABLE':'▼ DESFAVORABLE','','','',''],
+    ['Margen Objetivo',           Pp(marginObj),'','Input del proyecto','','','',''],
+    ['Diferencia de Margen',      Pp(marginReal-marginObj),'',marginReal>=marginObj?'▲ OK':'▼ BAJO META','','','',''],
+    [''],
+    ['ANÁLISIS DE SENSIBILIDAD (+/- variación en costos)','','','','','','',''],
+    ['Escenario','Δ Costos','Costo Total (Q)','Utilidad (Q)','Margen (%)','Resultado','',''],
+    ...[-0.15,-0.10,0.00,0.10,0.20,0.30].map(v => {
+      const ct=costoTotal*(1+v); const u=sale-ct; const m=sale>0?u/sale:0;
+      const esc=v<=-0.10?'Optimista':v===0?'Base':v<=0.10?'Conservador':v<=0.20?'Pesimista':'Muy pesimista';
+      return [esc, Pp(v), Qf(ct), Qf(u), Pp(m), u>0?'✅ Rentable':'🔴 Pérdida','',''];
+    }),
+    [''],
+    [veredicto,'','','','','','',''],
+  ];
+  const ws4 = XLSX.utils.aoa_to_sheet(s4);
+  ws4['!cols'] = [{wch:32},{wch:18},{wch:14},{wch:24},{wch:16},{wch:14},{wch:4},{wch:4}];
+  XLSX.utils.book_append_sheet(wb, ws4, '4. Proyeccion de Costos');
+
+  // ── Download ──────────────────────────────────────────────────
+  const fname = `BuildTrack_Reporte_${today.replace(/\//g,'-')}.xlsx`;
+  XLSX.writeFile(wb, fname);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BOOT — load storage then render
+// ═══════════════════════════════════════════════════════════════════
+loadFromStorage().then(() => {
+  // If viewer is active on load, init it
+  if (document.getElementById('screen-viewer')?.classList.contains('active')) {
+    setTimeout(() => { initThree(); renderPanel(); }, 100);
+  }
+});
+</script>
+</body>
+</html>
