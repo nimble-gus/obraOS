@@ -265,6 +265,8 @@ export type UnidadWhereInput = {
   faseActual?: Prisma.XOR<Prisma.FaseNullableScalarRelationFilter, Prisma.FaseWhereInput> | null
   avancesFase?: Prisma.AvanceUnidadFaseListRelationFilter
   tareasCompletadas?: Prisma.TareaCompletadaUnidadListRelationFilter
+  materialesAsignados?: Prisma.MaterialFaseUnidadListRelationFilter
+  movimientosInventario?: Prisma.InventarioMovimientoListRelationFilter
 }
 
 export type UnidadOrderByWithRelationInput = {
@@ -283,6 +285,8 @@ export type UnidadOrderByWithRelationInput = {
   faseActual?: Prisma.FaseOrderByWithRelationInput
   avancesFase?: Prisma.AvanceUnidadFaseOrderByRelationAggregateInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadOrderByRelationAggregateInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadOrderByRelationAggregateInput
+  movimientosInventario?: Prisma.InventarioMovimientoOrderByRelationAggregateInput
   _relevance?: Prisma.UnidadOrderByRelevanceInput
 }
 
@@ -306,6 +310,8 @@ export type UnidadWhereUniqueInput = Prisma.AtLeast<{
   faseActual?: Prisma.XOR<Prisma.FaseNullableScalarRelationFilter, Prisma.FaseWhereInput> | null
   avancesFase?: Prisma.AvanceUnidadFaseListRelationFilter
   tareasCompletadas?: Prisma.TareaCompletadaUnidadListRelationFilter
+  materialesAsignados?: Prisma.MaterialFaseUnidadListRelationFilter
+  movimientosInventario?: Prisma.InventarioMovimientoListRelationFilter
 }, "id" | "proyectoId_numero">
 
 export type UnidadOrderByWithAggregationInput = {
@@ -355,6 +361,8 @@ export type UnidadCreateInput = {
   faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
   avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateInput = {
@@ -370,6 +378,8 @@ export type UnidadUncheckedCreateInput = {
   updatedAt?: Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUpdateInput = {
@@ -385,6 +395,8 @@ export type UnidadUpdateInput = {
   faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
   avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateInput = {
@@ -400,6 +412,8 @@ export type UnidadUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateManyInput = {
@@ -446,6 +460,16 @@ export type UnidadListRelationFilter = {
 
 export type UnidadOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type UnidadScalarRelationFilter = {
+  is?: Prisma.UnidadWhereInput
+  isNot?: Prisma.UnidadWhereInput
+}
+
+export type UnidadNullableScalarRelationFilter = {
+  is?: Prisma.UnidadWhereInput | null
+  isNot?: Prisma.UnidadWhereInput | null
 }
 
 export type UnidadOrderByRelevanceInput = {
@@ -506,11 +530,6 @@ export type UnidadMinOrderByAggregateInput = {
 export type UnidadSumOrderByAggregateInput = {
   numero?: Prisma.SortOrder
   pctAvanceGlobal?: Prisma.SortOrder
-}
-
-export type UnidadScalarRelationFilter = {
-  is?: Prisma.UnidadWhereInput
-  isNot?: Prisma.UnidadWhereInput
 }
 
 export type UnidadCreateNestedManyWithoutProyectoInput = {
@@ -597,6 +616,36 @@ export type UnidadUncheckedUpdateManyWithoutFaseActualNestedInput = {
   deleteMany?: Prisma.UnidadScalarWhereInput | Prisma.UnidadScalarWhereInput[]
 }
 
+export type UnidadCreateNestedOneWithoutMaterialesAsignadosInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedCreateWithoutMaterialesAsignadosInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutMaterialesAsignadosInput
+  connect?: Prisma.UnidadWhereUniqueInput
+}
+
+export type UnidadUpdateOneRequiredWithoutMaterialesAsignadosNestedInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedCreateWithoutMaterialesAsignadosInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutMaterialesAsignadosInput
+  upsert?: Prisma.UnidadUpsertWithoutMaterialesAsignadosInput
+  connect?: Prisma.UnidadWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UnidadUpdateToOneWithWhereWithoutMaterialesAsignadosInput, Prisma.UnidadUpdateWithoutMaterialesAsignadosInput>, Prisma.UnidadUncheckedUpdateWithoutMaterialesAsignadosInput>
+}
+
+export type UnidadCreateNestedOneWithoutMovimientosInventarioInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedCreateWithoutMovimientosInventarioInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutMovimientosInventarioInput
+  connect?: Prisma.UnidadWhereUniqueInput
+}
+
+export type UnidadUpdateOneWithoutMovimientosInventarioNestedInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedCreateWithoutMovimientosInventarioInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutMovimientosInventarioInput
+  upsert?: Prisma.UnidadUpsertWithoutMovimientosInventarioInput
+  disconnect?: Prisma.UnidadWhereInput | boolean
+  delete?: Prisma.UnidadWhereInput | boolean
+  connect?: Prisma.UnidadWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UnidadUpdateToOneWithWhereWithoutMovimientosInventarioInput, Prisma.UnidadUpdateWithoutMovimientosInventarioInput>, Prisma.UnidadUncheckedUpdateWithoutMovimientosInventarioInput>
+}
+
 export type UnidadCreateNestedOneWithoutTareasCompletadasInput = {
   create?: Prisma.XOR<Prisma.UnidadCreateWithoutTareasCompletadasInput, Prisma.UnidadUncheckedCreateWithoutTareasCompletadasInput>
   connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutTareasCompletadasInput
@@ -679,6 +728,8 @@ export type UnidadCreateWithoutProyectoInput = {
   faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
   avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutProyectoInput = {
@@ -693,6 +744,8 @@ export type UnidadUncheckedCreateWithoutProyectoInput = {
   updatedAt?: Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutProyectoInput = {
@@ -749,6 +802,8 @@ export type UnidadCreateWithoutFaseActualInput = {
   modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
   avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutFaseActualInput = {
@@ -763,6 +818,8 @@ export type UnidadUncheckedCreateWithoutFaseActualInput = {
   updatedAt?: Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutFaseActualInput = {
@@ -791,6 +848,166 @@ export type UnidadUpdateManyWithWhereWithoutFaseActualInput = {
   data: Prisma.XOR<Prisma.UnidadUpdateManyMutationInput, Prisma.UnidadUncheckedUpdateManyWithoutFaseActualInput>
 }
 
+export type UnidadCreateWithoutMaterialesAsignadosInput = {
+  id?: string
+  numero: number
+  etiqueta: string
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proyecto: Prisma.ProyectoCreateNestedOneWithoutUnidadesInput
+  modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
+  faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
+  avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadUncheckedCreateWithoutMaterialesAsignadosInput = {
+  id?: string
+  proyectoId: string
+  numero: number
+  etiqueta: string
+  modeloCasaId?: string | null
+  faseActualId?: string | null
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadCreateOrConnectWithoutMaterialesAsignadosInput = {
+  where: Prisma.UnidadWhereUniqueInput
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedCreateWithoutMaterialesAsignadosInput>
+}
+
+export type UnidadUpsertWithoutMaterialesAsignadosInput = {
+  update: Prisma.XOR<Prisma.UnidadUpdateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedUpdateWithoutMaterialesAsignadosInput>
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedCreateWithoutMaterialesAsignadosInput>
+  where?: Prisma.UnidadWhereInput
+}
+
+export type UnidadUpdateToOneWithWhereWithoutMaterialesAsignadosInput = {
+  where?: Prisma.UnidadWhereInput
+  data: Prisma.XOR<Prisma.UnidadUpdateWithoutMaterialesAsignadosInput, Prisma.UnidadUncheckedUpdateWithoutMaterialesAsignadosInput>
+}
+
+export type UnidadUpdateWithoutMaterialesAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutUnidadesNestedInput
+  modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
+  faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
+  avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
+}
+
+export type UnidadUncheckedUpdateWithoutMaterialesAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  modeloCasaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faseActualId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
+}
+
+export type UnidadCreateWithoutMovimientosInventarioInput = {
+  id?: string
+  numero: number
+  etiqueta: string
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proyecto: Prisma.ProyectoCreateNestedOneWithoutUnidadesInput
+  modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
+  faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
+  avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadUncheckedCreateWithoutMovimientosInventarioInput = {
+  id?: string
+  proyectoId: string
+  numero: number
+  etiqueta: string
+  modeloCasaId?: string | null
+  faseActualId?: string | null
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadCreateOrConnectWithoutMovimientosInventarioInput = {
+  where: Prisma.UnidadWhereUniqueInput
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedCreateWithoutMovimientosInventarioInput>
+}
+
+export type UnidadUpsertWithoutMovimientosInventarioInput = {
+  update: Prisma.XOR<Prisma.UnidadUpdateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedUpdateWithoutMovimientosInventarioInput>
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedCreateWithoutMovimientosInventarioInput>
+  where?: Prisma.UnidadWhereInput
+}
+
+export type UnidadUpdateToOneWithWhereWithoutMovimientosInventarioInput = {
+  where?: Prisma.UnidadWhereInput
+  data: Prisma.XOR<Prisma.UnidadUpdateWithoutMovimientosInventarioInput, Prisma.UnidadUncheckedUpdateWithoutMovimientosInventarioInput>
+}
+
+export type UnidadUpdateWithoutMovimientosInventarioInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutUnidadesNestedInput
+  modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
+  faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
+  avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+}
+
+export type UnidadUncheckedUpdateWithoutMovimientosInventarioInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  modeloCasaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faseActualId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+}
+
 export type UnidadCreateWithoutTareasCompletadasInput = {
   id?: string
   numero: number
@@ -803,6 +1020,8 @@ export type UnidadCreateWithoutTareasCompletadasInput = {
   modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
   faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
   avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutTareasCompletadasInput = {
@@ -817,6 +1036,8 @@ export type UnidadUncheckedCreateWithoutTareasCompletadasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutTareasCompletadasInput = {
@@ -847,6 +1068,8 @@ export type UnidadUpdateWithoutTareasCompletadasInput = {
   modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
   faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
   avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutTareasCompletadasInput = {
@@ -861,6 +1084,8 @@ export type UnidadUncheckedUpdateWithoutTareasCompletadasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutAvancesFaseInput = {
@@ -875,6 +1100,8 @@ export type UnidadCreateWithoutAvancesFaseInput = {
   modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
   faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutAvancesFaseInput = {
@@ -889,6 +1116,8 @@ export type UnidadUncheckedCreateWithoutAvancesFaseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutAvancesFaseInput = {
@@ -919,6 +1148,8 @@ export type UnidadUpdateWithoutAvancesFaseInput = {
   modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
   faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutAvancesFaseInput = {
@@ -933,6 +1164,8 @@ export type UnidadUncheckedUpdateWithoutAvancesFaseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutModeloCasaInput = {
@@ -947,6 +1180,8 @@ export type UnidadCreateWithoutModeloCasaInput = {
   faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
   avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutModeloCasaInput = {
@@ -961,6 +1196,8 @@ export type UnidadUncheckedCreateWithoutModeloCasaInput = {
   updatedAt?: Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutModeloCasaInput = {
@@ -1013,6 +1250,8 @@ export type UnidadUpdateWithoutProyectoInput = {
   faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
   avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutProyectoInput = {
@@ -1027,6 +1266,8 @@ export type UnidadUncheckedUpdateWithoutProyectoInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutProyectoInput = {
@@ -1065,6 +1306,8 @@ export type UnidadUpdateWithoutFaseActualInput = {
   modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
   avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutFaseActualInput = {
@@ -1079,6 +1322,8 @@ export type UnidadUncheckedUpdateWithoutFaseActualInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutFaseActualInput = {
@@ -1117,6 +1362,8 @@ export type UnidadUpdateWithoutModeloCasaInput = {
   faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
   avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutModeloCasaInput = {
@@ -1131,6 +1378,8 @@ export type UnidadUncheckedUpdateWithoutModeloCasaInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
   tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutModeloCasaInput = {
@@ -1153,11 +1402,15 @@ export type UnidadUncheckedUpdateManyWithoutModeloCasaInput = {
 export type UnidadCountOutputType = {
   avancesFase: number
   tareasCompletadas: number
+  materialesAsignados: number
+  movimientosInventario: number
 }
 
 export type UnidadCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   avancesFase?: boolean | UnidadCountOutputTypeCountAvancesFaseArgs
   tareasCompletadas?: boolean | UnidadCountOutputTypeCountTareasCompletadasArgs
+  materialesAsignados?: boolean | UnidadCountOutputTypeCountMaterialesAsignadosArgs
+  movimientosInventario?: boolean | UnidadCountOutputTypeCountMovimientosInventarioArgs
 }
 
 /**
@@ -1184,6 +1437,20 @@ export type UnidadCountOutputTypeCountTareasCompletadasArgs<ExtArgs extends runt
   where?: Prisma.TareaCompletadaUnidadWhereInput
 }
 
+/**
+ * UnidadCountOutputType without action
+ */
+export type UnidadCountOutputTypeCountMaterialesAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialFaseUnidadWhereInput
+}
+
+/**
+ * UnidadCountOutputType without action
+ */
+export type UnidadCountOutputTypeCountMovimientosInventarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InventarioMovimientoWhereInput
+}
+
 
 export type UnidadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1201,6 +1468,8 @@ export type UnidadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   faseActual?: boolean | Prisma.Unidad$faseActualArgs<ExtArgs>
   avancesFase?: boolean | Prisma.Unidad$avancesFaseArgs<ExtArgs>
   tareasCompletadas?: boolean | Prisma.Unidad$tareasCompletadasArgs<ExtArgs>
+  materialesAsignados?: boolean | Prisma.Unidad$materialesAsignadosArgs<ExtArgs>
+  movimientosInventario?: boolean | Prisma.Unidad$movimientosInventarioArgs<ExtArgs>
   _count?: boolean | Prisma.UnidadCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unidad"]>
 
@@ -1226,6 +1495,8 @@ export type UnidadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   faseActual?: boolean | Prisma.Unidad$faseActualArgs<ExtArgs>
   avancesFase?: boolean | Prisma.Unidad$avancesFaseArgs<ExtArgs>
   tareasCompletadas?: boolean | Prisma.Unidad$tareasCompletadasArgs<ExtArgs>
+  materialesAsignados?: boolean | Prisma.Unidad$materialesAsignadosArgs<ExtArgs>
+  movimientosInventario?: boolean | Prisma.Unidad$movimientosInventarioArgs<ExtArgs>
   _count?: boolean | Prisma.UnidadCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1237,6 +1508,8 @@ export type $UnidadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     faseActual: Prisma.$FasePayload<ExtArgs> | null
     avancesFase: Prisma.$AvanceUnidadFasePayload<ExtArgs>[]
     tareasCompletadas: Prisma.$TareaCompletadaUnidadPayload<ExtArgs>[]
+    materialesAsignados: Prisma.$MaterialFaseUnidadPayload<ExtArgs>[]
+    movimientosInventario: Prisma.$InventarioMovimientoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1594,6 +1867,8 @@ export interface Prisma__UnidadClient<T, Null = never, ExtArgs extends runtime.T
   faseActual<T extends Prisma.Unidad$faseActualArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$faseActualArgs<ExtArgs>>): Prisma.Prisma__FaseClient<runtime.Types.Result.GetResult<Prisma.$FasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   avancesFase<T extends Prisma.Unidad$avancesFaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$avancesFaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AvanceUnidadFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tareasCompletadas<T extends Prisma.Unidad$tareasCompletadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$tareasCompletadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TareaCompletadaUnidadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  materialesAsignados<T extends Prisma.Unidad$materialesAsignadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$materialesAsignadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialFaseUnidadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  movimientosInventario<T extends Prisma.Unidad$movimientosInventarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$movimientosInventarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventarioMovimientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2059,6 +2334,54 @@ export type Unidad$tareasCompletadasArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.TareaCompletadaUnidadScalarFieldEnum | Prisma.TareaCompletadaUnidadScalarFieldEnum[]
+}
+
+/**
+ * Unidad.materialesAsignados
+ */
+export type Unidad$materialesAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialFaseUnidad
+   */
+  select?: Prisma.MaterialFaseUnidadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialFaseUnidad
+   */
+  omit?: Prisma.MaterialFaseUnidadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialFaseUnidadInclude<ExtArgs> | null
+  where?: Prisma.MaterialFaseUnidadWhereInput
+  orderBy?: Prisma.MaterialFaseUnidadOrderByWithRelationInput | Prisma.MaterialFaseUnidadOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialFaseUnidadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialFaseUnidadScalarFieldEnum | Prisma.MaterialFaseUnidadScalarFieldEnum[]
+}
+
+/**
+ * Unidad.movimientosInventario
+ */
+export type Unidad$movimientosInventarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventarioMovimiento
+   */
+  select?: Prisma.InventarioMovimientoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InventarioMovimiento
+   */
+  omit?: Prisma.InventarioMovimientoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventarioMovimientoInclude<ExtArgs> | null
+  where?: Prisma.InventarioMovimientoWhereInput
+  orderBy?: Prisma.InventarioMovimientoOrderByWithRelationInput | Prisma.InventarioMovimientoOrderByWithRelationInput[]
+  cursor?: Prisma.InventarioMovimientoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InventarioMovimientoScalarFieldEnum | Prisma.InventarioMovimientoScalarFieldEnum[]
 }
 
 /**

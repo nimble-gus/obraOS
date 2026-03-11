@@ -38,7 +38,27 @@ export async function PATCH(
       );
     }
     if (inc > 0) {
-      data.stockTotal = { increment: inc };
+      const mat = await prisma.catalogoMaterial.findUnique({ where: { id } });
+      if (!mat) return NextResponse.json({ error: "Material no encontrado" }, { status: 404 });
+      const saldoAntes = mat.stockTotal;
+      const saldoDespues = saldoAntes + inc;
+      await prisma.$transaction([
+        prisma.catalogoMaterial.update({
+          where: { id },
+          data: { stockTotal: { increment: inc } },
+        }),
+        prisma.inventarioMovimiento.create({
+          data: {
+            materialId: id,
+            tipo: "ENTRADA",
+            cantidad: inc,
+            saldoAntes,
+            saldoDespues,
+          },
+        }),
+      ]);
+      const material = await prisma.catalogoMaterial.findUnique({ where: { id } });
+      return NextResponse.json(material);
     }
   }
   if (presupuestoAsignado !== undefined) {

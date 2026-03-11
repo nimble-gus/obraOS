@@ -23,7 +23,7 @@ function calcularCostoComprometido(proyecto: {
   }
   return total;
 }
-import { Visor3DClient } from "./Visor3DClient";
+import { VisorIndicadoresClient } from "./VisorIndicadoresClient";
 import { ProyectoSelector } from "./ProyectoSelector";
 
 export default async function VisorPage({
@@ -42,7 +42,12 @@ export default async function VisorPage({
           fases: {
             orderBy: { orden: "asc" },
             include: {
-              materiales: { include: { material: true } },
+              materiales: {
+                include: {
+                  material: true,
+                  distribucionesUnidad: { select: { unidadId: true, porcentaje: true } },
+                },
+              },
               servicios: { include: { servicio: true } },
               planillasAsignadas: { include: { planilla: { select: { nombre: true } } } },
               tareas: { orderBy: { orden: "asc" }, include: { completadas: true } },
@@ -51,7 +56,7 @@ export default async function VisorPage({
           unidades: {
             where: { activa: true },
             orderBy: { numero: "asc" },
-            include: { modeloCasa: true },
+            include: { modeloCasa: true, avancesFase: true },
           },
           partes3D: true,
           pmAsignado: { select: { nombre: true } },
@@ -68,7 +73,7 @@ export default async function VisorPage({
     <div>
       <div className="mb-4 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Visor 3D</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">Visor</h1>
           <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
             {proyecto
               ? `${proyecto.nombre} — PM: ${proyecto.pmAsignado?.nombre}`
@@ -89,8 +94,9 @@ export default async function VisorPage({
           minHeight: 400,
         }}
       >
-        <Visor3DClient
+        <VisorIndicadoresClient
           proyectoId={proyecto?.id}
+          proyectoNombre={proyecto?.nombre}
           fases={proyecto?.fases ?? []}
           unidades={proyecto?.unidades ?? []}
           numUnidadesMax={proyecto?.numUnidades ?? 0}
@@ -106,6 +112,8 @@ export default async function VisorPage({
           }
           costoComprometido={proyecto ? calcularCostoComprometido(proyecto) : 0}
           puedeBorrarUnidades={puedeBorrarUnidades(session?.user?.role ?? "")}
+          proyectos={proyectos}
+          fechaEntregaEstimada={proyecto?.fechaEntregaEstimada ?? null}
         />
       </div>
     </div>

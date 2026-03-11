@@ -49,7 +49,7 @@ const icons: Record<string, React.ReactNode> = {
 
 const navByModulo: Record<string, { href: string; label: string; iconKey: string }> = {
   proyectos: { href: "/platform/proyectos", label: "Proyectos", iconKey: "proyectos" },
-  visor: { href: "/platform/visor", label: "Visor 3D", iconKey: "visor" },
+  visor: { href: "/platform/visor", label: "Visor", iconKey: "visor" },
   materiales: { href: "/platform/materiales", label: "Materiales", iconKey: "materiales" },
   planilla: { href: "/platform/planilla", label: "Planilla", iconKey: "planilla" },
   servicios: { href: "/platform/servicios", label: "Costos varios", iconKey: "servicios" },

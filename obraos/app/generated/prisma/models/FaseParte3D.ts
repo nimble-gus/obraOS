@@ -396,14 +396,6 @@ export type FaseParte3DUncheckedUpdateManyWithoutFaseNestedInput = {
   deleteMany?: Prisma.FaseParte3DScalarWhereInput | Prisma.FaseParte3DScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type FaseParte3DCreateNestedManyWithoutParteInput = {
   create?: Prisma.XOR<Prisma.FaseParte3DCreateWithoutParteInput, Prisma.FaseParte3DUncheckedCreateWithoutParteInput> | Prisma.FaseParte3DCreateWithoutParteInput[] | Prisma.FaseParte3DUncheckedCreateWithoutParteInput[]
   connectOrCreate?: Prisma.FaseParte3DCreateOrConnectWithoutParteInput | Prisma.FaseParte3DCreateOrConnectWithoutParteInput[]

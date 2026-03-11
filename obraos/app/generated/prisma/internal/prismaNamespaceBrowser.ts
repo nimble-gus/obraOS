@@ -68,7 +68,9 @@ export const ModelName = {
   ServicioFase: 'ServicioFase',
   Fase: 'Fase',
   MaterialFase: 'MaterialFase',
+  MaterialFaseUnidad: 'MaterialFaseUnidad',
   CatalogoMaterial: 'CatalogoMaterial',
+  InventarioMovimiento: 'InventarioMovimiento',
   Unidad: 'Unidad',
   Tarea: 'Tarea',
   TareaCompletadaUnidad: 'TareaCompletadaUnidad',
@@ -320,6 +322,18 @@ export const MaterialFaseScalarFieldEnum = {
 export type MaterialFaseScalarFieldEnum = (typeof MaterialFaseScalarFieldEnum)[keyof typeof MaterialFaseScalarFieldEnum]
 
 
+export const MaterialFaseUnidadScalarFieldEnum = {
+  id: 'id',
+  materialFaseId: 'materialFaseId',
+  unidadId: 'unidadId',
+  porcentaje: 'porcentaje',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MaterialFaseUnidadScalarFieldEnum = (typeof MaterialFaseUnidadScalarFieldEnum)[keyof typeof MaterialFaseUnidadScalarFieldEnum]
+
+
 export const CatalogoMaterialScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -335,6 +349,23 @@ export const CatalogoMaterialScalarFieldEnum = {
 } as const
 
 export type CatalogoMaterialScalarFieldEnum = (typeof CatalogoMaterialScalarFieldEnum)[keyof typeof CatalogoMaterialScalarFieldEnum]
+
+
+export const InventarioMovimientoScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  tipo: 'tipo',
+  cantidad: 'cantidad',
+  saldoAntes: 'saldoAntes',
+  saldoDespues: 'saldoDespues',
+  unidadId: 'unidadId',
+  faseId: 'faseId',
+  materialFaseId: 'materialFaseId',
+  proyectoId: 'proyectoId',
+  createdAt: 'createdAt'
+} as const
+
+export type InventarioMovimientoScalarFieldEnum = (typeof InventarioMovimientoScalarFieldEnum)[keyof typeof InventarioMovimientoScalarFieldEnum]
 
 
 export const UnidadScalarFieldEnum = {
@@ -647,6 +678,15 @@ export const MaterialFaseOrderByRelevanceFieldEnum = {
 export type MaterialFaseOrderByRelevanceFieldEnum = (typeof MaterialFaseOrderByRelevanceFieldEnum)[keyof typeof MaterialFaseOrderByRelevanceFieldEnum]
 
 
+export const MaterialFaseUnidadOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialFaseId: 'materialFaseId',
+  unidadId: 'unidadId'
+} as const
+
+export type MaterialFaseUnidadOrderByRelevanceFieldEnum = (typeof MaterialFaseUnidadOrderByRelevanceFieldEnum)[keyof typeof MaterialFaseUnidadOrderByRelevanceFieldEnum]
+
+
 export const CatalogoMaterialOrderByRelevanceFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -655,6 +695,18 @@ export const CatalogoMaterialOrderByRelevanceFieldEnum = {
 } as const
 
 export type CatalogoMaterialOrderByRelevanceFieldEnum = (typeof CatalogoMaterialOrderByRelevanceFieldEnum)[keyof typeof CatalogoMaterialOrderByRelevanceFieldEnum]
+
+
+export const InventarioMovimientoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  unidadId: 'unidadId',
+  faseId: 'faseId',
+  materialFaseId: 'materialFaseId',
+  proyectoId: 'proyectoId'
+} as const
+
+export type InventarioMovimientoOrderByRelevanceFieldEnum = (typeof InventarioMovimientoOrderByRelevanceFieldEnum)[keyof typeof InventarioMovimientoOrderByRelevanceFieldEnum]
 
 
 export const UnidadOrderByRelevanceFieldEnum = {

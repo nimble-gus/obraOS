@@ -103,3 +103,11 @@ export const EstadoPlanillaEnum = {
 } as const
 
 export type EstadoPlanillaEnum = (typeof EstadoPlanillaEnum)[keyof typeof EstadoPlanillaEnum]
+
+
+export const TipoMovimientoEnum = {
+  ENTRADA: 'ENTRADA',
+  SALIDA: 'SALIDA'
+} as const
+
+export type TipoMovimientoEnum = (typeof TipoMovimientoEnum)[keyof typeof TipoMovimientoEnum]

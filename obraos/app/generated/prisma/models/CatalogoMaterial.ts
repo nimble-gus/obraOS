@@ -273,6 +273,7 @@ export type CatalogoMaterialWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   materialesFase?: Prisma.MaterialFaseListRelationFilter
+  movimientos?: Prisma.InventarioMovimientoListRelationFilter
 }
 
 export type CatalogoMaterialOrderByWithRelationInput = {
@@ -288,6 +289,7 @@ export type CatalogoMaterialOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   materialesFase?: Prisma.MaterialFaseOrderByRelationAggregateInput
+  movimientos?: Prisma.InventarioMovimientoOrderByRelationAggregateInput
   _relevance?: Prisma.CatalogoMaterialOrderByRelevanceInput
 }
 
@@ -307,6 +309,7 @@ export type CatalogoMaterialWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   materialesFase?: Prisma.MaterialFaseListRelationFilter
+  movimientos?: Prisma.InventarioMovimientoListRelationFilter
 }, "id">
 
 export type CatalogoMaterialOrderByWithAggregationInput = {
@@ -358,6 +361,7 @@ export type CatalogoMaterialCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
 }
 
 export type CatalogoMaterialUncheckedCreateInput = {
@@ -373,6 +377,7 @@ export type CatalogoMaterialUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
 }
 
 export type CatalogoMaterialUpdateInput = {
@@ -388,6 +393,7 @@ export type CatalogoMaterialUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
 }
 
 export type CatalogoMaterialUncheckedUpdateInput = {
@@ -403,6 +409,7 @@ export type CatalogoMaterialUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
 }
 
 export type CatalogoMaterialCreateManyInput = {
@@ -530,6 +537,20 @@ export type EnumCategoriaEnumFieldUpdateOperationsInput = {
   set?: $Enums.CategoriaEnum
 }
 
+export type CatalogoMaterialCreateNestedOneWithoutMovimientosInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedCreateWithoutMovimientosInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutMovimientosInput
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+}
+
+export type CatalogoMaterialUpdateOneRequiredWithoutMovimientosNestedInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedCreateWithoutMovimientosInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutMovimientosInput
+  upsert?: Prisma.CatalogoMaterialUpsertWithoutMovimientosInput
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CatalogoMaterialUpdateToOneWithWhereWithoutMovimientosInput, Prisma.CatalogoMaterialUpdateWithoutMovimientosInput>, Prisma.CatalogoMaterialUncheckedUpdateWithoutMovimientosInput>
+}
+
 export type CatalogoMaterialCreateWithoutMaterialesFaseInput = {
   id?: string
   nombre: string
@@ -542,6 +563,7 @@ export type CatalogoMaterialCreateWithoutMaterialesFaseInput = {
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
 }
 
 export type CatalogoMaterialUncheckedCreateWithoutMaterialesFaseInput = {
@@ -556,6 +578,7 @@ export type CatalogoMaterialUncheckedCreateWithoutMaterialesFaseInput = {
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
 }
 
 export type CatalogoMaterialCreateOrConnectWithoutMaterialesFaseInput = {
@@ -586,6 +609,7 @@ export type CatalogoMaterialUpdateWithoutMaterialesFaseInput = {
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
 }
 
 export type CatalogoMaterialUncheckedUpdateWithoutMaterialesFaseInput = {
@@ -600,6 +624,83 @@ export type CatalogoMaterialUncheckedUpdateWithoutMaterialesFaseInput = {
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
+}
+
+export type CatalogoMaterialCreateWithoutMovimientosInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
+}
+
+export type CatalogoMaterialUncheckedCreateWithoutMovimientosInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
+}
+
+export type CatalogoMaterialCreateOrConnectWithoutMovimientosInput = {
+  where: Prisma.CatalogoMaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedCreateWithoutMovimientosInput>
+}
+
+export type CatalogoMaterialUpsertWithoutMovimientosInput = {
+  update: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutMovimientosInput>
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedCreateWithoutMovimientosInput>
+  where?: Prisma.CatalogoMaterialWhereInput
+}
+
+export type CatalogoMaterialUpdateToOneWithWhereWithoutMovimientosInput = {
+  where?: Prisma.CatalogoMaterialWhereInput
+  data: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutMovimientosInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutMovimientosInput>
+}
+
+export type CatalogoMaterialUpdateWithoutMovimientosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
+}
+
+export type CatalogoMaterialUncheckedUpdateWithoutMovimientosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
 }
 
 
@@ -609,10 +710,12 @@ export type CatalogoMaterialUncheckedUpdateWithoutMaterialesFaseInput = {
 
 export type CatalogoMaterialCountOutputType = {
   materialesFase: number
+  movimientos: number
 }
 
 export type CatalogoMaterialCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   materialesFase?: boolean | CatalogoMaterialCountOutputTypeCountMaterialesFaseArgs
+  movimientos?: boolean | CatalogoMaterialCountOutputTypeCountMovimientosArgs
 }
 
 /**
@@ -632,6 +735,13 @@ export type CatalogoMaterialCountOutputTypeCountMaterialesFaseArgs<ExtArgs exten
   where?: Prisma.MaterialFaseWhereInput
 }
 
+/**
+ * CatalogoMaterialCountOutputType without action
+ */
+export type CatalogoMaterialCountOutputTypeCountMovimientosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InventarioMovimientoWhereInput
+}
+
 
 export type CatalogoMaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -646,6 +756,7 @@ export type CatalogoMaterialSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdAt?: boolean
   updatedAt?: boolean
   materialesFase?: boolean | Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>
+  movimientos?: boolean | Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoMaterialCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["catalogoMaterial"]>
 
@@ -668,6 +779,7 @@ export type CatalogoMaterialSelectScalar = {
 export type CatalogoMaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "categoria" | "unidad" | "stockTotal" | "costoUnitario" | "presupuestoAsignado" | "colorHex" | "activo" | "createdAt" | "updatedAt", ExtArgs["result"]["catalogoMaterial"]>
 export type CatalogoMaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   materialesFase?: boolean | Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>
+  movimientos?: boolean | Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoMaterialCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -675,6 +787,7 @@ export type $CatalogoMaterialPayload<ExtArgs extends runtime.Types.Extensions.In
   name: "CatalogoMaterial"
   objects: {
     materialesFase: Prisma.$MaterialFasePayload<ExtArgs>[]
+    movimientos: Prisma.$InventarioMovimientoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1029,6 +1142,7 @@ readonly fields: CatalogoMaterialFieldRefs;
 export interface Prisma__CatalogoMaterialClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   materialesFase<T extends Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  movimientos<T extends Prisma.CatalogoMaterial$movimientosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventarioMovimientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1433,6 +1547,30 @@ export type CatalogoMaterial$materialesFaseArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.MaterialFaseScalarFieldEnum | Prisma.MaterialFaseScalarFieldEnum[]
+}
+
+/**
+ * CatalogoMaterial.movimientos
+ */
+export type CatalogoMaterial$movimientosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventarioMovimiento
+   */
+  select?: Prisma.InventarioMovimientoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InventarioMovimiento
+   */
+  omit?: Prisma.InventarioMovimientoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventarioMovimientoInclude<ExtArgs> | null
+  where?: Prisma.InventarioMovimientoWhereInput
+  orderBy?: Prisma.InventarioMovimientoOrderByWithRelationInput | Prisma.InventarioMovimientoOrderByWithRelationInput[]
+  cursor?: Prisma.InventarioMovimientoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InventarioMovimientoScalarFieldEnum | Prisma.InventarioMovimientoScalarFieldEnum[]
 }
 
 /**

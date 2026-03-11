@@ -399,21 +399,11 @@ export type EnumCategoriaEnumWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumCategoriaEnumFilter<$PrismaModel>
 }
 
-export type EnumTipoTechoEnumFilter<$PrismaModel = never> = {
-  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
-  in?: $Enums.TipoTechoEnum[]
-  notIn?: $Enums.TipoTechoEnum[]
-  not?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel> | $Enums.TipoTechoEnum
-}
-
-export type EnumTipoTechoEnumWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
-  in?: $Enums.TipoTechoEnum[]
-  notIn?: $Enums.TipoTechoEnum[]
-  not?: Prisma.NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoTechoEnum
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
+export type EnumTipoMovimientoEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoMovimientoEnum | Prisma.EnumTipoMovimientoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoMovimientoEnum[]
+  notIn?: $Enums.TipoMovimientoEnum[]
+  not?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel> | $Enums.TipoMovimientoEnum
 }
 
 export type IntNullableFilter<$PrismaModel = never> = {
@@ -425,6 +415,16 @@ export type IntNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type EnumTipoMovimientoEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoMovimientoEnum | Prisma.EnumTipoMovimientoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoMovimientoEnum[]
+  notIn?: $Enums.TipoMovimientoEnum[]
+  not?: Prisma.NestedEnumTipoMovimientoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoMovimientoEnum
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel>
 }
 
 export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -441,6 +441,23 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumTipoTechoEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoTechoEnum[]
+  notIn?: $Enums.TipoTechoEnum[]
+  not?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel> | $Enums.TipoTechoEnum
+}
+
+export type EnumTipoTechoEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoTechoEnum[]
+  notIn?: $Enums.TipoTechoEnum[]
+  not?: Prisma.NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoTechoEnum
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
 }
 
 export type JsonFilter<$PrismaModel = never> =
@@ -858,21 +875,21 @@ export type NestedEnumCategoriaEnumWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumCategoriaEnumFilter<$PrismaModel>
 }
 
-export type NestedEnumTipoTechoEnumFilter<$PrismaModel = never> = {
-  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
-  in?: $Enums.TipoTechoEnum[]
-  notIn?: $Enums.TipoTechoEnum[]
-  not?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel> | $Enums.TipoTechoEnum
+export type NestedEnumTipoMovimientoEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoMovimientoEnum | Prisma.EnumTipoMovimientoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoMovimientoEnum[]
+  notIn?: $Enums.TipoMovimientoEnum[]
+  not?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel> | $Enums.TipoMovimientoEnum
 }
 
-export type NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
-  in?: $Enums.TipoTechoEnum[]
-  notIn?: $Enums.TipoTechoEnum[]
-  not?: Prisma.NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoTechoEnum
+export type NestedEnumTipoMovimientoEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoMovimientoEnum | Prisma.EnumTipoMovimientoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoMovimientoEnum[]
+  notIn?: $Enums.TipoMovimientoEnum[]
+  not?: Prisma.NestedEnumTipoMovimientoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoMovimientoEnum
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoMovimientoEnumFilter<$PrismaModel>
 }
 
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -889,6 +906,23 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumTipoTechoEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoTechoEnum[]
+  notIn?: $Enums.TipoTechoEnum[]
+  not?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel> | $Enums.TipoTechoEnum
+}
+
+export type NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoTechoEnum | Prisma.EnumTipoTechoEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoTechoEnum[]
+  notIn?: $Enums.TipoTechoEnum[]
+  not?: Prisma.NestedEnumTipoTechoEnumWithAggregatesFilter<$PrismaModel> | $Enums.TipoTechoEnum
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoTechoEnumFilter<$PrismaModel>
 }
 
 export type NestedJsonFilter<$PrismaModel = never> =

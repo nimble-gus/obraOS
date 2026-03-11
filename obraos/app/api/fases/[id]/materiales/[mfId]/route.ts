@@ -41,10 +41,30 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    await prisma.catalogoMaterial.update({
-      where: { id: actual.materialId },
-      data: { stockTotal: { decrement: delta } },
+    const saldoAntes = mat.stockTotal;
+    const saldoDespues = saldoAntes - delta;
+    const fase = await prisma.fase.findUnique({
+      where: { id: actual.faseId },
+      select: { proyectoId: true },
     });
+    await prisma.$transaction([
+      prisma.catalogoMaterial.update({
+        where: { id: actual.materialId },
+        data: { stockTotal: { decrement: delta } },
+      }),
+      prisma.inventarioMovimiento.create({
+        data: {
+          materialId: actual.materialId,
+          tipo: "SALIDA",
+          cantidad: delta,
+          saldoAntes,
+          saldoDespues,
+          faseId: actual.faseId,
+          materialFaseId: mfId,
+          proyectoId: fase?.proyectoId ?? undefined,
+        },
+      }),
+    ]);
   }
 
   const mf = await prisma.materialFase.update({

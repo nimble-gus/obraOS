@@ -9,6 +9,7 @@ type MaterialFase = {
   cantidadRequerida: number;
   pctEjecutado: number;
   material: { id: string; nombre: string; unidad: string; costoUnitario: number; stockTotal: number };
+  distribucionesUnidad?: { unidadId: string; porcentaje: number }[];
 };
 
 type TareaPanel = { id: string; nombre: string; orden: number; completadas: { unidadId: string }[] };
@@ -106,6 +107,7 @@ export function PanelDerechoVisor({
   const [addingUnidad, setAddingUnidad] = useState(false);
   const [nombreNuevaFase, setNombreNuevaFase] = useState("");
   const [loading, setLoading] = useState<string | null>(null);
+  const [distribucionMf, setDistribucionMf] = useState<MaterialFase | null>(null);
 
   useEffect(() => {
     setFases(fasesIniciales);
@@ -360,6 +362,26 @@ export function PanelDerechoVisor({
     try {
       const res = await fetch(`/api/fases/${fase.id}/materiales/${mfId}`, { method: "DELETE" });
       if (res.ok) refresh();
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const guardarDistribucion = async (mfId: string, distribucion: { unidadId: string; porcentaje: number }[]) => {
+    setLoading("dist-" + mfId);
+    try {
+      const res = await fetch(`/api/materiales-fase/${mfId}/distribucion`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ distribucion }),
+      });
+      if (res.ok) {
+        setDistribucionMf(null);
+        refresh();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert(err.error ?? "Error al guardar distribución");
+      }
     } finally {
       setLoading(null);
     }
@@ -844,6 +866,14 @@ export function PanelDerechoVisor({
               ) : (
                 (fase.materiales ?? []).map((mf) => {
                   const costo = mf.cantidadRequerida * mf.material.costoUnitario;
+                  const distribucionActual = mf.distribucionesUnidad;
+                  const pctResumen = unidades.length > 1 && distribucionActual?.length
+                    ? distribucionActual.map((d) => {
+                        const u = unidades.find((x) => x.id === d.unidadId);
+                        return u ? `${u.etiqueta}: ${d.porcentaje}%` : "";
+                      }).filter(Boolean).join(", ")
+                    : unidades.length > 1 && unidades[0]
+                      ? `${unidades[0].etiqueta}: 100%` : null;
                   return (
                     <div
                       key={mf.id}
@@ -852,19 +882,38 @@ export function PanelDerechoVisor({
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-medium">{mf.material.nombre}</span>
-                        <button
-                          onClick={() => quitarMaterial(mf.id)}
-                          disabled={!!loading}
-                          className="text-[10px] hover:opacity-80"
-                          style={{ color: "var(--red)" }}
-                        >
-                          ×
-                        </button>
+                        <div className="flex items-center gap-0.5">
+                          {unidades.length > 1 && (
+                            <button
+                              onClick={() => setDistribucionMf(mf)}
+                              disabled={!!loading}
+                              className="rounded px-1.5 py-0.5 text-[10px] font-medium hover:opacity-80"
+                              style={{
+                                background: distribucionActual?.length ? "var(--accent-muted)" : "var(--bg3)",
+                                color: distribucionActual?.length ? "var(--accent)" : "var(--text3)",
+                              }}
+                              title={pctResumen ?? "Asignar % por unidad"}
+                            >
+                              Distribuir
+                            </button>
+                          )}
+                          <button
+                            onClick={() => quitarMaterial(mf.id)}
+                            disabled={!!loading}
+                            className="text-[10px] hover:opacity-80"
+                            style={{ color: "var(--red)" }}
+                          >
+                            ×
+                          </button>
+                        </div>
                       </div>
                       <div className="flex justify-between text-[10px]" style={{ color: "var(--text3)" }}>
                         <span>{mf.cantidadRequerida} {mf.material.unidad}</span>
                         <span className="font-mono">Q{Math.round(costo).toLocaleString()}</span>
                       </div>
+                      {pctResumen && (
+                        <div className="text-[9px]" style={{ color: "var(--text3)" }}>{pctResumen}</div>
+                      )}
                     </div>
                   );
                 })
@@ -919,6 +968,11 @@ export function PanelDerechoVisor({
                         <span>{sf.cantidadRequerida} {sf.servicio.unidad}</span>
                         <span className="font-mono">Q{Math.round(costo).toLocaleString()}</span>
                       </div>
+                      {unidades.length > 1 && unidades[0] && (
+                        <div className="text-[9px]" style={{ color: "var(--text3)" }}>
+                          {unidades[0].etiqueta}: 100%
+                        </div>
+                      )}
                     </div>
                   );
                 })
@@ -927,7 +981,7 @@ export function PanelDerechoVisor({
           )}
         </div>
 
-        {/* Planilla asignada */}
+        {/* Planilla asignada - todas las del proyecto (no solo fase activa) */}
         <div>
           <div className="mb-2 flex items-center justify-between">
             <span className="font-mono text-[10px] uppercase" style={{ color: "var(--text3)" }}>
@@ -941,14 +995,17 @@ export function PanelDerechoVisor({
               Gestionar
             </a>
           </div>
-          {fase && (
-            <div className="space-y-2">
-              {(fase.planillasAsignadas ?? []).length === 0 ? (
-                <p className="py-4 text-center text-xs" style={{ color: "var(--text3)" }}>
-                  Sin planillas asignadas. Crea y asigna desde el módulo Planilla.
-                </p>
-              ) : (
-                (fase.planillasAsignadas ?? []).map((pa) => (
+          {(() => {
+            const todasPlanillas = (fases ?? []).flatMap((f) =>
+              (f.planillasAsignadas ?? []).map((pa) => ({ ...pa, faseNombre: f.nombre }))
+            );
+            return todasPlanillas.length === 0 ? (
+              <p className="py-4 text-center text-xs" style={{ color: "var(--text3)" }}>
+                Sin planillas asignadas. Crea y asigna desde el módulo Planilla.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {todasPlanillas.map((pa) => (
                   <div
                     key={pa.id}
                     className="flex flex-col gap-1 rounded-lg border p-2"
@@ -965,14 +1022,20 @@ export function PanelDerechoVisor({
                         ×
                       </button>
                     </div>
-                    <div className="text-[10px] font-mono" style={{ color: "var(--text3)" }}>
-                      Q{Math.round(pa.monto).toLocaleString()}
+                    <div className="flex justify-between items-center text-[10px]" style={{ color: "var(--text3)" }}>
+                      <span>{pa.faseNombre}</span>
+                      <span className="font-mono">Q{Math.round(pa.monto).toLocaleString()}</span>
                     </div>
+                    {unidades.length > 1 && unidades[0] && (
+                      <div className="text-[9px]" style={{ color: "var(--text3)" }}>
+                        {unidades[0].etiqueta}: 100%
+                      </div>
+                    )}
                   </div>
-                ))
-              )}
-            </div>
-          )}
+                ))}
+              </div>
+            );
+          })()}
         </div>
       </div>
 
@@ -1023,6 +1086,124 @@ export function PanelDerechoVisor({
           </div>
         </div>
       )}
+
+      {/* Modal Distribución por unidad */}
+      {distribucionMf && unidades.length > 1 && (
+        <ModalDistribucionMaterial
+          material={distribucionMf}
+          unidades={unidades}
+          onGuardar={(dist) => guardarDistribucion(distribucionMf.id, dist)}
+          onCancelar={() => setDistribucionMf(null)}
+          loading={!!loading}
+        />
+      )}
+    </div>
+  );
+}
+
+function ModalDistribucionMaterial({
+  material,
+  unidades,
+  onGuardar,
+  onCancelar,
+  loading,
+}: {
+  material: MaterialFase;
+  unidades: UnidadPanel[];
+  onGuardar: (dist: { unidadId: string; porcentaje: number }[]) => void;
+  onCancelar: () => void;
+  loading: boolean;
+}) {
+  const igual = Math.floor(100 / unidades.length);
+  const resto = 100 - igual * unidades.length;
+  const inicial = unidades.map((u, i) => ({
+    unidadId: u.id,
+    porcentaje: i === 0 ? igual + resto : igual,
+  }));
+  const existente = material.distribucionesUnidad?.length
+    ? unidades.map((u) => {
+        const d = material.distribucionesUnidad!.find((x) => x.unidadId === u.id);
+        return { unidadId: u.id, porcentaje: d?.porcentaje ?? 0 };
+      })
+    : inicial;
+  const [vals, setVals] = useState<Record<string, number>>(() =>
+    Object.fromEntries(existente.map((d) => [d.unidadId, d.porcentaje]))
+  );
+  const total = Object.values(vals).reduce((s, n) => s + (Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0), 0);
+  const distribucion = unidades.map((u) => ({
+    unidadId: u.id,
+    porcentaje: Math.max(0, Math.min(100, Math.round(vals[u.id] ?? 0))),
+  }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (Math.abs(total - 100) <= 0.5) {
+      onGuardar(distribucion);
+    } else {
+      alert(`Los porcentajes deben sumar 100 (actual: ${total})`);
+    }
+  };
+
+  return (
+    <div
+      className="absolute inset-0 z-10 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.6)" }}
+      onClick={onCancelar}
+    >
+      <div
+        className="w-full max-w-sm rounded-xl border p-4"
+        style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 className="mb-1 font-bold">Distribuir por unidad</h3>
+        <p className="mb-3 text-xs" style={{ color: "var(--text3)" }}>
+          {material.material.nombre} — {material.cantidadRequerida} {material.material.unidad}. Los porcentajes deben sumar 100.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          {unidades.map((u) => (
+            <div key={u.id} className="flex items-center gap-2">
+              <label className="min-w-[60px] text-xs" style={{ color: "var(--text2)" }}>
+                {u.etiqueta}
+              </label>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={vals[u.id] ?? 0}
+                onChange={(e) => {
+                  const v = parseInt(e.target.value) || 0;
+                  setVals((prev) => ({ ...prev, [u.id]: v }));
+                }}
+                className="w-20 rounded border px-2 py-1 text-sm"
+                style={{ background: "var(--bg3)", borderColor: "var(--border2)", color: "var(--text)" }}
+              />
+              <span className="text-xs" style={{ color: "var(--text3)" }}>%</span>
+            </div>
+          ))}
+          <div className="flex items-center justify-between text-xs" style={{ color: total === 100 ? "var(--green)" : "var(--red)" }}>
+            <span>Total: {total}%</span>
+            {total !== 100 && <span>Debe sumar 100</span>}
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={loading || Math.abs(total - 100) > 0.5}
+              className="rounded px-3 py-1.5 text-sm font-semibold text-black"
+              style={{ background: "var(--accent)" }}
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              onClick={onCancelar}
+              className="rounded border px-3 py-1.5 text-sm"
+              style={{ borderColor: "var(--border2)", color: "var(--text2)" }}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { puedeAgregarMateriales, puedeEliminarMateriales } from "@/lib/permissions";
 import { AgregarStockButton } from "./AgregarStockButton";
 import { EliminarMaterialButton } from "./EliminarMaterialButton";
+import { TrazabilidadButton } from "./TrazabilidadButton";
+import { ProyeccionCard } from "./ProyeccionCard";
 
 const CAT_COLORS: Record<string, string> = {
   MAMPOSTERIA: "#e67e22",
@@ -78,9 +80,7 @@ export default async function MaterialesPage() {
                   <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>Costo Unit.</th>
                   <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>Total</th>
                   <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>Stock</th>
-                  {(puedeAgregar || puedeEliminar) && (
-                    <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>Acciones</th>
-                  )}
+                  <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,9 +115,13 @@ export default async function MaterialesPage() {
                       <td className="px-4 py-3 text-[10px] font-medium" style={{ color: st.color }}>
                         {st.text}
                       </td>
-                      {(puedeAgregar || puedeEliminar) && (
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
+                      <td className="px-4 py-3">
+                          <div className="flex flex-wrap items-center gap-3">
+                            <TrazabilidadButton
+                              materialId={m.id}
+                              nombre={m.nombre}
+                              unidad={m.unidad}
+                            />
                             {puedeAgregar && (
                               <AgregarStockButton
                                 materialId={m.id}
@@ -131,7 +135,6 @@ export default async function MaterialesPage() {
                             )}
                           </div>
                         </td>
-                      )}
                     </tr>
                   );
                 })}
@@ -159,6 +162,30 @@ export default async function MaterialesPage() {
             <p className="text-sm" style={{ color: "var(--text3)" }}>
               Valor total del inventario actual. Los costos por fase se calculan al asignar materiales a proyectos.
             </p>
+          </div>
+
+          <div
+            className="rounded-xl border p-5"
+            style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+          >
+            <h3 className="mb-4 font-bold">Proyección de agotamiento</h3>
+            <p className="mb-4 text-sm" style={{ color: "var(--text3)" }}>
+              Basado en consumo de los últimos 30 días
+            </p>
+            <div className="space-y-2">
+              {materiales
+                .filter((m) => m.stockTotal > 0)
+                .slice(0, 8)
+                .map((m) => (
+                  <ProyeccionCard
+                    key={m.id}
+                    materialId={m.id}
+                    nombre={m.nombre}
+                    unidad={m.unidad}
+                    stockTotal={m.stockTotal}
+                  />
+                ))}
+            </div>
           </div>
 
           <div

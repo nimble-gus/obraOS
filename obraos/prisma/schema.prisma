@@ -331,9 +331,26 @@ model MaterialFase {
   material           CatalogoMaterial @relation(fields: [materialId], references: [id])
   cantidadRequerida  Int      @map("cantidad_requerida")
   pctEjecutado       Int      @default(0) @map("pct_ejecutado")
+  distribucionesUnidad MaterialFaseUnidad[]
   @@unique([faseId, materialId])
   @@index([faseId])
   @@index([materialId])
+}
+
+// Asignación de material por unidad: % de cantidadRequerida que va a cada unidad
+model MaterialFaseUnidad {
+  id              String       @id @default(cuid())
+  materialFaseId  String       @map("material_fase_id")
+  materialFase    MaterialFase @relation(fields: [materialFaseId], references: [id], onDelete: Cascade)
+  unidadId        String       @map("unidad_id")
+  unidad          Unidad       @relation(fields: [unidadId], references: [id], onDelete: Cascade)
+  porcentaje      Float        @default(0) // 0-100, debe sumar 100 por materialFase
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  @@unique([materialFaseId, unidadId])
+  @@index([materialFaseId])
+  @@index([unidadId])
 }
 
 model CatalogoMaterial {
@@ -349,8 +366,35 @@ model CatalogoMaterial {
   createdAt          DateTime @default(now()) @map("created_at")
   updatedAt          DateTime @updatedAt @map("updated_at")
   materialesFase     MaterialFase[]
+  movimientos        InventarioMovimiento[]
 
   @@index([categoria])
+}
+
+enum TipoMovimientoEnum {
+  ENTRADA  // compra, ajuste positivo
+  SALIDA   // consumo por fase
+}
+
+// Trazabilidad: registra cada entrada y salida de material
+model InventarioMovimiento {
+  id           String             @id @default(cuid())
+  materialId   String             @map("material_id")
+  material     CatalogoMaterial   @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  tipo         TipoMovimientoEnum // ENTRADA | SALIDA
+  cantidad     Int
+  saldoAntes   Int?               @map("saldo_antes")
+  saldoDespues Int?               @map("saldo_despues")
+  unidadId     String?            @map("unidad_id")      // atribución opcional
+  unidad       Unidad?            @relation(fields: [unidadId], references: [id], onDelete: SetNull)
+  faseId       String?            @map("fase_id")        // para SALIDA: fase que consumió
+  materialFaseId String?          @map("material_fase_id") // para SALIDA
+  proyectoId   String?            @map("proyecto_id")    // para SALIDA
+  createdAt    DateTime           @default(now()) @map("created_at")
+
+  @@index([materialId])
+  @@index([createdAt])
+  @@index([tipo])
 }
 
 model Unidad {
@@ -369,6 +413,8 @@ model Unidad {
   updatedAt        DateTime     @updatedAt @map("updated_at")
   avancesFase      AvanceUnidadFase[]
   tareasCompletadas TareaCompletadaUnidad[]
+  materialesAsignados MaterialFaseUnidad[]
+  movimientosInventario InventarioMovimiento[]
 
   @@unique([proyectoId, numero])
   @@index([proyectoId])

@@ -222,6 +222,7 @@ export type MaterialFaseWhereInput = {
   pctEjecutado?: Prisma.IntFilter<"MaterialFase"> | number
   fase?: Prisma.XOR<Prisma.FaseScalarRelationFilter, Prisma.FaseWhereInput>
   material?: Prisma.XOR<Prisma.CatalogoMaterialScalarRelationFilter, Prisma.CatalogoMaterialWhereInput>
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadListRelationFilter
 }
 
 export type MaterialFaseOrderByWithRelationInput = {
@@ -232,6 +233,7 @@ export type MaterialFaseOrderByWithRelationInput = {
   pctEjecutado?: Prisma.SortOrder
   fase?: Prisma.FaseOrderByWithRelationInput
   material?: Prisma.CatalogoMaterialOrderByWithRelationInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadOrderByRelationAggregateInput
   _relevance?: Prisma.MaterialFaseOrderByRelevanceInput
 }
 
@@ -247,6 +249,7 @@ export type MaterialFaseWhereUniqueInput = Prisma.AtLeast<{
   pctEjecutado?: Prisma.IntFilter<"MaterialFase"> | number
   fase?: Prisma.XOR<Prisma.FaseScalarRelationFilter, Prisma.FaseWhereInput>
   material?: Prisma.XOR<Prisma.CatalogoMaterialScalarRelationFilter, Prisma.CatalogoMaterialWhereInput>
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadListRelationFilter
 }, "id" | "faseId_materialId">
 
 export type MaterialFaseOrderByWithAggregationInput = {
@@ -279,6 +282,7 @@ export type MaterialFaseCreateInput = {
   pctEjecutado?: number
   fase: Prisma.FaseCreateNestedOneWithoutMaterialesInput
   material: Prisma.CatalogoMaterialCreateNestedOneWithoutMaterialesFaseInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type MaterialFaseUncheckedCreateInput = {
   materialId: string
   cantidadRequerida: number
   pctEjecutado?: number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseUpdateInput = {
@@ -295,6 +300,7 @@ export type MaterialFaseUpdateInput = {
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
   fase?: Prisma.FaseUpdateOneRequiredWithoutMaterialesNestedInput
   material?: Prisma.CatalogoMaterialUpdateOneRequiredWithoutMaterialesFaseNestedInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseUncheckedUpdateInput = {
@@ -303,6 +309,7 @@ export type MaterialFaseUncheckedUpdateInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseCreateManyInput = {
@@ -382,6 +389,11 @@ export type MaterialFaseSumOrderByAggregateInput = {
   pctEjecutado?: Prisma.SortOrder
 }
 
+export type MaterialFaseScalarRelationFilter = {
+  is?: Prisma.MaterialFaseWhereInput
+  isNot?: Prisma.MaterialFaseWhereInput
+}
+
 export type MaterialFaseCreateNestedManyWithoutFaseInput = {
   create?: Prisma.XOR<Prisma.MaterialFaseCreateWithoutFaseInput, Prisma.MaterialFaseUncheckedCreateWithoutFaseInput> | Prisma.MaterialFaseCreateWithoutFaseInput[] | Prisma.MaterialFaseUncheckedCreateWithoutFaseInput[]
   connectOrCreate?: Prisma.MaterialFaseCreateOrConnectWithoutFaseInput | Prisma.MaterialFaseCreateOrConnectWithoutFaseInput[]
@@ -422,6 +434,20 @@ export type MaterialFaseUncheckedUpdateManyWithoutFaseNestedInput = {
   update?: Prisma.MaterialFaseUpdateWithWhereUniqueWithoutFaseInput | Prisma.MaterialFaseUpdateWithWhereUniqueWithoutFaseInput[]
   updateMany?: Prisma.MaterialFaseUpdateManyWithWhereWithoutFaseInput | Prisma.MaterialFaseUpdateManyWithWhereWithoutFaseInput[]
   deleteMany?: Prisma.MaterialFaseScalarWhereInput | Prisma.MaterialFaseScalarWhereInput[]
+}
+
+export type MaterialFaseCreateNestedOneWithoutDistribucionesUnidadInput = {
+  create?: Prisma.XOR<Prisma.MaterialFaseCreateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedCreateWithoutDistribucionesUnidadInput>
+  connectOrCreate?: Prisma.MaterialFaseCreateOrConnectWithoutDistribucionesUnidadInput
+  connect?: Prisma.MaterialFaseWhereUniqueInput
+}
+
+export type MaterialFaseUpdateOneRequiredWithoutDistribucionesUnidadNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialFaseCreateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedCreateWithoutDistribucionesUnidadInput>
+  connectOrCreate?: Prisma.MaterialFaseCreateOrConnectWithoutDistribucionesUnidadInput
+  upsert?: Prisma.MaterialFaseUpsertWithoutDistribucionesUnidadInput
+  connect?: Prisma.MaterialFaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialFaseUpdateToOneWithWhereWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUpdateWithoutDistribucionesUnidadInput>, Prisma.MaterialFaseUncheckedUpdateWithoutDistribucionesUnidadInput>
 }
 
 export type MaterialFaseCreateNestedManyWithoutMaterialInput = {
@@ -471,6 +497,7 @@ export type MaterialFaseCreateWithoutFaseInput = {
   cantidadRequerida: number
   pctEjecutado?: number
   material: Prisma.CatalogoMaterialCreateNestedOneWithoutMaterialesFaseInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseUncheckedCreateWithoutFaseInput = {
@@ -478,6 +505,7 @@ export type MaterialFaseUncheckedCreateWithoutFaseInput = {
   materialId: string
   cantidadRequerida: number
   pctEjecutado?: number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseCreateOrConnectWithoutFaseInput = {
@@ -517,11 +545,60 @@ export type MaterialFaseScalarWhereInput = {
   pctEjecutado?: Prisma.IntFilter<"MaterialFase"> | number
 }
 
+export type MaterialFaseCreateWithoutDistribucionesUnidadInput = {
+  id?: string
+  cantidadRequerida: number
+  pctEjecutado?: number
+  fase: Prisma.FaseCreateNestedOneWithoutMaterialesInput
+  material: Prisma.CatalogoMaterialCreateNestedOneWithoutMaterialesFaseInput
+}
+
+export type MaterialFaseUncheckedCreateWithoutDistribucionesUnidadInput = {
+  id?: string
+  faseId: string
+  materialId: string
+  cantidadRequerida: number
+  pctEjecutado?: number
+}
+
+export type MaterialFaseCreateOrConnectWithoutDistribucionesUnidadInput = {
+  where: Prisma.MaterialFaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialFaseCreateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedCreateWithoutDistribucionesUnidadInput>
+}
+
+export type MaterialFaseUpsertWithoutDistribucionesUnidadInput = {
+  update: Prisma.XOR<Prisma.MaterialFaseUpdateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedUpdateWithoutDistribucionesUnidadInput>
+  create: Prisma.XOR<Prisma.MaterialFaseCreateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedCreateWithoutDistribucionesUnidadInput>
+  where?: Prisma.MaterialFaseWhereInput
+}
+
+export type MaterialFaseUpdateToOneWithWhereWithoutDistribucionesUnidadInput = {
+  where?: Prisma.MaterialFaseWhereInput
+  data: Prisma.XOR<Prisma.MaterialFaseUpdateWithoutDistribucionesUnidadInput, Prisma.MaterialFaseUncheckedUpdateWithoutDistribucionesUnidadInput>
+}
+
+export type MaterialFaseUpdateWithoutDistribucionesUnidadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
+  pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
+  fase?: Prisma.FaseUpdateOneRequiredWithoutMaterialesNestedInput
+  material?: Prisma.CatalogoMaterialUpdateOneRequiredWithoutMaterialesFaseNestedInput
+}
+
+export type MaterialFaseUncheckedUpdateWithoutDistribucionesUnidadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  faseId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
+  pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type MaterialFaseCreateWithoutMaterialInput = {
   id?: string
   cantidadRequerida: number
   pctEjecutado?: number
   fase: Prisma.FaseCreateNestedOneWithoutMaterialesInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseUncheckedCreateWithoutMaterialInput = {
@@ -529,6 +606,7 @@ export type MaterialFaseUncheckedCreateWithoutMaterialInput = {
   faseId: string
   cantidadRequerida: number
   pctEjecutado?: number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutMaterialFaseInput
 }
 
 export type MaterialFaseCreateOrConnectWithoutMaterialInput = {
@@ -569,6 +647,7 @@ export type MaterialFaseUpdateWithoutFaseInput = {
   cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
   material?: Prisma.CatalogoMaterialUpdateOneRequiredWithoutMaterialesFaseNestedInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseUncheckedUpdateWithoutFaseInput = {
@@ -576,6 +655,7 @@ export type MaterialFaseUncheckedUpdateWithoutFaseInput = {
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseUncheckedUpdateManyWithoutFaseInput = {
@@ -597,6 +677,7 @@ export type MaterialFaseUpdateWithoutMaterialInput = {
   cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
   fase?: Prisma.FaseUpdateOneRequiredWithoutMaterialesNestedInput
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseUncheckedUpdateWithoutMaterialInput = {
@@ -604,6 +685,7 @@ export type MaterialFaseUncheckedUpdateWithoutMaterialInput = {
   faseId?: Prisma.StringFieldUpdateOperationsInput | string
   cantidadRequerida?: Prisma.IntFieldUpdateOperationsInput | number
   pctEjecutado?: Prisma.IntFieldUpdateOperationsInput | number
+  distribucionesUnidad?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutMaterialFaseNestedInput
 }
 
 export type MaterialFaseUncheckedUpdateManyWithoutMaterialInput = {
@@ -614,6 +696,35 @@ export type MaterialFaseUncheckedUpdateManyWithoutMaterialInput = {
 }
 
 
+/**
+ * Count Type MaterialFaseCountOutputType
+ */
+
+export type MaterialFaseCountOutputType = {
+  distribucionesUnidad: number
+}
+
+export type MaterialFaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  distribucionesUnidad?: boolean | MaterialFaseCountOutputTypeCountDistribucionesUnidadArgs
+}
+
+/**
+ * MaterialFaseCountOutputType without action
+ */
+export type MaterialFaseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialFaseCountOutputType
+   */
+  select?: Prisma.MaterialFaseCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MaterialFaseCountOutputType without action
+ */
+export type MaterialFaseCountOutputTypeCountDistribucionesUnidadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialFaseUnidadWhereInput
+}
+
 
 export type MaterialFaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -623,6 +734,8 @@ export type MaterialFaseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   pctEjecutado?: boolean
   fase?: boolean | Prisma.FaseDefaultArgs<ExtArgs>
   material?: boolean | Prisma.CatalogoMaterialDefaultArgs<ExtArgs>
+  distribucionesUnidad?: boolean | Prisma.MaterialFase$distribucionesUnidadArgs<ExtArgs>
+  _count?: boolean | Prisma.MaterialFaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["materialFase"]>
 
 
@@ -639,6 +752,8 @@ export type MaterialFaseOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MaterialFaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fase?: boolean | Prisma.FaseDefaultArgs<ExtArgs>
   material?: boolean | Prisma.CatalogoMaterialDefaultArgs<ExtArgs>
+  distribucionesUnidad?: boolean | Prisma.MaterialFase$distribucionesUnidadArgs<ExtArgs>
+  _count?: boolean | Prisma.MaterialFaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MaterialFasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -646,6 +761,7 @@ export type $MaterialFasePayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     fase: Prisma.$FasePayload<ExtArgs>
     material: Prisma.$CatalogoMaterialPayload<ExtArgs>
+    distribucionesUnidad: Prisma.$MaterialFaseUnidadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -995,6 +1111,7 @@ export interface Prisma__MaterialFaseClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   fase<T extends Prisma.FaseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FaseDefaultArgs<ExtArgs>>): Prisma.Prisma__FaseClient<runtime.Types.Result.GetResult<Prisma.$FasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   material<T extends Prisma.CatalogoMaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__CatalogoMaterialClient<runtime.Types.Result.GetResult<Prisma.$CatalogoMaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  distribucionesUnidad<T extends Prisma.MaterialFase$distribucionesUnidadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialFase$distribucionesUnidadArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialFaseUnidadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1369,6 +1486,30 @@ export type MaterialFaseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many MaterialFases to delete.
    */
   limit?: number
+}
+
+/**
+ * MaterialFase.distribucionesUnidad
+ */
+export type MaterialFase$distribucionesUnidadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialFaseUnidad
+   */
+  select?: Prisma.MaterialFaseUnidadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialFaseUnidad
+   */
+  omit?: Prisma.MaterialFaseUnidadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialFaseUnidadInclude<ExtArgs> | null
+  where?: Prisma.MaterialFaseUnidadWhereInput
+  orderBy?: Prisma.MaterialFaseUnidadOrderByWithRelationInput | Prisma.MaterialFaseUnidadOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialFaseUnidadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialFaseUnidadScalarFieldEnum | Prisma.MaterialFaseUnidadScalarFieldEnum[]
 }
 
 /**

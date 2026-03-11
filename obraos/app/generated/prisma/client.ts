@@ -127,10 +127,20 @@ export type Fase = Prisma.FaseModel
  */
 export type MaterialFase = Prisma.MaterialFaseModel
 /**
+ * Model MaterialFaseUnidad
+ * 
+ */
+export type MaterialFaseUnidad = Prisma.MaterialFaseUnidadModel
+/**
  * Model CatalogoMaterial
  * 
  */
 export type CatalogoMaterial = Prisma.CatalogoMaterialModel
+/**
+ * Model InventarioMovimiento
+ * 
+ */
+export type InventarioMovimiento = Prisma.InventarioMovimientoModel
 /**
  * Model Unidad
  * 
