@@ -8,32 +8,36 @@ export default async function ConfiguracionPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Configuración</h1>
-      <p className="mt-1 text-slate-400">
+      <h1 className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--text)" }}>Configuración</h1>
+      <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
         Parámetros generales de la plataforma
       </p>
       <div className="mt-6 space-y-4">
         {configs.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-slate-600 p-8 text-center text-slate-400">
+          <p
+            className="rounded-xl border border-dashed p-8 text-center"
+            style={{ borderColor: "var(--border2)", color: "var(--text3)" }}
+          >
             No hay configuraciones. Agrega parámetros desde el API o seed.
           </p>
         ) : (
           configs.map((c) => (
             <div
               key={c.id}
-              className="flex items-center justify-between rounded-xl border border-slate-700 bg-slate-800 p-4"
+              className="flex items-center justify-between rounded-xl border p-4"
+              style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
             >
               <div>
-                <span className="font-mono text-sm text-amber-400">
+                <span className="font-mono text-sm" style={{ color: "var(--accent)" }}>
                   {c.clave}
                 </span>
                 {c.descripcion && (
-                  <p className="mt-0.5 text-xs text-slate-500">
+                  <p className="mt-0.5 text-xs" style={{ color: "var(--text3)" }}>
                     {c.descripcion}
                   </p>
                 )}
               </div>
-              <span className="max-w-xs truncate text-sm text-slate-300">
+              <span className="max-w-xs truncate text-sm" style={{ color: "var(--text2)" }}>
                 {c.valor}
               </span>
             </div>

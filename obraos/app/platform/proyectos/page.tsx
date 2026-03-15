@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/db";
 import { auth } from "@/auth";
-import Link from "next/link";
 import { puedeCrearProyectos } from "@/lib/permissions";
 import { ProyectosGrid } from "./ProyectosGrid";
-import { UnidadesAvanceExpandible } from "./UnidadesAvanceExpandible";
 
 const TIPO_LABEL: Record<string, string> = {
   RESIDENCIAL: "Residencial",
@@ -17,7 +15,8 @@ export default async function ProyectosPage() {
   const session = await auth();
   const puedeCrear = puedeCrearProyectos(session?.user?.role ?? "");
 
-  const proyectos = await prisma.proyecto.findMany({
+  const [proyectos, pms] = await Promise.all([
+    prisma.proyecto.findMany({
     include: {
       pmAsignado: { select: { nombre: true } },
       unidades: {
@@ -34,9 +33,13 @@ export default async function ProyectosPage() {
       },
     },
     orderBy: { createdAt: "desc" },
-  });
+  }),
+    prisma.usuario.findMany({
+      where: { rol: "PROJECT_MANAGER", estado: "ACTIVO" },
+      select: { id: true, nombre: true },
+    }),
+  ]);
 
-  /** Calcula pct por unidad: promedio de avance por fase (cada fase pesa igual). Las fases sin tareas cuentan 0%. Total proyecto = promedio sobre numUnidades. */
   function calcularAvancePorUnidad(p: (typeof proyectos)[0]) {
     const unidades = p.unidades;
     const numFases = p.fases.length;
@@ -48,7 +51,10 @@ export default async function ProyectosPage() {
       return { pctTotal: pctFases, pctPorUnidad: [] as { etiqueta: string; numero: number; pct: number }[] };
     }
     if (numFases === 0) {
-      return { pctTotal: 0, pctPorUnidad: unidades.map((u) => ({ etiqueta: u.etiqueta, numero: u.numero, pct: 0 })) };
+      return {
+        pctTotal: 0,
+        pctPorUnidad: unidades.map((u) => ({ etiqueta: u.etiqueta, numero: u.numero, pct: 0 })),
+      };
     }
     const pctPorUnidad = unidades.map((u) => {
       let sumaPctFase = 0;
@@ -77,7 +83,11 @@ export default async function ProyectosPage() {
 
   function presupuestoObraDirecta(p: (typeof proyectos)[0]) {
     const total = p.presupuestoTotal ?? 0;
-    const pct = 1 - (p.pctCostosIndirectos ?? 0) - (p.pctContingencia ?? 0) - (p.margenObjetivo ?? 0);
+    const pct =
+      1 -
+      (p.pctCostosIndirectos ?? 0) -
+      (p.pctContingencia ?? 0) -
+      (p.margenObjetivo ?? 0);
     return total * Math.max(0, pct);
   }
 
@@ -109,10 +119,7 @@ export default async function ProyectosPage() {
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">Proyectos</h1>
-          <p
-            className="mt-0.5 text-sm"
-            style={{ color: "var(--text3)" }}
-          >
+          <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
             {proyectos.length} proyectos activos
           </p>
         </div>
@@ -120,25 +127,10 @@ export default async function ProyectosPage() {
 
       <ProyectosGrid
         proyectos={proyectosConAvance}
+        pms={pms}
         esAdmin={session?.user?.role === "ADMIN"}
         puedeCrear={puedeCrear}
       />
-
-      {proyectos.length === 0 && (
-        <div
-          className="rounded-xl border border-dashed p-16 text-center"
-          style={{ borderColor: "var(--border2)", color: "var(--text3)" }}
-        >
-          <p className="text-lg">No hay proyectos</p>
-          <Link
-            href="/platform/proyectos/nuevo"
-            className="mt-4 inline-block text-sm font-medium"
-            style={{ color: "var(--accent)" }}
-          >
-            + Crear primer proyecto
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const { proyectoId, nombre, periodo, fechaInicio, fechaFin, fechaPago } = body;
+  const { proyectoId, nombre, periodo } = body;
 
   if (!proyectoId || !nombre?.trim()) {
     return NextResponse.json(
@@ -42,20 +42,11 @@ export async function POST(req: Request) {
     );
   }
 
-  const fi = fechaInicio ? new Date(fechaInicio) : null;
-  const ff = fechaFin ? new Date(fechaFin) : null;
-  const periodoStr = periodo?.trim() || (fi && ff
-    ? `${fi.toLocaleDateString("es-GT", { day: "numeric", month: "short" })} - ${ff.toLocaleDateString("es-GT", { day: "numeric", month: "short", year: "numeric" })}`
-    : null);
-
   const planilla = await prisma.planilla.create({
     data: {
       proyectoId,
       nombre: nombre.trim(),
-      periodo: periodoStr,
-      fechaInicio: fi,
-      fechaFin: ff,
-      fechaPago: fechaPago ? new Date(fechaPago) : null,
+      periodo: periodo?.trim() || null,
     },
   });
 

@@ -8,8 +8,8 @@ export default async function TiposServicioPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Tipos de servicio</h1>
-      <p className="mt-1 text-slate-400">
+      <h1 className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--text)" }}>Tipos de servicio</h1>
+      <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
         Catálogo de rubros para costos varios (Renta grúa, Fletes, etc.). Se usa en Costos varios y en el desglose del dashboard.
       </p>
       <TiposServicioClient tiposIniciales={tipos} />

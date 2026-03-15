@@ -274,6 +274,8 @@ export type CatalogoMaterialWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   materialesFase?: Prisma.MaterialFaseListRelationFilter
   movimientos?: Prisma.InventarioMovimientoListRelationFilter
+  lotes?: Prisma.LoteMaterialListRelationFilter
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaListRelationFilter
 }
 
 export type CatalogoMaterialOrderByWithRelationInput = {
@@ -290,6 +292,8 @@ export type CatalogoMaterialOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   materialesFase?: Prisma.MaterialFaseOrderByRelationAggregateInput
   movimientos?: Prisma.InventarioMovimientoOrderByRelationAggregateInput
+  lotes?: Prisma.LoteMaterialOrderByRelationAggregateInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaOrderByRelationAggregateInput
   _relevance?: Prisma.CatalogoMaterialOrderByRelevanceInput
 }
 
@@ -310,6 +314,8 @@ export type CatalogoMaterialWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CatalogoMaterial"> | Date | string
   materialesFase?: Prisma.MaterialFaseListRelationFilter
   movimientos?: Prisma.InventarioMovimientoListRelationFilter
+  lotes?: Prisma.LoteMaterialListRelationFilter
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaListRelationFilter
 }, "id">
 
 export type CatalogoMaterialOrderByWithAggregationInput = {
@@ -354,7 +360,7 @@ export type CatalogoMaterialCreateInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
@@ -362,6 +368,8 @@ export type CatalogoMaterialCreateInput = {
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
   movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialUncheckedCreateInput = {
@@ -370,7 +378,7 @@ export type CatalogoMaterialUncheckedCreateInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
@@ -378,6 +386,8 @@ export type CatalogoMaterialUncheckedCreateInput = {
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
   movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialUpdateInput = {
@@ -394,6 +404,8 @@ export type CatalogoMaterialUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
   movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 export type CatalogoMaterialUncheckedUpdateInput = {
@@ -410,6 +422,8 @@ export type CatalogoMaterialUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
   movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 export type CatalogoMaterialCreateManyInput = {
@@ -418,7 +432,7 @@ export type CatalogoMaterialCreateManyInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
@@ -519,6 +533,11 @@ export type CatalogoMaterialSumOrderByAggregateInput = {
   presupuestoAsignado?: Prisma.SortOrder
 }
 
+export type CatalogoMaterialNullableScalarRelationFilter = {
+  is?: Prisma.CatalogoMaterialWhereInput | null
+  isNot?: Prisma.CatalogoMaterialWhereInput | null
+}
+
 export type CatalogoMaterialCreateNestedOneWithoutMaterialesFaseInput = {
   create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutMaterialesFaseInput, Prisma.CatalogoMaterialUncheckedCreateWithoutMaterialesFaseInput>
   connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutMaterialesFaseInput
@@ -535,6 +554,36 @@ export type CatalogoMaterialUpdateOneRequiredWithoutMaterialesFaseNestedInput = 
 
 export type EnumCategoriaEnumFieldUpdateOperationsInput = {
   set?: $Enums.CategoriaEnum
+}
+
+export type CatalogoMaterialCreateNestedOneWithoutLotesInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedCreateWithoutLotesInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutLotesInput
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+}
+
+export type CatalogoMaterialUpdateOneRequiredWithoutLotesNestedInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedCreateWithoutLotesInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutLotesInput
+  upsert?: Prisma.CatalogoMaterialUpsertWithoutLotesInput
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CatalogoMaterialUpdateToOneWithWhereWithoutLotesInput, Prisma.CatalogoMaterialUpdateWithoutLotesInput>, Prisma.CatalogoMaterialUncheckedUpdateWithoutLotesInput>
+}
+
+export type CatalogoMaterialCreateNestedOneWithoutAsignacionesTareaInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutAsignacionesTareaInput
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+}
+
+export type CatalogoMaterialUpdateOneWithoutAsignacionesTareaNestedInput = {
+  create?: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.CatalogoMaterialCreateOrConnectWithoutAsignacionesTareaInput
+  upsert?: Prisma.CatalogoMaterialUpsertWithoutAsignacionesTareaInput
+  disconnect?: Prisma.CatalogoMaterialWhereInput | boolean
+  delete?: Prisma.CatalogoMaterialWhereInput | boolean
+  connect?: Prisma.CatalogoMaterialWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CatalogoMaterialUpdateToOneWithWhereWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUpdateWithoutAsignacionesTareaInput>, Prisma.CatalogoMaterialUncheckedUpdateWithoutAsignacionesTareaInput>
 }
 
 export type CatalogoMaterialCreateNestedOneWithoutMovimientosInput = {
@@ -557,13 +606,15 @@ export type CatalogoMaterialCreateWithoutMaterialesFaseInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialUncheckedCreateWithoutMaterialesFaseInput = {
@@ -572,13 +623,15 @@ export type CatalogoMaterialUncheckedCreateWithoutMaterialesFaseInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialCreateOrConnectWithoutMaterialesFaseInput = {
@@ -610,6 +663,8 @@ export type CatalogoMaterialUpdateWithoutMaterialesFaseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 export type CatalogoMaterialUncheckedUpdateWithoutMaterialesFaseInput = {
@@ -625,6 +680,176 @@ export type CatalogoMaterialUncheckedUpdateWithoutMaterialesFaseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
+}
+
+export type CatalogoMaterialCreateWithoutLotesInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario?: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutCatalogoMaterialInput
+}
+
+export type CatalogoMaterialUncheckedCreateWithoutLotesInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario?: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutCatalogoMaterialInput
+}
+
+export type CatalogoMaterialCreateOrConnectWithoutLotesInput = {
+  where: Prisma.CatalogoMaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedCreateWithoutLotesInput>
+}
+
+export type CatalogoMaterialUpsertWithoutLotesInput = {
+  update: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutLotesInput>
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedCreateWithoutLotesInput>
+  where?: Prisma.CatalogoMaterialWhereInput
+}
+
+export type CatalogoMaterialUpdateToOneWithWhereWithoutLotesInput = {
+  where?: Prisma.CatalogoMaterialWhereInput
+  data: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutLotesInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutLotesInput>
+}
+
+export type CatalogoMaterialUpdateWithoutLotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutCatalogoMaterialNestedInput
+}
+
+export type CatalogoMaterialUncheckedUpdateWithoutLotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
+}
+
+export type CatalogoMaterialCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario?: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialCreateNestedManyWithoutCatalogoMaterialInput
+}
+
+export type CatalogoMaterialUncheckedCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  nombre: string
+  categoria: $Enums.CategoriaEnum
+  unidad: string
+  stockTotal?: number
+  costoUnitario?: number
+  presupuestoAsignado?: number | null
+  colorHex?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutCatalogoMaterialInput
+}
+
+export type CatalogoMaterialCreateOrConnectWithoutAsignacionesTareaInput = {
+  where: Prisma.CatalogoMaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedCreateWithoutAsignacionesTareaInput>
+}
+
+export type CatalogoMaterialUpsertWithoutAsignacionesTareaInput = {
+  update: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutAsignacionesTareaInput>
+  create: Prisma.XOR<Prisma.CatalogoMaterialCreateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedCreateWithoutAsignacionesTareaInput>
+  where?: Prisma.CatalogoMaterialWhereInput
+}
+
+export type CatalogoMaterialUpdateToOneWithWhereWithoutAsignacionesTareaInput = {
+  where?: Prisma.CatalogoMaterialWhereInput
+  data: Prisma.XOR<Prisma.CatalogoMaterialUpdateWithoutAsignacionesTareaInput, Prisma.CatalogoMaterialUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
+export type CatalogoMaterialUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUpdateManyWithoutCatalogoMaterialNestedInput
+}
+
+export type CatalogoMaterialUncheckedUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaEnumFieldUpdateOperationsInput | $Enums.CategoriaEnum
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  stockTotal?: Prisma.IntFieldUpdateOperationsInput | number
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoAsignado?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
+  movimientos?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 export type CatalogoMaterialCreateWithoutMovimientosInput = {
@@ -633,13 +858,15 @@ export type CatalogoMaterialCreateWithoutMovimientosInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialUncheckedCreateWithoutMovimientosInput = {
@@ -648,13 +875,15 @@ export type CatalogoMaterialUncheckedCreateWithoutMovimientosInput = {
   categoria: $Enums.CategoriaEnum
   unidad: string
   stockTotal?: number
-  costoUnitario: number
+  costoUnitario?: number
   presupuestoAsignado?: number | null
   colorHex?: string | null
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutMaterialInput
+  lotes?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutCatalogoMaterialInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutCatalogoMaterialInput
 }
 
 export type CatalogoMaterialCreateOrConnectWithoutMovimientosInput = {
@@ -686,6 +915,8 @@ export type CatalogoMaterialUpdateWithoutMovimientosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 export type CatalogoMaterialUncheckedUpdateWithoutMovimientosInput = {
@@ -701,6 +932,8 @@ export type CatalogoMaterialUncheckedUpdateWithoutMovimientosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   materialesFase?: Prisma.MaterialFaseUncheckedUpdateManyWithoutMaterialNestedInput
+  lotes?: Prisma.LoteMaterialUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
+  asignacionesTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutCatalogoMaterialNestedInput
 }
 
 
@@ -711,11 +944,15 @@ export type CatalogoMaterialUncheckedUpdateWithoutMovimientosInput = {
 export type CatalogoMaterialCountOutputType = {
   materialesFase: number
   movimientos: number
+  lotes: number
+  asignacionesTarea: number
 }
 
 export type CatalogoMaterialCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   materialesFase?: boolean | CatalogoMaterialCountOutputTypeCountMaterialesFaseArgs
   movimientos?: boolean | CatalogoMaterialCountOutputTypeCountMovimientosArgs
+  lotes?: boolean | CatalogoMaterialCountOutputTypeCountLotesArgs
+  asignacionesTarea?: boolean | CatalogoMaterialCountOutputTypeCountAsignacionesTareaArgs
 }
 
 /**
@@ -742,6 +979,20 @@ export type CatalogoMaterialCountOutputTypeCountMovimientosArgs<ExtArgs extends 
   where?: Prisma.InventarioMovimientoWhereInput
 }
 
+/**
+ * CatalogoMaterialCountOutputType without action
+ */
+export type CatalogoMaterialCountOutputTypeCountLotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LoteMaterialWhereInput
+}
+
+/**
+ * CatalogoMaterialCountOutputType without action
+ */
+export type CatalogoMaterialCountOutputTypeCountAsignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialAsignadoTareaWhereInput
+}
+
 
 export type CatalogoMaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -757,6 +1008,8 @@ export type CatalogoMaterialSelect<ExtArgs extends runtime.Types.Extensions.Inte
   updatedAt?: boolean
   materialesFase?: boolean | Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>
   movimientos?: boolean | Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>
+  lotes?: boolean | Prisma.CatalogoMaterial$lotesArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.CatalogoMaterial$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoMaterialCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["catalogoMaterial"]>
 
@@ -780,6 +1033,8 @@ export type CatalogoMaterialOmit<ExtArgs extends runtime.Types.Extensions.Intern
 export type CatalogoMaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   materialesFase?: boolean | Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>
   movimientos?: boolean | Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>
+  lotes?: boolean | Prisma.CatalogoMaterial$lotesArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.CatalogoMaterial$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoMaterialCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -788,6 +1043,8 @@ export type $CatalogoMaterialPayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     materialesFase: Prisma.$MaterialFasePayload<ExtArgs>[]
     movimientos: Prisma.$InventarioMovimientoPayload<ExtArgs>[]
+    lotes: Prisma.$LoteMaterialPayload<ExtArgs>[]
+    asignacionesTarea: Prisma.$MaterialAsignadoTareaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1143,6 +1400,8 @@ export interface Prisma__CatalogoMaterialClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   materialesFase<T extends Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$materialesFaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   movimientos<T extends Prisma.CatalogoMaterial$movimientosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventarioMovimientoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lotes<T extends Prisma.CatalogoMaterial$lotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$lotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoteMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  asignacionesTarea<T extends Prisma.CatalogoMaterial$asignacionesTareaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoMaterial$asignacionesTareaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1571,6 +1830,54 @@ export type CatalogoMaterial$movimientosArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.InventarioMovimientoScalarFieldEnum | Prisma.InventarioMovimientoScalarFieldEnum[]
+}
+
+/**
+ * CatalogoMaterial.lotes
+ */
+export type CatalogoMaterial$lotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LoteMaterial
+   */
+  select?: Prisma.LoteMaterialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LoteMaterial
+   */
+  omit?: Prisma.LoteMaterialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LoteMaterialInclude<ExtArgs> | null
+  where?: Prisma.LoteMaterialWhereInput
+  orderBy?: Prisma.LoteMaterialOrderByWithRelationInput | Prisma.LoteMaterialOrderByWithRelationInput[]
+  cursor?: Prisma.LoteMaterialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LoteMaterialScalarFieldEnum | Prisma.LoteMaterialScalarFieldEnum[]
+}
+
+/**
+ * CatalogoMaterial.asignacionesTarea
+ */
+export type CatalogoMaterial$asignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialAsignadoTarea
+   */
+  select?: Prisma.MaterialAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialAsignadoTarea
+   */
+  omit?: Prisma.MaterialAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.MaterialAsignadoTareaWhereInput
+  orderBy?: Prisma.MaterialAsignadoTareaOrderByWithRelationInput | Prisma.MaterialAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialAsignadoTareaScalarFieldEnum | Prisma.MaterialAsignadoTareaScalarFieldEnum[]
 }
 
 /**

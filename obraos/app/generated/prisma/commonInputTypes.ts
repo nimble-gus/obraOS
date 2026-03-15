@@ -365,6 +365,23 @@ export type EnumEstadoPlanillaEnumWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumEstadoPlanillaEnumFilter<$PrismaModel>
 }
 
+export type EnumUnidadPlanillaEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnidadPlanillaEnum | Prisma.EnumUnidadPlanillaEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.UnidadPlanillaEnum[]
+  notIn?: $Enums.UnidadPlanillaEnum[]
+  not?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel> | $Enums.UnidadPlanillaEnum
+}
+
+export type EnumUnidadPlanillaEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnidadPlanillaEnum | Prisma.EnumUnidadPlanillaEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.UnidadPlanillaEnum[]
+  notIn?: $Enums.UnidadPlanillaEnum[]
+  not?: Prisma.NestedEnumUnidadPlanillaEnumWithAggregatesFilter<$PrismaModel> | $Enums.UnidadPlanillaEnum
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel>
+}
+
 export type EnumStatusEnumFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusEnum | Prisma.EnumStatusEnumFieldRefInput<$PrismaModel>
   in?: $Enums.StatusEnum[]
@@ -839,6 +856,23 @@ export type NestedEnumEstadoPlanillaEnumWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEstadoPlanillaEnumFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEstadoPlanillaEnumFilter<$PrismaModel>
+}
+
+export type NestedEnumUnidadPlanillaEnumFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnidadPlanillaEnum | Prisma.EnumUnidadPlanillaEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.UnidadPlanillaEnum[]
+  notIn?: $Enums.UnidadPlanillaEnum[]
+  not?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel> | $Enums.UnidadPlanillaEnum
+}
+
+export type NestedEnumUnidadPlanillaEnumWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnidadPlanillaEnum | Prisma.EnumUnidadPlanillaEnumFieldRefInput<$PrismaModel>
+  in?: $Enums.UnidadPlanillaEnum[]
+  notIn?: $Enums.UnidadPlanillaEnum[]
+  not?: Prisma.NestedEnumUnidadPlanillaEnumWithAggregatesFilter<$PrismaModel> | $Enums.UnidadPlanillaEnum
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUnidadPlanillaEnumFilter<$PrismaModel>
 }
 
 export type NestedEnumStatusEnumFilter<$PrismaModel = never> = {

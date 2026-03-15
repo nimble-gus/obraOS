@@ -242,6 +242,7 @@ export type CatalogoServicioWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"CatalogoServicio"> | Date | string
   tipoServicio?: Prisma.XOR<Prisma.CatalogoTipoServicioNullableScalarRelationFilter, Prisma.CatalogoTipoServicioWhereInput> | null
   serviciosFase?: Prisma.ServicioFaseListRelationFilter
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaListRelationFilter
 }
 
 export type CatalogoServicioOrderByWithRelationInput = {
@@ -255,6 +256,7 @@ export type CatalogoServicioOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   tipoServicio?: Prisma.CatalogoTipoServicioOrderByWithRelationInput
   serviciosFase?: Prisma.ServicioFaseOrderByRelationAggregateInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaOrderByRelationAggregateInput
   _relevance?: Prisma.CatalogoServicioOrderByRelevanceInput
 }
 
@@ -272,6 +274,7 @@ export type CatalogoServicioWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CatalogoServicio"> | Date | string
   tipoServicio?: Prisma.XOR<Prisma.CatalogoTipoServicioNullableScalarRelationFilter, Prisma.CatalogoTipoServicioWhereInput> | null
   serviciosFase?: Prisma.ServicioFaseListRelationFilter
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaListRelationFilter
 }, "id">
 
 export type CatalogoServicioOrderByWithAggregationInput = {
@@ -314,6 +317,7 @@ export type CatalogoServicioCreateInput = {
   updatedAt?: Date | string
   tipoServicio?: Prisma.CatalogoTipoServicioCreateNestedOneWithoutServiciosInput
   serviciosFase?: Prisma.ServicioFaseCreateNestedManyWithoutServicioInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioUncheckedCreateInput = {
@@ -326,6 +330,7 @@ export type CatalogoServicioUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviciosFase?: Prisma.ServicioFaseUncheckedCreateNestedManyWithoutServicioInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioUpdateInput = {
@@ -338,6 +343,7 @@ export type CatalogoServicioUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tipoServicio?: Prisma.CatalogoTipoServicioUpdateOneWithoutServiciosNestedInput
   serviciosFase?: Prisma.ServicioFaseUpdateManyWithoutServicioNestedInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioUncheckedUpdateInput = {
@@ -350,6 +356,7 @@ export type CatalogoServicioUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviciosFase?: Prisma.ServicioFaseUncheckedUpdateManyWithoutServicioNestedInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioCreateManyInput = {
@@ -502,6 +509,20 @@ export type CatalogoServicioUpdateOneRequiredWithoutServiciosFaseNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CatalogoServicioUpdateToOneWithWhereWithoutServiciosFaseInput, Prisma.CatalogoServicioUpdateWithoutServiciosFaseInput>, Prisma.CatalogoServicioUncheckedUpdateWithoutServiciosFaseInput>
 }
 
+export type CatalogoServicioCreateNestedOneWithoutAsignacionesTareaInput = {
+  create?: Prisma.XOR<Prisma.CatalogoServicioCreateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.CatalogoServicioCreateOrConnectWithoutAsignacionesTareaInput
+  connect?: Prisma.CatalogoServicioWhereUniqueInput
+}
+
+export type CatalogoServicioUpdateOneRequiredWithoutAsignacionesTareaNestedInput = {
+  create?: Prisma.XOR<Prisma.CatalogoServicioCreateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.CatalogoServicioCreateOrConnectWithoutAsignacionesTareaInput
+  upsert?: Prisma.CatalogoServicioUpsertWithoutAsignacionesTareaInput
+  connect?: Prisma.CatalogoServicioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CatalogoServicioUpdateToOneWithWhereWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUpdateWithoutAsignacionesTareaInput>, Prisma.CatalogoServicioUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
 export type CatalogoServicioCreateWithoutTipoServicioInput = {
   id?: string
   nombre: string
@@ -511,6 +532,7 @@ export type CatalogoServicioCreateWithoutTipoServicioInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviciosFase?: Prisma.ServicioFaseCreateNestedManyWithoutServicioInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioUncheckedCreateWithoutTipoServicioInput = {
@@ -522,6 +544,7 @@ export type CatalogoServicioUncheckedCreateWithoutTipoServicioInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   serviciosFase?: Prisma.ServicioFaseUncheckedCreateNestedManyWithoutServicioInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioCreateOrConnectWithoutTipoServicioInput = {
@@ -573,6 +596,7 @@ export type CatalogoServicioCreateWithoutServiciosFaseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tipoServicio?: Prisma.CatalogoTipoServicioCreateNestedOneWithoutServiciosInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioUncheckedCreateWithoutServiciosFaseInput = {
@@ -584,6 +608,7 @@ export type CatalogoServicioUncheckedCreateWithoutServiciosFaseInput = {
   activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutServicioInput
 }
 
 export type CatalogoServicioCreateOrConnectWithoutServiciosFaseInput = {
@@ -611,6 +636,7 @@ export type CatalogoServicioUpdateWithoutServiciosFaseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tipoServicio?: Prisma.CatalogoTipoServicioUpdateOneWithoutServiciosNestedInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioUncheckedUpdateWithoutServiciosFaseInput = {
@@ -622,6 +648,71 @@ export type CatalogoServicioUncheckedUpdateWithoutServiciosFaseInput = {
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutServicioNestedInput
+}
+
+export type CatalogoServicioCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  nombre: string
+  unidad: string
+  costoUnitario: number
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tipoServicio?: Prisma.CatalogoTipoServicioCreateNestedOneWithoutServiciosInput
+  serviciosFase?: Prisma.ServicioFaseCreateNestedManyWithoutServicioInput
+}
+
+export type CatalogoServicioUncheckedCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  tipoServicioId?: string | null
+  nombre: string
+  unidad: string
+  costoUnitario: number
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  serviciosFase?: Prisma.ServicioFaseUncheckedCreateNestedManyWithoutServicioInput
+}
+
+export type CatalogoServicioCreateOrConnectWithoutAsignacionesTareaInput = {
+  where: Prisma.CatalogoServicioWhereUniqueInput
+  create: Prisma.XOR<Prisma.CatalogoServicioCreateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedCreateWithoutAsignacionesTareaInput>
+}
+
+export type CatalogoServicioUpsertWithoutAsignacionesTareaInput = {
+  update: Prisma.XOR<Prisma.CatalogoServicioUpdateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedUpdateWithoutAsignacionesTareaInput>
+  create: Prisma.XOR<Prisma.CatalogoServicioCreateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedCreateWithoutAsignacionesTareaInput>
+  where?: Prisma.CatalogoServicioWhereInput
+}
+
+export type CatalogoServicioUpdateToOneWithWhereWithoutAsignacionesTareaInput = {
+  where?: Prisma.CatalogoServicioWhereInput
+  data: Prisma.XOR<Prisma.CatalogoServicioUpdateWithoutAsignacionesTareaInput, Prisma.CatalogoServicioUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
+export type CatalogoServicioUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tipoServicio?: Prisma.CatalogoTipoServicioUpdateOneWithoutServiciosNestedInput
+  serviciosFase?: Prisma.ServicioFaseUpdateManyWithoutServicioNestedInput
+}
+
+export type CatalogoServicioUncheckedUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tipoServicioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.StringFieldUpdateOperationsInput | string
+  costoUnitario?: Prisma.FloatFieldUpdateOperationsInput | number
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviciosFase?: Prisma.ServicioFaseUncheckedUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioCreateManyTipoServicioInput = {
@@ -643,6 +734,7 @@ export type CatalogoServicioUpdateWithoutTipoServicioInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviciosFase?: Prisma.ServicioFaseUpdateManyWithoutServicioNestedInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioUncheckedUpdateWithoutTipoServicioInput = {
@@ -654,6 +746,7 @@ export type CatalogoServicioUncheckedUpdateWithoutTipoServicioInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviciosFase?: Prisma.ServicioFaseUncheckedUpdateManyWithoutServicioNestedInput
+  asignacionesTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutServicioNestedInput
 }
 
 export type CatalogoServicioUncheckedUpdateManyWithoutTipoServicioInput = {
@@ -673,10 +766,12 @@ export type CatalogoServicioUncheckedUpdateManyWithoutTipoServicioInput = {
 
 export type CatalogoServicioCountOutputType = {
   serviciosFase: number
+  asignacionesTarea: number
 }
 
 export type CatalogoServicioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   serviciosFase?: boolean | CatalogoServicioCountOutputTypeCountServiciosFaseArgs
+  asignacionesTarea?: boolean | CatalogoServicioCountOutputTypeCountAsignacionesTareaArgs
 }
 
 /**
@@ -696,6 +791,13 @@ export type CatalogoServicioCountOutputTypeCountServiciosFaseArgs<ExtArgs extend
   where?: Prisma.ServicioFaseWhereInput
 }
 
+/**
+ * CatalogoServicioCountOutputType without action
+ */
+export type CatalogoServicioCountOutputTypeCountAsignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServicioAsignadoTareaWhereInput
+}
+
 
 export type CatalogoServicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -708,6 +810,7 @@ export type CatalogoServicioSelect<ExtArgs extends runtime.Types.Extensions.Inte
   updatedAt?: boolean
   tipoServicio?: boolean | Prisma.CatalogoServicio$tipoServicioArgs<ExtArgs>
   serviciosFase?: boolean | Prisma.CatalogoServicio$serviciosFaseArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.CatalogoServicio$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoServicioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["catalogoServicio"]>
 
@@ -728,6 +831,7 @@ export type CatalogoServicioOmit<ExtArgs extends runtime.Types.Extensions.Intern
 export type CatalogoServicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tipoServicio?: boolean | Prisma.CatalogoServicio$tipoServicioArgs<ExtArgs>
   serviciosFase?: boolean | Prisma.CatalogoServicio$serviciosFaseArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.CatalogoServicio$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.CatalogoServicioCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -736,6 +840,7 @@ export type $CatalogoServicioPayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     tipoServicio: Prisma.$CatalogoTipoServicioPayload<ExtArgs> | null
     serviciosFase: Prisma.$ServicioFasePayload<ExtArgs>[]
+    asignacionesTarea: Prisma.$ServicioAsignadoTareaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1088,6 +1193,7 @@ export interface Prisma__CatalogoServicioClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tipoServicio<T extends Prisma.CatalogoServicio$tipoServicioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoServicio$tipoServicioArgs<ExtArgs>>): Prisma.Prisma__CatalogoTipoServicioClient<runtime.Types.Result.GetResult<Prisma.$CatalogoTipoServicioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   serviciosFase<T extends Prisma.CatalogoServicio$serviciosFaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoServicio$serviciosFaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  asignacionesTarea<T extends Prisma.CatalogoServicio$asignacionesTareaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CatalogoServicio$asignacionesTareaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1508,6 +1614,30 @@ export type CatalogoServicio$serviciosFaseArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.ServicioFaseScalarFieldEnum | Prisma.ServicioFaseScalarFieldEnum[]
+}
+
+/**
+ * CatalogoServicio.asignacionesTarea
+ */
+export type CatalogoServicio$asignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServicioAsignadoTarea
+   */
+  select?: Prisma.ServicioAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServicioAsignadoTarea
+   */
+  omit?: Prisma.ServicioAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServicioAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.ServicioAsignadoTareaWhereInput
+  orderBy?: Prisma.ServicioAsignadoTareaOrderByWithRelationInput | Prisma.ServicioAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.ServicioAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServicioAsignadoTareaScalarFieldEnum | Prisma.ServicioAsignadoTareaScalarFieldEnum[]
 }
 
 /**

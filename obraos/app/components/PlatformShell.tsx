@@ -1,283 +1,138 @@
-"use client";
-
-import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import Link from "./Link";
-import { usePathname } from "next/navigation";
-import { useTheme } from "./ThemeProvider";
-import { signOut } from "next-auth/react";
-import {
-  Box,
-  Drawer,
-  Typography,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Avatar,
-  IconButton,
-  Divider,
-  Menu,
-  MenuItem,
-  ListItemIcon as MenuItemIcon,
-} from "@mui/material";
-import {
-  Home as HomeIcon,
-  ViewInAr as VisorIcon,
-  Inventory as MaterialesIcon,
-  Assignment as PlanillaIcon,
-  AttachMoney as ServiciosIcon,
-  People as EquipoIcon,
-  DarkMode as MoonIcon,
-  LightMode as SunIcon,
-  Person as PersonIcon,
-  AdminPanelSettings as AdminPortalIcon,
-  Logout as LogoutIcon,
-} from "@mui/icons-material";
-import { MODULOS, puedeVerModulo } from "@/lib/permissions";
+import { PlatformTopbar } from "./PlatformTopbar";
+import type { Session } from "next-auth";
 
-const DRAWER_WIDTH = 240;
+function getUserName(user: Session["user"] | undefined): string | undefined {
+  if (!user) return undefined;
+  const u = user as { nombre?: string; name?: string };
+  return u.nombre ?? u.name ?? undefined;
+}
 
-const icons: Record<string, React.ReactNode> = {
-  proyectos: <HomeIcon fontSize="small" />,
-  visor: <VisorIcon fontSize="small" />,
-  materiales: <MaterialesIcon fontSize="small" />,
-  planilla: <PlanillaIcon fontSize="small" />,
-  servicios: <ServiciosIcon fontSize="small" />,
-  equipo: <EquipoIcon fontSize="small" />,
-};
+const NAV_MAIN = [
+  { href: "/platform/proyectos", label: "Proyectos", icon: "grid" },
+  { href: "/platform/visor", label: "Control de Obra", icon: "view" },
+];
 
-const navByModulo: Record<string, { href: string; label: string; iconKey: string }> = {
-  proyectos: { href: "/platform/proyectos", label: "Proyectos", iconKey: "proyectos" },
-  visor: { href: "/platform/visor", label: "Visor", iconKey: "visor" },
-  materiales: { href: "/platform/materiales", label: "Materiales", iconKey: "materiales" },
-  planilla: { href: "/platform/planilla", label: "Planilla", iconKey: "planilla" },
-  servicios: { href: "/platform/servicios", label: "Costos varios", iconKey: "servicios" },
-  equipo: { href: "/platform/equipo", label: "Equipo PM", iconKey: "equipo" },
-};
+const NAV_GESTION = [
+  { href: "/platform/materiales", label: "Materiales", icon: "box" },
+  { href: "/platform/planilla", label: "Planilla", icon: "clipboard" },
+  { href: "/platform/servicios", label: "Costos varios", icon: "dollar" },
+  { href: "/platform/equipo", label: "Equipo PM", icon: "users" },
+];
 
-function NavItem({
-  href,
-  label,
-  iconKey,
-  pathname,
-}: {
-  href: string;
-  label: string;
-  iconKey: string;
-  pathname: string;
-}) {
-  const active =
-    pathname === href || (href !== "/platform" && pathname.startsWith(href));
-
-  return (
-    <ListItemButton
-      component={Link}
-      href={href}
-      selected={active}
-      sx={{
-        color: active ? "primary.main" : "text.secondary",
-        "& .MuiListItemIcon-root": {
-          color: active ? "primary.main" : "text.secondary",
-        },
-      }}
-    >
-      <ListItemIcon sx={{ minWidth: 40 }}>{icons[iconKey]}</ListItemIcon>
-      <ListItemText primary={label} primaryTypographyProps={{ fontWeight: active ? 600 : 400 }} />
-    </ListItemButton>
-  );
+function NavIcon({ icon }: { icon: string }) {
+  const className = "h-5 w-5 shrink-0";
+  switch (icon) {
+    case "grid":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+      );
+    case "view":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      );
+    case "box":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+      );
+    case "clipboard":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      );
+    case "dollar":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      );
+    case "users":
+      return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      );
+    default:
+      return null;
+  }
 }
 
 export function PlatformShell({
-  children,
   session,
+  children,
 }: {
+  session: Session | null;
   children: React.ReactNode;
-  session: { user?: { nombre?: string; role?: string; modulosAcceso?: string[] } } | null;
 }) {
-  const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-
-  const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const rol = session?.user?.role ?? "";
-  const modulosAcceso = session?.user?.modulosAcceso;
-  const navPrincipal = MODULOS.slice(0, 2).filter((m) =>
-    puedeVerModulo(rol, m, modulosAcceso)
-  );
-  const navGestion = MODULOS.slice(2).filter((m) =>
-    puedeVerModulo(rol, m, modulosAcceso)
-  );
-
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>
-      {/* Sidebar - MUI Drawer */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: DRAWER_WIDTH,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: DRAWER_WIDTH,
-            boxSizing: "border-box",
-            bgcolor: "#111c44",
-            color: "white",
-          },
+    <div className="flex min-h-screen" style={{ background: "var(--bg)" }}>
+      <aside
+        className="flex w-64 shrink-0 flex-col"
+        style={{
+          background: "var(--sidebar-bg)",
+          borderRight: "1px solid var(--sidebar-border)",
         }}
       >
-        <Box sx={{ p: 2.5, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Image
-            src="/obri.png"
-            alt="obraOS"
-            width={160}
-            height={40}
-            priority
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
-        <Box sx={{ flex: 1, overflow: "auto", py: 2, px: 1 }}>
-          {navPrincipal.length > 0 && (
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="caption" sx={{ px: 2, color: "rgba(255,255,255,0.7)", letterSpacing: 1.5, display: "block", mb: 1 }}>
-                Principal
-              </Typography>
-              <List dense disablePadding>
-                {navPrincipal.map((mod) => {
-                  const item = navByModulo[mod];
-                  return item ? (
-                    <NavItem key={mod} {...item} pathname={pathname} />
-                  ) : null;
-                })}
-              </List>
-            </Box>
-          )}
-          {navGestion.length > 0 && (
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="caption" sx={{ px: 2, color: "rgba(255,255,255,0.7)", letterSpacing: 1.5, display: "block", mb: 1 }}>
-                Gestión
-              </Typography>
-              <List dense disablePadding>
-                {navGestion.map((mod) => {
-                  const item = navByModulo[mod];
-                  return item ? (
-                    <NavItem key={mod} {...item} pathname={pathname} />
-                  ) : null;
-                })}
-              </List>
-            </Box>
-          )}
-        </Box>
-      </Drawer>
-
-      {/* Main content */}
-      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, bgcolor: "background.default" }}>
-        <Box sx={{ flexShrink: 0, p: 2, pt: 2.5 }}>
-          <Box
-            component="header"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "98%",
-              mx: "auto",
-              px: 3,
-              py: 1.5,
-              borderRadius: "16px",
-              bgcolor: "background.paper",
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.15), 0 0 1px rgba(255,255,255,0.08)",
-            }}
-          >
-            <Box sx={{ flex: 1 }} />
-            <IconButton
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              aria-label={theme === "light" ? "Cambiar a oscuro" : "Cambiar a claro"}
-              size="small"
-              sx={{
-                bgcolor: "action.hover",
-                mr: 1,
-                "&:hover": { bgcolor: "action.selected" },
-              }}
+        <div className="flex flex-col items-center gap-4 py-6">
+          <Link href="/platform/proyectos" className="block">
+            <Image
+              src="/obri.png"
+              alt="obraOS"
+              width={168}
+              height={168}
+              className="h-[10.5rem] w-[10.5rem] object-contain dark:invert-0 invert"
+            />
+          </Link>
+        </div>
+        <nav className="flex flex-1 flex-col gap-0.5 px-3 pb-4">
+          <span className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider" style={{ color: "var(--text3)" }}>
+            Menú
+          </span>
+          {NAV_MAIN.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition hover:bg-[var(--sidebar-hover)]"
+              style={{ color: "var(--sidebar-text-muted)" }}
             >
-              {theme === "light" ? <MoonIcon /> : <SunIcon />}
-            </IconButton>
-            <IconButton
-              onClick={handleAvatarClick}
-              aria-controls={menuOpen ? "user-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={menuOpen ? "true" : undefined}
-              sx={{ p: 0.5 }}
+              <NavIcon icon={item.icon} />
+              {item.label}
+            </Link>
+          ))}
+          <span className="mt-4 px-3 py-2 text-[10px] font-bold uppercase tracking-wider" style={{ color: "var(--text3)" }}>
+            Gestión
+          </span>
+          {NAV_GESTION.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition hover:bg-[var(--sidebar-hover)]"
+              style={{ color: "var(--sidebar-text-muted)" }}
             >
-              <Avatar
-                sx={{
-                  width: 36,
-                  height: 36,
-                  bgcolor: "primary.main",
-                  color: "white",
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                }}
-              >
-                {session?.user?.nombre?.slice(0, 2).toUpperCase() ?? "?"}
-              </Avatar>
-            </IconButton>
-            <Menu
-              id="user-menu"
-              anchorEl={anchorEl}
-              open={menuOpen}
-              onClose={handleMenuClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              transformOrigin={{ vertical: "top", horizontal: "right" }}
-              slotProps={{
-                paper: {
-                  elevation: 8,
-                  sx: { mt: 1.5, minWidth: 200, borderRadius: 2 },
-                },
-              }}
-            >
-              <MenuItem component={Link} href="/platform" onClick={handleMenuClose}>
-                <MenuItemIcon>
-                  <PersonIcon fontSize="small" />
-                </MenuItemIcon>
-                Mi perfil
-              </MenuItem>
-              {session?.user?.role === "ADMIN" && (
-                <MenuItem component={Link} href="/admin" onClick={handleMenuClose}>
-                  <MenuItemIcon>
-                    <AdminPortalIcon fontSize="small" />
-                  </MenuItemIcon>
-                  Admin portal
-                </MenuItem>
-              )}
-              <Divider />
-              <MenuItem
-                onClick={() => {
-                  handleMenuClose();
-                  signOut({ callbackUrl: "/auth/login" });
-                }}
-                sx={{ color: "error.main" }}
-              >
-                <MenuItemIcon sx={{ color: "error.main" }}>
-                  <LogoutIcon fontSize="small" />
-                </MenuItemIcon>
-                Cerrar sesión
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Box>
-        <Box component="main" sx={{ flex: 1, overflow: "auto", px: 3, pb: 3 }}>
+              <NavIcon icon={item.icon} />
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <PlatformTopbar userName={getUserName(session?.user)} />
+        <main
+          className="flex-1 overflow-auto p-6"
+          style={{ background: "var(--bg2)", color: "var(--text)" }}
+        >
           {children}
-        </Box>
-      </Box>
-    </Box>
+        </main>
+      </div>
+    </div>
   );
 }

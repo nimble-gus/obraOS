@@ -28,10 +28,14 @@ export type AggregateTarea = {
 
 export type TareaAvgAggregateOutputType = {
   orden: number | null
+  cantidadM2: number | null
+  cantidadM3: number | null
 }
 
 export type TareaSumAggregateOutputType = {
   orden: number | null
+  cantidadM2: number | null
+  cantidadM3: number | null
 }
 
 export type TareaMinAggregateOutputType = {
@@ -39,6 +43,10 @@ export type TareaMinAggregateOutputType = {
   faseId: string | null
   nombre: string | null
   orden: number | null
+  fechaInicio: Date | null
+  fechaFin: Date | null
+  cantidadM2: number | null
+  cantidadM3: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +56,10 @@ export type TareaMaxAggregateOutputType = {
   faseId: string | null
   nombre: string | null
   orden: number | null
+  fechaInicio: Date | null
+  fechaFin: Date | null
+  cantidadM2: number | null
+  cantidadM3: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,6 +69,10 @@ export type TareaCountAggregateOutputType = {
   faseId: number
   nombre: number
   orden: number
+  fechaInicio: number
+  fechaFin: number
+  cantidadM2: number
+  cantidadM3: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,10 +81,14 @@ export type TareaCountAggregateOutputType = {
 
 export type TareaAvgAggregateInputType = {
   orden?: true
+  cantidadM2?: true
+  cantidadM3?: true
 }
 
 export type TareaSumAggregateInputType = {
   orden?: true
+  cantidadM2?: true
+  cantidadM3?: true
 }
 
 export type TareaMinAggregateInputType = {
@@ -76,6 +96,10 @@ export type TareaMinAggregateInputType = {
   faseId?: true
   nombre?: true
   orden?: true
+  fechaInicio?: true
+  fechaFin?: true
+  cantidadM2?: true
+  cantidadM3?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -85,6 +109,10 @@ export type TareaMaxAggregateInputType = {
   faseId?: true
   nombre?: true
   orden?: true
+  fechaInicio?: true
+  fechaFin?: true
+  cantidadM2?: true
+  cantidadM3?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +122,10 @@ export type TareaCountAggregateInputType = {
   faseId?: true
   nombre?: true
   orden?: true
+  fechaInicio?: true
+  fechaFin?: true
+  cantidadM2?: true
+  cantidadM3?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -190,6 +222,10 @@ export type TareaGroupByOutputType = {
   faseId: string
   nombre: string
   orden: number
+  fechaInicio: Date | null
+  fechaFin: Date | null
+  cantidadM2: number
+  cantidadM3: number
   createdAt: Date
   updatedAt: Date
   _count: TareaCountAggregateOutputType | null
@@ -222,10 +258,18 @@ export type TareaWhereInput = {
   faseId?: Prisma.StringFilter<"Tarea"> | string
   nombre?: Prisma.StringFilter<"Tarea"> | string
   orden?: Prisma.IntFilter<"Tarea"> | number
+  fechaInicio?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  fechaFin?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  cantidadM2?: Prisma.FloatFilter<"Tarea"> | number
+  cantidadM3?: Prisma.FloatFilter<"Tarea"> | number
   createdAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
   fase?: Prisma.XOR<Prisma.FaseScalarRelationFilter, Prisma.FaseWhereInput>
   completadas?: Prisma.TareaCompletadaUnidadListRelationFilter
+  materialesAsignados?: Prisma.MaterialAsignadoTareaListRelationFilter
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaListRelationFilter
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaListRelationFilter
 }
 
 export type TareaOrderByWithRelationInput = {
@@ -233,10 +277,18 @@ export type TareaOrderByWithRelationInput = {
   faseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   orden?: Prisma.SortOrder
+  fechaInicio?: Prisma.SortOrderInput | Prisma.SortOrder
+  fechaFin?: Prisma.SortOrderInput | Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   fase?: Prisma.FaseOrderByWithRelationInput
   completadas?: Prisma.TareaCompletadaUnidadOrderByRelationAggregateInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaOrderByRelationAggregateInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaOrderByRelationAggregateInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaOrderByRelationAggregateInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaOrderByRelationAggregateInput
   _relevance?: Prisma.TareaOrderByRelevanceInput
 }
 
@@ -248,10 +300,18 @@ export type TareaWhereUniqueInput = Prisma.AtLeast<{
   faseId?: Prisma.StringFilter<"Tarea"> | string
   nombre?: Prisma.StringFilter<"Tarea"> | string
   orden?: Prisma.IntFilter<"Tarea"> | number
+  fechaInicio?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  fechaFin?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  cantidadM2?: Prisma.FloatFilter<"Tarea"> | number
+  cantidadM3?: Prisma.FloatFilter<"Tarea"> | number
   createdAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
   fase?: Prisma.XOR<Prisma.FaseScalarRelationFilter, Prisma.FaseWhereInput>
   completadas?: Prisma.TareaCompletadaUnidadListRelationFilter
+  materialesAsignados?: Prisma.MaterialAsignadoTareaListRelationFilter
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaListRelationFilter
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaListRelationFilter
 }, "id">
 
 export type TareaOrderByWithAggregationInput = {
@@ -259,6 +319,10 @@ export type TareaOrderByWithAggregationInput = {
   faseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   orden?: Prisma.SortOrder
+  fechaInicio?: Prisma.SortOrderInput | Prisma.SortOrder
+  fechaFin?: Prisma.SortOrderInput | Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TareaCountOrderByAggregateInput
@@ -276,6 +340,10 @@ export type TareaScalarWhereWithAggregatesInput = {
   faseId?: Prisma.StringWithAggregatesFilter<"Tarea"> | string
   nombre?: Prisma.StringWithAggregatesFilter<"Tarea"> | string
   orden?: Prisma.IntWithAggregatesFilter<"Tarea"> | number
+  fechaInicio?: Prisma.DateTimeNullableWithAggregatesFilter<"Tarea"> | Date | string | null
+  fechaFin?: Prisma.DateTimeNullableWithAggregatesFilter<"Tarea"> | Date | string | null
+  cantidadM2?: Prisma.FloatWithAggregatesFilter<"Tarea"> | number
+  cantidadM3?: Prisma.FloatWithAggregatesFilter<"Tarea"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tarea"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tarea"> | Date | string
 }
@@ -284,10 +352,18 @@ export type TareaCreateInput = {
   id?: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   fase: Prisma.FaseCreateNestedOneWithoutTareasInput
   completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
 }
 
 export type TareaUncheckedCreateInput = {
@@ -295,19 +371,35 @@ export type TareaUncheckedCreateInput = {
   faseId: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
 }
 
 export type TareaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
   completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaUncheckedUpdateInput = {
@@ -315,9 +407,17 @@ export type TareaUncheckedUpdateInput = {
   faseId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaCreateManyInput = {
@@ -325,6 +425,10 @@ export type TareaCreateManyInput = {
   faseId: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -333,6 +437,10 @@ export type TareaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -342,8 +450,17 @@ export type TareaUncheckedUpdateManyInput = {
   faseId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TareaScalarRelationFilter = {
+  is?: Prisma.TareaWhereInput
+  isNot?: Prisma.TareaWhereInput
 }
 
 export type TareaListRelationFilter = {
@@ -367,12 +484,18 @@ export type TareaCountOrderByAggregateInput = {
   faseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   orden?: Prisma.SortOrder
+  fechaInicio?: Prisma.SortOrder
+  fechaFin?: Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TareaAvgOrderByAggregateInput = {
   orden?: Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
 }
 
 export type TareaMaxOrderByAggregateInput = {
@@ -380,6 +503,10 @@ export type TareaMaxOrderByAggregateInput = {
   faseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   orden?: Prisma.SortOrder
+  fechaInicio?: Prisma.SortOrder
+  fechaFin?: Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -389,17 +516,60 @@ export type TareaMinOrderByAggregateInput = {
   faseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   orden?: Prisma.SortOrder
+  fechaInicio?: Prisma.SortOrder
+  fechaFin?: Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TareaSumOrderByAggregateInput = {
   orden?: Prisma.SortOrder
+  cantidadM2?: Prisma.SortOrder
+  cantidadM3?: Prisma.SortOrder
 }
 
-export type TareaScalarRelationFilter = {
-  is?: Prisma.TareaWhereInput
-  isNot?: Prisma.TareaWhereInput
+export type TareaCreateNestedOneWithoutPlanillasBloqueAsignadasInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasBloqueAsignadasInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutPlanillasBloqueAsignadasInput
+  connect?: Prisma.TareaWhereUniqueInput
+}
+
+export type TareaUpdateOneRequiredWithoutPlanillasBloqueAsignadasNestedInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasBloqueAsignadasInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutPlanillasBloqueAsignadasInput
+  upsert?: Prisma.TareaUpsertWithoutPlanillasBloqueAsignadasInput
+  connect?: Prisma.TareaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TareaUpdateToOneWithWhereWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUpdateWithoutPlanillasBloqueAsignadasInput>, Prisma.TareaUncheckedUpdateWithoutPlanillasBloqueAsignadasInput>
+}
+
+export type TareaCreateNestedOneWithoutPlanillasRegistroAsignadasInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasRegistroAsignadasInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutPlanillasRegistroAsignadasInput
+  connect?: Prisma.TareaWhereUniqueInput
+}
+
+export type TareaUpdateOneRequiredWithoutPlanillasRegistroAsignadasNestedInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasRegistroAsignadasInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutPlanillasRegistroAsignadasInput
+  upsert?: Prisma.TareaUpsertWithoutPlanillasRegistroAsignadasInput
+  connect?: Prisma.TareaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TareaUpdateToOneWithWhereWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUpdateWithoutPlanillasRegistroAsignadasInput>, Prisma.TareaUncheckedUpdateWithoutPlanillasRegistroAsignadasInput>
+}
+
+export type TareaCreateNestedOneWithoutServiciosAsignadosInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedCreateWithoutServiciosAsignadosInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutServiciosAsignadosInput
+  connect?: Prisma.TareaWhereUniqueInput
+}
+
+export type TareaUpdateOneRequiredWithoutServiciosAsignadosNestedInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedCreateWithoutServiciosAsignadosInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutServiciosAsignadosInput
+  upsert?: Prisma.TareaUpsertWithoutServiciosAsignadosInput
+  connect?: Prisma.TareaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TareaUpdateToOneWithWhereWithoutServiciosAsignadosInput, Prisma.TareaUpdateWithoutServiciosAsignadosInput>, Prisma.TareaUncheckedUpdateWithoutServiciosAsignadosInput>
 }
 
 export type TareaCreateNestedManyWithoutFaseInput = {
@@ -444,6 +614,20 @@ export type TareaUncheckedUpdateManyWithoutFaseNestedInput = {
   deleteMany?: Prisma.TareaScalarWhereInput | Prisma.TareaScalarWhereInput[]
 }
 
+export type TareaCreateNestedOneWithoutMaterialesAsignadosInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedCreateWithoutMaterialesAsignadosInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutMaterialesAsignadosInput
+  connect?: Prisma.TareaWhereUniqueInput
+}
+
+export type TareaUpdateOneRequiredWithoutMaterialesAsignadosNestedInput = {
+  create?: Prisma.XOR<Prisma.TareaCreateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedCreateWithoutMaterialesAsignadosInput>
+  connectOrCreate?: Prisma.TareaCreateOrConnectWithoutMaterialesAsignadosInput
+  upsert?: Prisma.TareaUpsertWithoutMaterialesAsignadosInput
+  connect?: Prisma.TareaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TareaUpdateToOneWithWhereWithoutMaterialesAsignadosInput, Prisma.TareaUpdateWithoutMaterialesAsignadosInput>, Prisma.TareaUncheckedUpdateWithoutMaterialesAsignadosInput>
+}
+
 export type TareaCreateNestedOneWithoutCompletadasInput = {
   create?: Prisma.XOR<Prisma.TareaCreateWithoutCompletadasInput, Prisma.TareaUncheckedCreateWithoutCompletadasInput>
   connectOrCreate?: Prisma.TareaCreateOrConnectWithoutCompletadasInput
@@ -458,22 +642,290 @@ export type TareaUpdateOneRequiredWithoutCompletadasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TareaUpdateToOneWithWhereWithoutCompletadasInput, Prisma.TareaUpdateWithoutCompletadasInput>, Prisma.TareaUncheckedUpdateWithoutCompletadasInput>
 }
 
+export type TareaCreateWithoutPlanillasBloqueAsignadasInput = {
+  id?: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fase: Prisma.FaseCreateNestedOneWithoutTareasInput
+  completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
+}
+
+export type TareaUncheckedCreateWithoutPlanillasBloqueAsignadasInput = {
+  id?: string
+  faseId: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+}
+
+export type TareaCreateOrConnectWithoutPlanillasBloqueAsignadasInput = {
+  where: Prisma.TareaWhereUniqueInput
+  create: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasBloqueAsignadasInput>
+}
+
+export type TareaUpsertWithoutPlanillasBloqueAsignadasInput = {
+  update: Prisma.XOR<Prisma.TareaUpdateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedUpdateWithoutPlanillasBloqueAsignadasInput>
+  create: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasBloqueAsignadasInput>
+  where?: Prisma.TareaWhereInput
+}
+
+export type TareaUpdateToOneWithWhereWithoutPlanillasBloqueAsignadasInput = {
+  where?: Prisma.TareaWhereInput
+  data: Prisma.XOR<Prisma.TareaUpdateWithoutPlanillasBloqueAsignadasInput, Prisma.TareaUncheckedUpdateWithoutPlanillasBloqueAsignadasInput>
+}
+
+export type TareaUpdateWithoutPlanillasBloqueAsignadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
+  completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaUncheckedUpdateWithoutPlanillasBloqueAsignadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  faseId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaCreateWithoutPlanillasRegistroAsignadasInput = {
+  id?: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fase: Prisma.FaseCreateNestedOneWithoutTareasInput
+  completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
+}
+
+export type TareaUncheckedCreateWithoutPlanillasRegistroAsignadasInput = {
+  id?: string
+  faseId: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+}
+
+export type TareaCreateOrConnectWithoutPlanillasRegistroAsignadasInput = {
+  where: Prisma.TareaWhereUniqueInput
+  create: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasRegistroAsignadasInput>
+}
+
+export type TareaUpsertWithoutPlanillasRegistroAsignadasInput = {
+  update: Prisma.XOR<Prisma.TareaUpdateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedUpdateWithoutPlanillasRegistroAsignadasInput>
+  create: Prisma.XOR<Prisma.TareaCreateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedCreateWithoutPlanillasRegistroAsignadasInput>
+  where?: Prisma.TareaWhereInput
+}
+
+export type TareaUpdateToOneWithWhereWithoutPlanillasRegistroAsignadasInput = {
+  where?: Prisma.TareaWhereInput
+  data: Prisma.XOR<Prisma.TareaUpdateWithoutPlanillasRegistroAsignadasInput, Prisma.TareaUncheckedUpdateWithoutPlanillasRegistroAsignadasInput>
+}
+
+export type TareaUpdateWithoutPlanillasRegistroAsignadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
+  completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaUncheckedUpdateWithoutPlanillasRegistroAsignadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  faseId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaCreateWithoutServiciosAsignadosInput = {
+  id?: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fase: Prisma.FaseCreateNestedOneWithoutTareasInput
+  completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+}
+
+export type TareaUncheckedCreateWithoutServiciosAsignadosInput = {
+  id?: string
+  faseId: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+}
+
+export type TareaCreateOrConnectWithoutServiciosAsignadosInput = {
+  where: Prisma.TareaWhereUniqueInput
+  create: Prisma.XOR<Prisma.TareaCreateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedCreateWithoutServiciosAsignadosInput>
+}
+
+export type TareaUpsertWithoutServiciosAsignadosInput = {
+  update: Prisma.XOR<Prisma.TareaUpdateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedUpdateWithoutServiciosAsignadosInput>
+  create: Prisma.XOR<Prisma.TareaCreateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedCreateWithoutServiciosAsignadosInput>
+  where?: Prisma.TareaWhereInput
+}
+
+export type TareaUpdateToOneWithWhereWithoutServiciosAsignadosInput = {
+  where?: Prisma.TareaWhereInput
+  data: Prisma.XOR<Prisma.TareaUpdateWithoutServiciosAsignadosInput, Prisma.TareaUncheckedUpdateWithoutServiciosAsignadosInput>
+}
+
+export type TareaUpdateWithoutServiciosAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
+  completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaUncheckedUpdateWithoutServiciosAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  faseId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+}
+
 export type TareaCreateWithoutFaseInput = {
   id?: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
 }
 
 export type TareaUncheckedCreateWithoutFaseInput = {
   id?: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
 }
 
 export type TareaCreateOrConnectWithoutFaseInput = {
@@ -510,17 +962,113 @@ export type TareaScalarWhereInput = {
   faseId?: Prisma.StringFilter<"Tarea"> | string
   nombre?: Prisma.StringFilter<"Tarea"> | string
   orden?: Prisma.IntFilter<"Tarea"> | number
+  fechaInicio?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  fechaFin?: Prisma.DateTimeNullableFilter<"Tarea"> | Date | string | null
+  cantidadM2?: Prisma.FloatFilter<"Tarea"> | number
+  cantidadM3?: Prisma.FloatFilter<"Tarea"> | number
   createdAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tarea"> | Date | string
+}
+
+export type TareaCreateWithoutMaterialesAsignadosInput = {
+  id?: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fase: Prisma.FaseCreateNestedOneWithoutTareasInput
+  completadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
+}
+
+export type TareaUncheckedCreateWithoutMaterialesAsignadosInput = {
+  id?: string
+  faseId: string
+  nombre: string
+  orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+}
+
+export type TareaCreateOrConnectWithoutMaterialesAsignadosInput = {
+  where: Prisma.TareaWhereUniqueInput
+  create: Prisma.XOR<Prisma.TareaCreateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedCreateWithoutMaterialesAsignadosInput>
+}
+
+export type TareaUpsertWithoutMaterialesAsignadosInput = {
+  update: Prisma.XOR<Prisma.TareaUpdateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedUpdateWithoutMaterialesAsignadosInput>
+  create: Prisma.XOR<Prisma.TareaCreateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedCreateWithoutMaterialesAsignadosInput>
+  where?: Prisma.TareaWhereInput
+}
+
+export type TareaUpdateToOneWithWhereWithoutMaterialesAsignadosInput = {
+  where?: Prisma.TareaWhereInput
+  data: Prisma.XOR<Prisma.TareaUpdateWithoutMaterialesAsignadosInput, Prisma.TareaUncheckedUpdateWithoutMaterialesAsignadosInput>
+}
+
+export type TareaUpdateWithoutMaterialesAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
+  completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
+}
+
+export type TareaUncheckedUpdateWithoutMaterialesAsignadosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  faseId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaCreateWithoutCompletadasInput = {
   id?: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   fase: Prisma.FaseCreateNestedOneWithoutTareasInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutTareaInput
 }
 
 export type TareaUncheckedCreateWithoutCompletadasInput = {
@@ -528,8 +1076,16 @@ export type TareaUncheckedCreateWithoutCompletadasInput = {
   faseId: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutTareaInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutTareaInput
 }
 
 export type TareaCreateOrConnectWithoutCompletadasInput = {
@@ -552,9 +1108,17 @@ export type TareaUpdateWithoutCompletadasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fase?: Prisma.FaseUpdateOneRequiredWithoutTareasNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaUncheckedUpdateWithoutCompletadasInput = {
@@ -562,14 +1126,26 @@ export type TareaUncheckedUpdateWithoutCompletadasInput = {
   faseId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaCreateManyFaseInput = {
   id?: string
   nombre: string
   orden?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  cantidadM2?: number
+  cantidadM3?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -578,24 +1154,44 @@ export type TareaUpdateWithoutFaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaUncheckedUpdateWithoutFaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutTareaNestedInput
+  materialesAsignados?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutTareaNestedInput
+  serviciosAsignados?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutTareaNestedInput
 }
 
 export type TareaUncheckedUpdateManyWithoutFaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   orden?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cantidadM2?: Prisma.FloatFieldUpdateOperationsInput | number
+  cantidadM3?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -607,10 +1203,18 @@ export type TareaUncheckedUpdateManyWithoutFaseInput = {
 
 export type TareaCountOutputType = {
   completadas: number
+  materialesAsignados: number
+  planillasRegistroAsignadas: number
+  planillasBloqueAsignadas: number
+  serviciosAsignados: number
 }
 
 export type TareaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   completadas?: boolean | TareaCountOutputTypeCountCompletadasArgs
+  materialesAsignados?: boolean | TareaCountOutputTypeCountMaterialesAsignadosArgs
+  planillasRegistroAsignadas?: boolean | TareaCountOutputTypeCountPlanillasRegistroAsignadasArgs
+  planillasBloqueAsignadas?: boolean | TareaCountOutputTypeCountPlanillasBloqueAsignadasArgs
+  serviciosAsignados?: boolean | TareaCountOutputTypeCountServiciosAsignadosArgs
 }
 
 /**
@@ -630,16 +1234,52 @@ export type TareaCountOutputTypeCountCompletadasArgs<ExtArgs extends runtime.Typ
   where?: Prisma.TareaCompletadaUnidadWhereInput
 }
 
+/**
+ * TareaCountOutputType without action
+ */
+export type TareaCountOutputTypeCountMaterialesAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialAsignadoTareaWhereInput
+}
+
+/**
+ * TareaCountOutputType without action
+ */
+export type TareaCountOutputTypeCountPlanillasRegistroAsignadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlanillaRegistroAsignadoTareaWhereInput
+}
+
+/**
+ * TareaCountOutputType without action
+ */
+export type TareaCountOutputTypeCountPlanillasBloqueAsignadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlanillaAsignadaTareaWhereInput
+}
+
+/**
+ * TareaCountOutputType without action
+ */
+export type TareaCountOutputTypeCountServiciosAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServicioAsignadoTareaWhereInput
+}
+
 
 export type TareaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   faseId?: boolean
   nombre?: boolean
   orden?: boolean
+  fechaInicio?: boolean
+  fechaFin?: boolean
+  cantidadM2?: boolean
+  cantidadM3?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   fase?: boolean | Prisma.FaseDefaultArgs<ExtArgs>
   completadas?: boolean | Prisma.Tarea$completadasArgs<ExtArgs>
+  materialesAsignados?: boolean | Prisma.Tarea$materialesAsignadosArgs<ExtArgs>
+  planillasRegistroAsignadas?: boolean | Prisma.Tarea$planillasRegistroAsignadasArgs<ExtArgs>
+  planillasBloqueAsignadas?: boolean | Prisma.Tarea$planillasBloqueAsignadasArgs<ExtArgs>
+  serviciosAsignados?: boolean | Prisma.Tarea$serviciosAsignadosArgs<ExtArgs>
   _count?: boolean | Prisma.TareaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tarea"]>
 
@@ -650,14 +1290,22 @@ export type TareaSelectScalar = {
   faseId?: boolean
   nombre?: boolean
   orden?: boolean
+  fechaInicio?: boolean
+  fechaFin?: boolean
+  cantidadM2?: boolean
+  cantidadM3?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TareaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "faseId" | "nombre" | "orden" | "createdAt" | "updatedAt", ExtArgs["result"]["tarea"]>
+export type TareaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "faseId" | "nombre" | "orden" | "fechaInicio" | "fechaFin" | "cantidadM2" | "cantidadM3" | "createdAt" | "updatedAt", ExtArgs["result"]["tarea"]>
 export type TareaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fase?: boolean | Prisma.FaseDefaultArgs<ExtArgs>
   completadas?: boolean | Prisma.Tarea$completadasArgs<ExtArgs>
+  materialesAsignados?: boolean | Prisma.Tarea$materialesAsignadosArgs<ExtArgs>
+  planillasRegistroAsignadas?: boolean | Prisma.Tarea$planillasRegistroAsignadasArgs<ExtArgs>
+  planillasBloqueAsignadas?: boolean | Prisma.Tarea$planillasBloqueAsignadasArgs<ExtArgs>
+  serviciosAsignados?: boolean | Prisma.Tarea$serviciosAsignadosArgs<ExtArgs>
   _count?: boolean | Prisma.TareaCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -666,12 +1314,20 @@ export type $TareaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     fase: Prisma.$FasePayload<ExtArgs>
     completadas: Prisma.$TareaCompletadaUnidadPayload<ExtArgs>[]
+    materialesAsignados: Prisma.$MaterialAsignadoTareaPayload<ExtArgs>[]
+    planillasRegistroAsignadas: Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>[]
+    planillasBloqueAsignadas: Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>[]
+    serviciosAsignados: Prisma.$ServicioAsignadoTareaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     faseId: string
     nombre: string
     orden: number
+    fechaInicio: Date | null
+    fechaFin: Date | null
+    cantidadM2: number
+    cantidadM3: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["tarea"]>
@@ -1016,6 +1672,10 @@ export interface Prisma__TareaClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   fase<T extends Prisma.FaseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FaseDefaultArgs<ExtArgs>>): Prisma.Prisma__FaseClient<runtime.Types.Result.GetResult<Prisma.$FasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   completadas<T extends Prisma.Tarea$completadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tarea$completadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TareaCompletadaUnidadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  materialesAsignados<T extends Prisma.Tarea$materialesAsignadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tarea$materialesAsignadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  planillasRegistroAsignadas<T extends Prisma.Tarea$planillasRegistroAsignadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tarea$planillasRegistroAsignadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  planillasBloqueAsignadas<T extends Prisma.Tarea$planillasBloqueAsignadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tarea$planillasBloqueAsignadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviciosAsignados<T extends Prisma.Tarea$serviciosAsignadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tarea$serviciosAsignadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1049,6 +1709,10 @@ export interface TareaFieldRefs {
   readonly faseId: Prisma.FieldRef<"Tarea", 'String'>
   readonly nombre: Prisma.FieldRef<"Tarea", 'String'>
   readonly orden: Prisma.FieldRef<"Tarea", 'Int'>
+  readonly fechaInicio: Prisma.FieldRef<"Tarea", 'DateTime'>
+  readonly fechaFin: Prisma.FieldRef<"Tarea", 'DateTime'>
+  readonly cantidadM2: Prisma.FieldRef<"Tarea", 'Float'>
+  readonly cantidadM3: Prisma.FieldRef<"Tarea", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Tarea", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tarea", 'DateTime'>
 }
@@ -1415,6 +2079,102 @@ export type Tarea$completadasArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.TareaCompletadaUnidadScalarFieldEnum | Prisma.TareaCompletadaUnidadScalarFieldEnum[]
+}
+
+/**
+ * Tarea.materialesAsignados
+ */
+export type Tarea$materialesAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialAsignadoTarea
+   */
+  select?: Prisma.MaterialAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialAsignadoTarea
+   */
+  omit?: Prisma.MaterialAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.MaterialAsignadoTareaWhereInput
+  orderBy?: Prisma.MaterialAsignadoTareaOrderByWithRelationInput | Prisma.MaterialAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialAsignadoTareaScalarFieldEnum | Prisma.MaterialAsignadoTareaScalarFieldEnum[]
+}
+
+/**
+ * Tarea.planillasRegistroAsignadas
+ */
+export type Tarea$planillasRegistroAsignadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanillaRegistroAsignadoTarea
+   */
+  select?: Prisma.PlanillaRegistroAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlanillaRegistroAsignadoTarea
+   */
+  omit?: Prisma.PlanillaRegistroAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanillaRegistroAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.PlanillaRegistroAsignadoTareaWhereInput
+  orderBy?: Prisma.PlanillaRegistroAsignadoTareaOrderByWithRelationInput | Prisma.PlanillaRegistroAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.PlanillaRegistroAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlanillaRegistroAsignadoTareaScalarFieldEnum | Prisma.PlanillaRegistroAsignadoTareaScalarFieldEnum[]
+}
+
+/**
+ * Tarea.planillasBloqueAsignadas
+ */
+export type Tarea$planillasBloqueAsignadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanillaAsignadaTarea
+   */
+  select?: Prisma.PlanillaAsignadaTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlanillaAsignadaTarea
+   */
+  omit?: Prisma.PlanillaAsignadaTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanillaAsignadaTareaInclude<ExtArgs> | null
+  where?: Prisma.PlanillaAsignadaTareaWhereInput
+  orderBy?: Prisma.PlanillaAsignadaTareaOrderByWithRelationInput | Prisma.PlanillaAsignadaTareaOrderByWithRelationInput[]
+  cursor?: Prisma.PlanillaAsignadaTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlanillaAsignadaTareaScalarFieldEnum | Prisma.PlanillaAsignadaTareaScalarFieldEnum[]
+}
+
+/**
+ * Tarea.serviciosAsignados
+ */
+export type Tarea$serviciosAsignadosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServicioAsignadoTarea
+   */
+  select?: Prisma.ServicioAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServicioAsignadoTarea
+   */
+  omit?: Prisma.ServicioAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServicioAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.ServicioAsignadoTareaWhereInput
+  orderBy?: Prisma.ServicioAsignadoTareaOrderByWithRelationInput | Prisma.ServicioAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.ServicioAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServicioAsignadoTareaScalarFieldEnum | Prisma.ServicioAsignadoTareaScalarFieldEnum[]
 }
 
 /**

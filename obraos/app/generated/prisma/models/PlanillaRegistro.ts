@@ -27,103 +27,75 @@ export type AggregatePlanillaRegistro = {
 }
 
 export type PlanillaRegistroAvgAggregateOutputType = {
-  tarifaDia: number | null
-  diasTrabajados: number | null
-  horasExtras: number | null
-  tarifaHoraExtra: number | null
-  total: number | null
+  tarifa: number | null
 }
 
 export type PlanillaRegistroSumAggregateOutputType = {
-  tarifaDia: number | null
-  diasTrabajados: number | null
-  horasExtras: number | null
-  tarifaHoraExtra: number | null
-  total: number | null
+  tarifa: number | null
 }
 
 export type PlanillaRegistroMinAggregateOutputType = {
   id: string | null
   planillaId: string | null
-  nombrePersona: string | null
-  tarifaDia: number | null
-  diasTrabajados: number | null
-  horasExtras: number | null
-  tarifaHoraExtra: number | null
-  total: number | null
+  nombre: string | null
+  unidad: $Enums.UnidadPlanillaEnum | null
+  tarifa: number | null
+  createdAt: Date | null
 }
 
 export type PlanillaRegistroMaxAggregateOutputType = {
   id: string | null
   planillaId: string | null
-  nombrePersona: string | null
-  tarifaDia: number | null
-  diasTrabajados: number | null
-  horasExtras: number | null
-  tarifaHoraExtra: number | null
-  total: number | null
+  nombre: string | null
+  unidad: $Enums.UnidadPlanillaEnum | null
+  tarifa: number | null
+  createdAt: Date | null
 }
 
 export type PlanillaRegistroCountAggregateOutputType = {
   id: number
   planillaId: number
-  nombrePersona: number
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras: number
-  tarifaHoraExtra: number
-  total: number
+  nombre: number
+  unidad: number
+  tarifa: number
+  createdAt: number
   _all: number
 }
 
 
 export type PlanillaRegistroAvgAggregateInputType = {
-  tarifaDia?: true
-  diasTrabajados?: true
-  horasExtras?: true
-  tarifaHoraExtra?: true
-  total?: true
+  tarifa?: true
 }
 
 export type PlanillaRegistroSumAggregateInputType = {
-  tarifaDia?: true
-  diasTrabajados?: true
-  horasExtras?: true
-  tarifaHoraExtra?: true
-  total?: true
+  tarifa?: true
 }
 
 export type PlanillaRegistroMinAggregateInputType = {
   id?: true
   planillaId?: true
-  nombrePersona?: true
-  tarifaDia?: true
-  diasTrabajados?: true
-  horasExtras?: true
-  tarifaHoraExtra?: true
-  total?: true
+  nombre?: true
+  unidad?: true
+  tarifa?: true
+  createdAt?: true
 }
 
 export type PlanillaRegistroMaxAggregateInputType = {
   id?: true
   planillaId?: true
-  nombrePersona?: true
-  tarifaDia?: true
-  diasTrabajados?: true
-  horasExtras?: true
-  tarifaHoraExtra?: true
-  total?: true
+  nombre?: true
+  unidad?: true
+  tarifa?: true
+  createdAt?: true
 }
 
 export type PlanillaRegistroCountAggregateInputType = {
   id?: true
   planillaId?: true
-  nombrePersona?: true
-  tarifaDia?: true
-  diasTrabajados?: true
-  horasExtras?: true
-  tarifaHoraExtra?: true
-  total?: true
+  nombre?: true
+  unidad?: true
+  tarifa?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -216,12 +188,10 @@ export type PlanillaRegistroGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type PlanillaRegistroGroupByOutputType = {
   id: string
   planillaId: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras: number
-  tarifaHoraExtra: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt: Date
   _count: PlanillaRegistroCountAggregateOutputType | null
   _avg: PlanillaRegistroAvgAggregateOutputType | null
   _sum: PlanillaRegistroSumAggregateOutputType | null
@@ -250,25 +220,23 @@ export type PlanillaRegistroWhereInput = {
   NOT?: Prisma.PlanillaRegistroWhereInput | Prisma.PlanillaRegistroWhereInput[]
   id?: Prisma.StringFilter<"PlanillaRegistro"> | string
   planillaId?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  nombrePersona?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  tarifaDia?: Prisma.FloatFilter<"PlanillaRegistro"> | number
-  diasTrabajados?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  horasExtras?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  tarifaHoraExtra?: Prisma.FloatNullableFilter<"PlanillaRegistro"> | number | null
-  total?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  nombre?: Prisma.StringFilter<"PlanillaRegistro"> | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFilter<"PlanillaRegistro"> | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  createdAt?: Prisma.DateTimeFilter<"PlanillaRegistro"> | Date | string
   planilla?: Prisma.XOR<Prisma.PlanillaScalarRelationFilter, Prisma.PlanillaWhereInput>
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
 }
 
 export type PlanillaRegistroOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   planillaId?: Prisma.SortOrder
-  nombrePersona?: Prisma.SortOrder
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrderInput | Prisma.SortOrder
-  total?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
+  unidad?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   planilla?: Prisma.PlanillaOrderByWithRelationInput
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaOrderByRelationAggregateInput
   _relevance?: Prisma.PlanillaRegistroOrderByRelevanceInput
 }
 
@@ -278,24 +246,21 @@ export type PlanillaRegistroWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PlanillaRegistroWhereInput[]
   NOT?: Prisma.PlanillaRegistroWhereInput | Prisma.PlanillaRegistroWhereInput[]
   planillaId?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  nombrePersona?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  tarifaDia?: Prisma.FloatFilter<"PlanillaRegistro"> | number
-  diasTrabajados?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  horasExtras?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  tarifaHoraExtra?: Prisma.FloatNullableFilter<"PlanillaRegistro"> | number | null
-  total?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  nombre?: Prisma.StringFilter<"PlanillaRegistro"> | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFilter<"PlanillaRegistro"> | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  createdAt?: Prisma.DateTimeFilter<"PlanillaRegistro"> | Date | string
   planilla?: Prisma.XOR<Prisma.PlanillaScalarRelationFilter, Prisma.PlanillaWhereInput>
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
 }, "id">
 
 export type PlanillaRegistroOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   planillaId?: Prisma.SortOrder
-  nombrePersona?: Prisma.SortOrder
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrderInput | Prisma.SortOrder
-  total?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
+  unidad?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.PlanillaRegistroCountOrderByAggregateInput
   _avg?: Prisma.PlanillaRegistroAvgOrderByAggregateInput
   _max?: Prisma.PlanillaRegistroMaxOrderByAggregateInput
@@ -309,88 +274,76 @@ export type PlanillaRegistroScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PlanillaRegistroScalarWhereWithAggregatesInput | Prisma.PlanillaRegistroScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PlanillaRegistro"> | string
   planillaId?: Prisma.StringWithAggregatesFilter<"PlanillaRegistro"> | string
-  nombrePersona?: Prisma.StringWithAggregatesFilter<"PlanillaRegistro"> | string
-  tarifaDia?: Prisma.FloatWithAggregatesFilter<"PlanillaRegistro"> | number
-  diasTrabajados?: Prisma.IntWithAggregatesFilter<"PlanillaRegistro"> | number
-  horasExtras?: Prisma.IntWithAggregatesFilter<"PlanillaRegistro"> | number
-  tarifaHoraExtra?: Prisma.FloatNullableWithAggregatesFilter<"PlanillaRegistro"> | number | null
-  total?: Prisma.FloatWithAggregatesFilter<"PlanillaRegistro"> | number
+  nombre?: Prisma.StringWithAggregatesFilter<"PlanillaRegistro"> | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumWithAggregatesFilter<"PlanillaRegistro"> | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatWithAggregatesFilter<"PlanillaRegistro"> | number
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlanillaRegistro"> | Date | string
 }
 
 export type PlanillaRegistroCreateInput = {
   id?: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
   planilla: Prisma.PlanillaCreateNestedOneWithoutRegistrosInput
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutPlanillaRegistroInput
 }
 
 export type PlanillaRegistroUncheckedCreateInput = {
   id?: string
   planillaId: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutPlanillaRegistroInput
 }
 
 export type PlanillaRegistroUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   planilla?: Prisma.PlanillaUpdateOneRequiredWithoutRegistrosNestedInput
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutPlanillaRegistroNestedInput
 }
 
 export type PlanillaRegistroUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   planillaId?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutPlanillaRegistroNestedInput
 }
 
 export type PlanillaRegistroCreateManyInput = {
   id?: string
   planillaId: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
 }
 
 export type PlanillaRegistroUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanillaRegistroUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   planillaId?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanillaRegistroListRelationFilter = {
@@ -412,50 +365,41 @@ export type PlanillaRegistroOrderByRelevanceInput = {
 export type PlanillaRegistroCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   planillaId?: Prisma.SortOrder
-  nombrePersona?: Prisma.SortOrder
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
+  unidad?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PlanillaRegistroAvgOrderByAggregateInput = {
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
 }
 
 export type PlanillaRegistroMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   planillaId?: Prisma.SortOrder
-  nombrePersona?: Prisma.SortOrder
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
+  unidad?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PlanillaRegistroMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   planillaId?: Prisma.SortOrder
-  nombrePersona?: Prisma.SortOrder
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  nombre?: Prisma.SortOrder
+  unidad?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type PlanillaRegistroSumOrderByAggregateInput = {
-  tarifaDia?: Prisma.SortOrder
-  diasTrabajados?: Prisma.SortOrder
-  horasExtras?: Prisma.SortOrder
-  tarifaHoraExtra?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  tarifa?: Prisma.SortOrder
+}
+
+export type PlanillaRegistroScalarRelationFilter = {
+  is?: Prisma.PlanillaRegistroWhereInput
+  isNot?: Prisma.PlanillaRegistroWhereInput
 }
 
 export type PlanillaRegistroCreateNestedManyWithoutPlanillaInput = {
@@ -500,24 +444,40 @@ export type PlanillaRegistroUncheckedUpdateManyWithoutPlanillaNestedInput = {
   deleteMany?: Prisma.PlanillaRegistroScalarWhereInput | Prisma.PlanillaRegistroScalarWhereInput[]
 }
 
+export type EnumUnidadPlanillaEnumFieldUpdateOperationsInput = {
+  set?: $Enums.UnidadPlanillaEnum
+}
+
+export type PlanillaRegistroCreateNestedOneWithoutAsignacionesTareaInput = {
+  create?: Prisma.XOR<Prisma.PlanillaRegistroCreateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.PlanillaRegistroCreateOrConnectWithoutAsignacionesTareaInput
+  connect?: Prisma.PlanillaRegistroWhereUniqueInput
+}
+
+export type PlanillaRegistroUpdateOneRequiredWithoutAsignacionesTareaNestedInput = {
+  create?: Prisma.XOR<Prisma.PlanillaRegistroCreateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.PlanillaRegistroCreateOrConnectWithoutAsignacionesTareaInput
+  upsert?: Prisma.PlanillaRegistroUpsertWithoutAsignacionesTareaInput
+  connect?: Prisma.PlanillaRegistroWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlanillaRegistroUpdateToOneWithWhereWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUpdateWithoutAsignacionesTareaInput>, Prisma.PlanillaRegistroUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
 export type PlanillaRegistroCreateWithoutPlanillaInput = {
   id?: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutPlanillaRegistroInput
 }
 
 export type PlanillaRegistroUncheckedCreateWithoutPlanillaInput = {
   id?: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutPlanillaRegistroInput
 }
 
 export type PlanillaRegistroCreateOrConnectWithoutPlanillaInput = {
@@ -552,66 +512,139 @@ export type PlanillaRegistroScalarWhereInput = {
   NOT?: Prisma.PlanillaRegistroScalarWhereInput | Prisma.PlanillaRegistroScalarWhereInput[]
   id?: Prisma.StringFilter<"PlanillaRegistro"> | string
   planillaId?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  nombrePersona?: Prisma.StringFilter<"PlanillaRegistro"> | string
-  tarifaDia?: Prisma.FloatFilter<"PlanillaRegistro"> | number
-  diasTrabajados?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  horasExtras?: Prisma.IntFilter<"PlanillaRegistro"> | number
-  tarifaHoraExtra?: Prisma.FloatNullableFilter<"PlanillaRegistro"> | number | null
-  total?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  nombre?: Prisma.StringFilter<"PlanillaRegistro"> | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFilter<"PlanillaRegistro"> | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFilter<"PlanillaRegistro"> | number
+  createdAt?: Prisma.DateTimeFilter<"PlanillaRegistro"> | Date | string
+}
+
+export type PlanillaRegistroCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
+  planilla: Prisma.PlanillaCreateNestedOneWithoutRegistrosInput
+}
+
+export type PlanillaRegistroUncheckedCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  planillaId: string
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
+}
+
+export type PlanillaRegistroCreateOrConnectWithoutAsignacionesTareaInput = {
+  where: Prisma.PlanillaRegistroWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlanillaRegistroCreateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedCreateWithoutAsignacionesTareaInput>
+}
+
+export type PlanillaRegistroUpsertWithoutAsignacionesTareaInput = {
+  update: Prisma.XOR<Prisma.PlanillaRegistroUpdateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedUpdateWithoutAsignacionesTareaInput>
+  create: Prisma.XOR<Prisma.PlanillaRegistroCreateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedCreateWithoutAsignacionesTareaInput>
+  where?: Prisma.PlanillaRegistroWhereInput
+}
+
+export type PlanillaRegistroUpdateToOneWithWhereWithoutAsignacionesTareaInput = {
+  where?: Prisma.PlanillaRegistroWhereInput
+  data: Prisma.XOR<Prisma.PlanillaRegistroUpdateWithoutAsignacionesTareaInput, Prisma.PlanillaRegistroUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
+export type PlanillaRegistroUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  planilla?: Prisma.PlanillaUpdateOneRequiredWithoutRegistrosNestedInput
+}
+
+export type PlanillaRegistroUncheckedUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planillaId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanillaRegistroCreateManyPlanillaInput = {
   id?: string
-  nombrePersona: string
-  tarifaDia: number
-  diasTrabajados: number
-  horasExtras?: number
-  tarifaHoraExtra?: number | null
-  total: number
+  nombre: string
+  unidad: $Enums.UnidadPlanillaEnum
+  tarifa: number
+  createdAt?: Date | string
 }
 
 export type PlanillaRegistroUpdateWithoutPlanillaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutPlanillaRegistroNestedInput
 }
 
 export type PlanillaRegistroUncheckedUpdateWithoutPlanillaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  asignacionesTarea?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutPlanillaRegistroNestedInput
 }
 
 export type PlanillaRegistroUncheckedUpdateManyWithoutPlanillaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  nombrePersona?: Prisma.StringFieldUpdateOperationsInput | string
-  tarifaDia?: Prisma.FloatFieldUpdateOperationsInput | number
-  diasTrabajados?: Prisma.IntFieldUpdateOperationsInput | number
-  horasExtras?: Prisma.IntFieldUpdateOperationsInput | number
-  tarifaHoraExtra?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  unidad?: Prisma.EnumUnidadPlanillaEnumFieldUpdateOperationsInput | $Enums.UnidadPlanillaEnum
+  tarifa?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type PlanillaRegistroCountOutputType
+ */
+
+export type PlanillaRegistroCountOutputType = {
+  asignacionesTarea: number
+}
+
+export type PlanillaRegistroCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  asignacionesTarea?: boolean | PlanillaRegistroCountOutputTypeCountAsignacionesTareaArgs
+}
+
+/**
+ * PlanillaRegistroCountOutputType without action
+ */
+export type PlanillaRegistroCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanillaRegistroCountOutputType
+   */
+  select?: Prisma.PlanillaRegistroCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PlanillaRegistroCountOutputType without action
+ */
+export type PlanillaRegistroCountOutputTypeCountAsignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlanillaRegistroAsignadoTareaWhereInput
+}
 
 
 export type PlanillaRegistroSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   planillaId?: boolean
-  nombrePersona?: boolean
-  tarifaDia?: boolean
-  diasTrabajados?: boolean
-  horasExtras?: boolean
-  tarifaHoraExtra?: boolean
-  total?: boolean
+  nombre?: boolean
+  unidad?: boolean
+  tarifa?: boolean
+  createdAt?: boolean
   planilla?: boolean | Prisma.PlanillaDefaultArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.PlanillaRegistro$asignacionesTareaArgs<ExtArgs>
+  _count?: boolean | Prisma.PlanillaRegistroCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["planillaRegistro"]>
 
 
@@ -619,33 +652,32 @@ export type PlanillaRegistroSelect<ExtArgs extends runtime.Types.Extensions.Inte
 export type PlanillaRegistroSelectScalar = {
   id?: boolean
   planillaId?: boolean
-  nombrePersona?: boolean
-  tarifaDia?: boolean
-  diasTrabajados?: boolean
-  horasExtras?: boolean
-  tarifaHoraExtra?: boolean
-  total?: boolean
+  nombre?: boolean
+  unidad?: boolean
+  tarifa?: boolean
+  createdAt?: boolean
 }
 
-export type PlanillaRegistroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "planillaId" | "nombrePersona" | "tarifaDia" | "diasTrabajados" | "horasExtras" | "tarifaHoraExtra" | "total", ExtArgs["result"]["planillaRegistro"]>
+export type PlanillaRegistroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "planillaId" | "nombre" | "unidad" | "tarifa" | "createdAt", ExtArgs["result"]["planillaRegistro"]>
 export type PlanillaRegistroInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   planilla?: boolean | Prisma.PlanillaDefaultArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.PlanillaRegistro$asignacionesTareaArgs<ExtArgs>
+  _count?: boolean | Prisma.PlanillaRegistroCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $PlanillaRegistroPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PlanillaRegistro"
   objects: {
     planilla: Prisma.$PlanillaPayload<ExtArgs>
+    asignacionesTarea: Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     planillaId: string
-    nombrePersona: string
-    tarifaDia: number
-    diasTrabajados: number
-    horasExtras: number
-    tarifaHoraExtra: number | null
-    total: number
+    nombre: string
+    unidad: $Enums.UnidadPlanillaEnum
+    tarifa: number
+    createdAt: Date
   }, ExtArgs["result"]["planillaRegistro"]>
   composites: {}
 }
@@ -987,6 +1019,7 @@ readonly fields: PlanillaRegistroFieldRefs;
 export interface Prisma__PlanillaRegistroClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   planilla<T extends Prisma.PlanillaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlanillaDefaultArgs<ExtArgs>>): Prisma.Prisma__PlanillaClient<runtime.Types.Result.GetResult<Prisma.$PlanillaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  asignacionesTarea<T extends Prisma.PlanillaRegistro$asignacionesTareaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlanillaRegistro$asignacionesTareaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1018,12 +1051,10 @@ export interface Prisma__PlanillaRegistroClient<T, Null = never, ExtArgs extends
 export interface PlanillaRegistroFieldRefs {
   readonly id: Prisma.FieldRef<"PlanillaRegistro", 'String'>
   readonly planillaId: Prisma.FieldRef<"PlanillaRegistro", 'String'>
-  readonly nombrePersona: Prisma.FieldRef<"PlanillaRegistro", 'String'>
-  readonly tarifaDia: Prisma.FieldRef<"PlanillaRegistro", 'Float'>
-  readonly diasTrabajados: Prisma.FieldRef<"PlanillaRegistro", 'Int'>
-  readonly horasExtras: Prisma.FieldRef<"PlanillaRegistro", 'Int'>
-  readonly tarifaHoraExtra: Prisma.FieldRef<"PlanillaRegistro", 'Float'>
-  readonly total: Prisma.FieldRef<"PlanillaRegistro", 'Float'>
+  readonly nombre: Prisma.FieldRef<"PlanillaRegistro", 'String'>
+  readonly unidad: Prisma.FieldRef<"PlanillaRegistro", 'UnidadPlanillaEnum'>
+  readonly tarifa: Prisma.FieldRef<"PlanillaRegistro", 'Float'>
+  readonly createdAt: Prisma.FieldRef<"PlanillaRegistro", 'DateTime'>
 }
     
 
@@ -1364,6 +1395,30 @@ export type PlanillaRegistroDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many PlanillaRegistros to delete.
    */
   limit?: number
+}
+
+/**
+ * PlanillaRegistro.asignacionesTarea
+ */
+export type PlanillaRegistro$asignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanillaRegistroAsignadoTarea
+   */
+  select?: Prisma.PlanillaRegistroAsignadoTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlanillaRegistroAsignadoTarea
+   */
+  omit?: Prisma.PlanillaRegistroAsignadoTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanillaRegistroAsignadoTareaInclude<ExtArgs> | null
+  where?: Prisma.PlanillaRegistroAsignadoTareaWhereInput
+  orderBy?: Prisma.PlanillaRegistroAsignadoTareaOrderByWithRelationInput | Prisma.PlanillaRegistroAsignadoTareaOrderByWithRelationInput[]
+  cursor?: Prisma.PlanillaRegistroAsignadoTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlanillaRegistroAsignadoTareaScalarFieldEnum | Prisma.PlanillaRegistroAsignadoTareaScalarFieldEnum[]
 }
 
 /**

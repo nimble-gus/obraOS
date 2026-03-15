@@ -183,6 +183,7 @@ model Proyecto {
   partes3D               Parte3D[]
   planillas              Planilla[]
   presupuestoRubros      PresupuestoRubro[]
+  lotesMaterial          LoteMaterial[]
 }
 
 // Límite de presupuesto por rubro (materiales, planilla, tipos de servicio). Flexible: agregar rubros sin migraciones.
@@ -208,34 +209,38 @@ enum EstadoPlanillaEnum {
   PAGADA
 }
 
+enum UnidadPlanillaEnum {
+  DIA
+  M2
+  M3
+}
+
 model Planilla {
   id           String            @id @default(cuid())
   proyectoId   String            @map("proyecto_id")
   proyecto     Proyecto          @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
-  nombre       String
+  nombre       String            // Nombre del bloque/cubo de planilla
   periodo      String?
-  fechaInicio  DateTime?         @map("fecha_inicio")
-  fechaFin     DateTime?         @map("fecha_fin")
-  fechaPago    DateTime?         @map("fecha_pago")
   estado       EstadoPlanillaEnum @default(BORRADOR)
   createdAt    DateTime          @default(now()) @map("created_at")
   updatedAt    DateTime          @updatedAt @map("updated_at")
-  registros    PlanillaRegistro[]
-  asignaciones PlanillaAsignadaFase[]
+  registros         PlanillaRegistro[]
+  asignaciones      PlanillaAsignadaFase[]
+  asignacionesTarea PlanillaAsignadaTarea[]
 
   @@index([proyectoId])
 }
 
+// Registros dentro del bloque: Nombre, Unidad (día/m²/m³), Tarifa
 model PlanillaRegistro {
-  id               String   @id @default(cuid())
-  planillaId       String   @map("planilla_id")
-  planilla         Planilla @relation(fields: [planillaId], references: [id], onDelete: Cascade)
-  nombrePersona    String   @map("nombre_persona")
-  tarifaDia        Float    @map("tarifa_dia")
-  diasTrabajados   Int      @map("dias_trabajados")
-  horasExtras      Int      @default(0) @map("horas_extras")
-  tarifaHoraExtra  Float?   @map("tarifa_hora_extra") // si null, se calcula (tarifaDia/8)*1.5
-  total            Float
+  id         String              @id @default(cuid())
+  planillaId String              @map("planilla_id")
+  planilla   Planilla            @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+  nombre     String
+  unidad     UnidadPlanillaEnum   // DIA | M2 | M3
+  tarifa     Float
+  createdAt  DateTime            @default(now()) @map("created_at")
+  asignacionesTarea PlanillaRegistroAsignadoTarea[]
 
   @@index([planillaId])
 }
@@ -253,9 +258,60 @@ model PlanillaAsignadaFase {
   @@index([faseId])
 }
 
+// Asignación de bloque de planilla a tarea+unidad: suma de tarifas del bloque × cantidad (monto total)
+model PlanillaAsignadaTarea {
+  id         String              @id @default(cuid())
+  planillaId String              @map("planilla_id")
+  planilla   Planilla            @relation(fields: [planillaId], references: [id], onDelete: Cascade)
+  tareaId    String              @map("tarea_id")
+  tarea      Tarea               @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  unidadId   String              @map("unidad_id")
+  unidad     Unidad              @relation(fields: [unidadId], references: [id], onDelete: Cascade)
+  unidadTipo UnidadPlanillaEnum  @map("unidad_tipo") // DIA | M2 | M3
+  cantidad   Float
+  monto      Float               // (suma tarifas del bloque en esta unidad) × cantidad
+  createdAt  DateTime            @default(now()) @map("created_at")
+
+  @@index([planillaId])
+  @@index([tareaId])
+  @@index([unidadId])
+}
+
+// Asignación de registro de planilla a tarea+unidad (legacy: por persona)
+model PlanillaRegistroAsignadoTarea {
+  id                 String          @id @default(cuid())
+  planillaRegistroId String          @map("planilla_registro_id")
+  planillaRegistro   PlanillaRegistro @relation(fields: [planillaRegistroId], references: [id], onDelete: Cascade)
+  tareaId            String          @map("tarea_id")
+  tarea              Tarea           @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  unidadId           String          @map("unidad_id")
+  unidad             Unidad          @relation(fields: [unidadId], references: [id], onDelete: Cascade)
+  cantidad           Float
+  monto              Float           // cantidad * tarifa
+  createdAt          DateTime        @default(now()) @map("created_at")
+
+  @@index([planillaRegistroId])
+  @@index([tareaId])
+  @@index([unidadId])
+}
+
 // =============================================================================
 // COSTOS VARIOS (SERVICIOS)
 // =============================================================================
+
+// Catálogo de fases predefinidas (Movimiento de tierra, Cimentación, etc.) - Admin
+// El usuario las selecciona al crear Bloques; se instancian como Fase en el proyecto
+model CatalogoFase {
+  id        String   @id @default(cuid())
+  nombre    String
+  orden     Int      @default(0)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  fases     Fase[]
+
+  @@index([orden])
+}
 
 // Catálogo de tipos de servicio (Renta grúa, Fletes, etc.) - gestionado en Admin
 model CatalogoTipoServicio {
@@ -281,6 +337,7 @@ model CatalogoServicio {
   createdAt        DateTime            @default(now()) @map("created_at")
   updatedAt        DateTime            @updatedAt @map("updated_at")
   serviciosFase    ServicioFase[]
+  asignacionesTarea ServicioAsignadoTarea[]
 
   @@index([nombre])
   @@index([tipoServicioId])
@@ -299,12 +356,32 @@ model ServicioFase {
   @@index([servicioId])
 }
 
+// Asignación de servicio (costo varios) a tarea+unidad
+model ServicioAsignadoTarea {
+  id          String           @id @default(cuid())
+  servicioId  String           @map("servicio_id")
+  servicio    CatalogoServicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+  tareaId     String           @map("tarea_id")
+  tarea       Tarea            @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  unidadId    String           @map("unidad_id")
+  unidad      Unidad           @relation(fields: [unidadId], references: [id], onDelete: Cascade)
+  cantidad    Float
+  monto       Float            // cantidad * costoUnitario al asignar
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@index([servicioId])
+  @@index([tareaId])
+  @@index([unidadId])
+}
+
 model Fase {
-  id          String      @id @default(cuid())
-  proyectoId  String      @map("proyecto_id")
-  proyecto    Proyecto    @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
-  nombre      String
-  status      StatusEnum  @default(PENDING)
+  id              String        @id @default(cuid())
+  proyectoId      String        @map("proyecto_id")
+  proyecto        Proyecto      @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
+  catalogoFaseId  String?       @map("catalogo_fase_id")
+  catalogoFase    CatalogoFase? @relation(fields: [catalogoFaseId], references: [id], onDelete: SetNull)
+  nombre          String
+  status          StatusEnum    @default(PENDING)
   pctAvance   Int         @default(0) @map("pct_avance")
   fechaInicio DateTime?   @map("fecha_inicio")
   fechaFin    DateTime?   @map("fecha_fin")
@@ -354,21 +431,64 @@ model MaterialFaseUnidad {
 }
 
 model CatalogoMaterial {
-  id                 String   @id @default(cuid())
-  nombre             String
-  categoria          CategoriaEnum
-  unidad             String
-  stockTotal         Int      @default(0) @map("stock_total")
-  costoUnitario      Float    @map("costo_unitario")
-  presupuestoAsignado Float?  @map("presupuesto_asignado") // Presupuesto Q para este material al crearlo
-  colorHex           String?  @map("color_hex")
-  activo             Boolean  @default(true)
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
-  materialesFase     MaterialFase[]
-  movimientos        InventarioMovimiento[]
+  id                  String         @id @default(cuid())
+  nombre              String
+  categoria           CategoriaEnum
+  unidad              String
+  stockTotal          Int            @default(0) @map("stock_total") // legacy; se calcula desde lotes
+  costoUnitario       Float          @default(0) @map("costo_unitario") // legacy; precio por defecto para nuevos lotes
+  presupuestoAsignado Float?         @map("presupuesto_asignado")
+  colorHex            String?        @map("color_hex")
+  activo              Boolean        @default(true)
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+  materialesFase      MaterialFase[]
+  movimientos         InventarioMovimiento[]
+  lotes               LoteMaterial[]
+  asignacionesTarea   MaterialAsignadoTarea[]
 
   @@index([categoria])
+}
+
+// Lote de compra: mismo material puede tener varios lotes con distintos precios
+model LoteMaterial {
+  id                 String               @id @default(cuid())
+  catalogoMaterialId String               @map("catalogo_material_id")
+  catalogoMaterial   CatalogoMaterial     @relation(fields: [catalogoMaterialId], references: [id], onDelete: Cascade)
+  proyectoId         String               @map("proyecto_id")
+  proyecto           Proyecto             @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
+  cantidad           Float                // cantidad restante en stock
+  cantidadInicial    Float                @map("cantidad_inicial") // cantidad al crear (para historial)
+  precioUnitario     Float                @map("precio_unitario")
+  total              Float                // cantidad * precio (almacenado para consistencia)
+  descripcion        String?              @map("descripcion") // ej. "Compra Almacén X", "Lote 1"
+  createdAt          DateTime             @default(now()) @map("created_at")
+  asignaciones       MaterialAsignadoTarea[]
+
+  @@index([catalogoMaterialId])
+  @@index([proyectoId])
+}
+
+// Asignación de material a una tarea de una unidad
+// Origen: CatalogoMaterial (stock de Materiales) o LoteMaterial (lote de compra)
+model MaterialAsignadoTarea {
+  id                 String            @id @default(cuid())
+  catalogoMaterialId String?           @map("catalogo_material_id")
+  catalogoMaterial   CatalogoMaterial? @relation(fields: [catalogoMaterialId], references: [id], onDelete: Cascade)
+  loteId             String?           @map("lote_id")
+  lote               LoteMaterial?     @relation(fields: [loteId], references: [id], onDelete: Cascade)
+  tareaId            String            @map("tarea_id")
+  tarea              Tarea             @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  unidadId           String            @map("unidad_id")
+  unidad             Unidad            @relation(fields: [unidadId], references: [id], onDelete: Cascade)
+  cantidad           Float
+  monto              Float
+  createdAt          DateTime          @default(now()) @map("created_at")
+
+  @@index([catalogoMaterialId])
+  @@index([loteId])
+  @@index([tareaId])
+  @@index([unidadId])
 }
 
 enum TipoMovimientoEnum {
@@ -398,12 +518,13 @@ model InventarioMovimiento {
 }
 
 model Unidad {
-  id               String       @id @default(cuid())
-  proyectoId       String       @map("proyecto_id")
-  proyecto         Proyecto     @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
-  numero           Int
-  etiqueta         String
-  modeloCasaId     String?      @map("modelo_casa_id")
+  id                   String       @id @default(cuid())
+  proyectoId           String       @map("proyecto_id")
+  proyecto             Proyecto     @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
+  numero               Int
+  etiqueta             String
+  fechaEntregaEstimada DateTime?    @map("fecha_entrega_estimada")
+  modeloCasaId         String?      @map("modelo_casa_id")
   modeloCasa       ModeloCasa?  @relation(fields: [modeloCasaId], references: [id], onDelete: SetNull)
   faseActualId     String?      @map("fase_actual_id")
   faseActual       Fase?        @relation("UnidadFaseActiva", fields: [faseActualId], references: [id], onDelete: SetNull)
@@ -415,6 +536,10 @@ model Unidad {
   tareasCompletadas TareaCompletadaUnidad[]
   materialesAsignados MaterialFaseUnidad[]
   movimientosInventario InventarioMovimiento[]
+  materialesAsignadosTarea MaterialAsignadoTarea[]
+  planillasRegistroAsignadas PlanillaRegistroAsignadoTarea[]
+  planillasBloqueAsignadas PlanillaAsignadaTarea[]
+  serviciosAsignadosTarea ServicioAsignadoTarea[]
 
   @@unique([proyectoId, numero])
   @@index([proyectoId])
@@ -423,14 +548,22 @@ model Unidad {
 }
 
 model Tarea {
-  id          String   @id @default(cuid())
-  faseId      String   @map("fase_id")
-  fase        Fase     @relation(fields: [faseId], references: [id], onDelete: Cascade)
-  nombre      String
-  orden       Int      @default(0)
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  completadas TareaCompletadaUnidad[]
+  id           String    @id @default(cuid())
+  faseId       String    @map("fase_id")
+  fase         Fase      @relation(fields: [faseId], references: [id], onDelete: Cascade)
+  nombre       String
+  orden        Int       @default(0)
+  fechaInicio  DateTime? @map("fecha_inicio")
+  fechaFin     DateTime? @map("fecha_fin")
+  cantidadM2   Float     @default(0) @map("cantidad_m2")
+  cantidadM3   Float     @default(0) @map("cantidad_m3")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  completadas  TareaCompletadaUnidad[]
+  materialesAsignados MaterialAsignadoTarea[]
+  planillasRegistroAsignadas PlanillaRegistroAsignadoTarea[]
+  planillasBloqueAsignadas PlanillaAsignadaTarea[]
+  serviciosAsignados ServicioAsignadoTarea[]
 
   @@index([faseId])
 }

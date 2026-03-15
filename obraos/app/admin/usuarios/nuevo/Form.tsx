@@ -27,40 +27,44 @@ export function CrearUsuarioForm() {
     <form action={crearUsuario} className="mt-6 max-w-md space-y-4">
       <input type="hidden" name="modulosAcceso" value={JSON.stringify(modulos)} />
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-300">Nombre</label>
+        <label className="mb-1 block text-sm font-medium" style={{ color: "var(--text2)" }}>Nombre</label>
         <input
           name="nombre"
           required
-          className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+          className="w-full rounded-lg border px-3 py-2 focus:border-[var(--accent)] focus:outline-none"
+          style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-300">Email</label>
+        <label className="mb-1 block text-sm font-medium" style={{ color: "var(--text2)" }}>Email</label>
         <input
           name="email"
           type="email"
           required
-          className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+          className="w-full rounded-lg border px-3 py-2 focus:border-[var(--accent)] focus:outline-none"
+          style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-300">Contraseña</label>
+        <label className="mb-1 block text-sm font-medium" style={{ color: "var(--text2)" }}>Contraseña</label>
         <input
           name="password"
           type="password"
           required
           minLength={6}
-          className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+          className="w-full rounded-lg border px-3 py-2 focus:border-[var(--accent)] focus:outline-none"
+          style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-300">Rol</label>
+        <label className="mb-1 block text-sm font-medium" style={{ color: "var(--text2)" }}>Rol</label>
         <select
           name="rol"
           required
           value={rol}
           onChange={(e) => setRol(e.target.value)}
-          className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white focus:border-amber-500 focus:outline-none"
+          className="w-full rounded-lg border px-3 py-2 focus:border-[var(--accent)] focus:outline-none"
+          style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
         >
           <option value="SUPERVISOR">Supervisor (solo agregar avance)</option>
           <option value="PROJECT_MANAGER">Project Manager</option>
@@ -70,8 +74,8 @@ export function CrearUsuarioForm() {
       </div>
 
       {rol !== "ADMIN" && (
-        <div className="rounded-lg border border-slate-600 bg-slate-800/50 p-4">
-          <label className="mb-3 block text-sm font-medium text-slate-300">
+        <div className="rounded-lg border p-4" style={{ borderColor: "var(--border)", background: "var(--bg3)" }}>
+          <label className="mb-3 block text-sm font-medium" style={{ color: "var(--text2)" }}>
             Módulos a los que tendrá acceso
           </label>
           <div className="flex flex-wrap gap-2">
@@ -80,8 +84,8 @@ export function CrearUsuarioForm() {
                 key={m}
                 className="flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition"
                 style={{
-                  borderColor: modulos.includes(m) ? "var(--amber-500)" : "var(--slate-600)",
-                  background: modulos.includes(m) ? "rgba(245,158,11,0.1)" : "transparent",
+                  borderColor: modulos.includes(m) ? "var(--accent)" : "var(--border)",
+                  background: modulos.includes(m) ? "var(--accent-muted)" : "transparent",
                 }}
               >
                 <input
@@ -99,13 +103,15 @@ export function CrearUsuarioForm() {
       <div className="flex gap-3 pt-4">
         <button
           type="submit"
-          className="rounded-lg bg-amber-600 px-4 py-2 font-medium text-white hover:bg-amber-500"
+          className="rounded-lg px-4 py-2 font-semibold text-black transition hover:opacity-90"
+          style={{ background: "var(--accent)" }}
         >
           Crear usuario
         </button>
         <a
           href="/admin/usuarios"
-          className="rounded-lg border border-slate-600 px-4 py-2 text-slate-300 hover:bg-slate-700"
+          className="rounded-lg border px-4 py-2 transition"
+          style={{ borderColor: "var(--border)", color: "var(--text2)" }}
         >
           Cancelar
         </a>

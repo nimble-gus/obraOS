@@ -62,5 +62,33 @@ export async function POST(
     });
   }
 
+  // Actualizar pctAvanceGlobal de la unidad: promedio de avance por fase
+  const proyecto = await prisma.unidad.findUnique({
+    where: { id: unidadId },
+    select: { proyectoId: true },
+  });
+  if (proyecto) {
+    const fases = await prisma.fase.findMany({
+      where: { proyectoId: proyecto.proyectoId },
+      orderBy: { orden: "asc" },
+      include: { tareas: { include: { completadas: { where: { unidadId } } } } },
+    });
+    if (fases.length > 0) {
+      let sumaPct = 0;
+      for (const f of fases) {
+        const total = f.tareas.length;
+        const completadas = total > 0
+          ? f.tareas.filter((t) => t.completadas.some((c) => c.unidadId === unidadId)).length
+          : 0;
+        sumaPct += total > 0 ? (completadas / total) * 100 : 0;
+      }
+      const pctGlobal = Math.round(sumaPct / fases.length);
+      await prisma.unidad.update({
+        where: { id: unidadId },
+        data: { pctAvanceGlobal: pctGlobal },
+      });
+    }
+  }
+
   return NextResponse.json({ completada: !existing });
 }

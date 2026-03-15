@@ -29,9 +29,6 @@ export type PlanillaMinAggregateOutputType = {
   proyectoId: string | null
   nombre: string | null
   periodo: string | null
-  fechaInicio: Date | null
-  fechaFin: Date | null
-  fechaPago: Date | null
   estado: $Enums.EstadoPlanillaEnum | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -42,9 +39,6 @@ export type PlanillaMaxAggregateOutputType = {
   proyectoId: string | null
   nombre: string | null
   periodo: string | null
-  fechaInicio: Date | null
-  fechaFin: Date | null
-  fechaPago: Date | null
   estado: $Enums.EstadoPlanillaEnum | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,9 +49,6 @@ export type PlanillaCountAggregateOutputType = {
   proyectoId: number
   nombre: number
   periodo: number
-  fechaInicio: number
-  fechaFin: number
-  fechaPago: number
   estado: number
   createdAt: number
   updatedAt: number
@@ -70,9 +61,6 @@ export type PlanillaMinAggregateInputType = {
   proyectoId?: true
   nombre?: true
   periodo?: true
-  fechaInicio?: true
-  fechaFin?: true
-  fechaPago?: true
   estado?: true
   createdAt?: true
   updatedAt?: true
@@ -83,9 +71,6 @@ export type PlanillaMaxAggregateInputType = {
   proyectoId?: true
   nombre?: true
   periodo?: true
-  fechaInicio?: true
-  fechaFin?: true
-  fechaPago?: true
   estado?: true
   createdAt?: true
   updatedAt?: true
@@ -96,9 +81,6 @@ export type PlanillaCountAggregateInputType = {
   proyectoId?: true
   nombre?: true
   periodo?: true
-  fechaInicio?: true
-  fechaFin?: true
-  fechaPago?: true
   estado?: true
   createdAt?: true
   updatedAt?: true
@@ -182,9 +164,6 @@ export type PlanillaGroupByOutputType = {
   proyectoId: string
   nombre: string
   periodo: string | null
-  fechaInicio: Date | null
-  fechaFin: Date | null
-  fechaPago: Date | null
   estado: $Enums.EstadoPlanillaEnum
   createdAt: Date
   updatedAt: Date
@@ -216,15 +195,13 @@ export type PlanillaWhereInput = {
   proyectoId?: Prisma.StringFilter<"Planilla"> | string
   nombre?: Prisma.StringFilter<"Planilla"> | string
   periodo?: Prisma.StringNullableFilter<"Planilla"> | string | null
-  fechaInicio?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaFin?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaPago?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFilter<"Planilla"> | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
   proyecto?: Prisma.XOR<Prisma.ProyectoScalarRelationFilter, Prisma.ProyectoWhereInput>
   registros?: Prisma.PlanillaRegistroListRelationFilter
   asignaciones?: Prisma.PlanillaAsignadaFaseListRelationFilter
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaListRelationFilter
 }
 
 export type PlanillaOrderByWithRelationInput = {
@@ -232,15 +209,13 @@ export type PlanillaOrderByWithRelationInput = {
   proyectoId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   periodo?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaInicio?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaFin?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaPago?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   proyecto?: Prisma.ProyectoOrderByWithRelationInput
   registros?: Prisma.PlanillaRegistroOrderByRelationAggregateInput
   asignaciones?: Prisma.PlanillaAsignadaFaseOrderByRelationAggregateInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaOrderByRelationAggregateInput
   _relevance?: Prisma.PlanillaOrderByRelevanceInput
 }
 
@@ -252,15 +227,13 @@ export type PlanillaWhereUniqueInput = Prisma.AtLeast<{
   proyectoId?: Prisma.StringFilter<"Planilla"> | string
   nombre?: Prisma.StringFilter<"Planilla"> | string
   periodo?: Prisma.StringNullableFilter<"Planilla"> | string | null
-  fechaInicio?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaFin?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaPago?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFilter<"Planilla"> | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
   proyecto?: Prisma.XOR<Prisma.ProyectoScalarRelationFilter, Prisma.ProyectoWhereInput>
   registros?: Prisma.PlanillaRegistroListRelationFilter
   asignaciones?: Prisma.PlanillaAsignadaFaseListRelationFilter
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaListRelationFilter
 }, "id">
 
 export type PlanillaOrderByWithAggregationInput = {
@@ -268,9 +241,6 @@ export type PlanillaOrderByWithAggregationInput = {
   proyectoId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   periodo?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaInicio?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaFin?: Prisma.SortOrderInput | Prisma.SortOrder
-  fechaPago?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -287,9 +257,6 @@ export type PlanillaScalarWhereWithAggregatesInput = {
   proyectoId?: Prisma.StringWithAggregatesFilter<"Planilla"> | string
   nombre?: Prisma.StringWithAggregatesFilter<"Planilla"> | string
   periodo?: Prisma.StringNullableWithAggregatesFilter<"Planilla"> | string | null
-  fechaInicio?: Prisma.DateTimeNullableWithAggregatesFilter<"Planilla"> | Date | string | null
-  fechaFin?: Prisma.DateTimeNullableWithAggregatesFilter<"Planilla"> | Date | string | null
-  fechaPago?: Prisma.DateTimeNullableWithAggregatesFilter<"Planilla"> | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumWithAggregatesFilter<"Planilla"> | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Planilla"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Planilla"> | Date | string
@@ -299,15 +266,13 @@ export type PlanillaCreateInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutPlanillasInput
   registros?: Prisma.PlanillaRegistroCreateNestedManyWithoutPlanillaInput
   asignaciones?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaUncheckedCreateInput = {
@@ -315,29 +280,25 @@ export type PlanillaUncheckedCreateInput = {
   proyectoId: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   registros?: Prisma.PlanillaRegistroUncheckedCreateNestedManyWithoutPlanillaInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutPlanillasNestedInput
   registros?: Prisma.PlanillaRegistroUpdateManyWithoutPlanillaNestedInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaUncheckedUpdateInput = {
@@ -345,14 +306,12 @@ export type PlanillaUncheckedUpdateInput = {
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registros?: Prisma.PlanillaRegistroUncheckedUpdateManyWithoutPlanillaNestedInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaCreateManyInput = {
@@ -360,9 +319,6 @@ export type PlanillaCreateManyInput = {
   proyectoId: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -372,9 +328,6 @@ export type PlanillaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -385,9 +338,6 @@ export type PlanillaUncheckedUpdateManyInput = {
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,9 +364,6 @@ export type PlanillaCountOrderByAggregateInput = {
   proyectoId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   periodo?: Prisma.SortOrder
-  fechaInicio?: Prisma.SortOrder
-  fechaFin?: Prisma.SortOrder
-  fechaPago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -427,9 +374,6 @@ export type PlanillaMaxOrderByAggregateInput = {
   proyectoId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   periodo?: Prisma.SortOrder
-  fechaInicio?: Prisma.SortOrder
-  fechaFin?: Prisma.SortOrder
-  fechaPago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -440,9 +384,6 @@ export type PlanillaMinOrderByAggregateInput = {
   proyectoId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   periodo?: Prisma.SortOrder
-  fechaInicio?: Prisma.SortOrder
-  fechaFin?: Prisma.SortOrder
-  fechaPago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -527,32 +468,42 @@ export type PlanillaUpdateOneRequiredWithoutAsignacionesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PlanillaUpdateToOneWithWhereWithoutAsignacionesInput, Prisma.PlanillaUpdateWithoutAsignacionesInput>, Prisma.PlanillaUncheckedUpdateWithoutAsignacionesInput>
 }
 
+export type PlanillaCreateNestedOneWithoutAsignacionesTareaInput = {
+  create?: Prisma.XOR<Prisma.PlanillaCreateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.PlanillaCreateOrConnectWithoutAsignacionesTareaInput
+  connect?: Prisma.PlanillaWhereUniqueInput
+}
+
+export type PlanillaUpdateOneRequiredWithoutAsignacionesTareaNestedInput = {
+  create?: Prisma.XOR<Prisma.PlanillaCreateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedCreateWithoutAsignacionesTareaInput>
+  connectOrCreate?: Prisma.PlanillaCreateOrConnectWithoutAsignacionesTareaInput
+  upsert?: Prisma.PlanillaUpsertWithoutAsignacionesTareaInput
+  connect?: Prisma.PlanillaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlanillaUpdateToOneWithWhereWithoutAsignacionesTareaInput, Prisma.PlanillaUpdateWithoutAsignacionesTareaInput>, Prisma.PlanillaUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
 export type PlanillaCreateWithoutProyectoInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   registros?: Prisma.PlanillaRegistroCreateNestedManyWithoutPlanillaInput
   asignaciones?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaUncheckedCreateWithoutProyectoInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   registros?: Prisma.PlanillaRegistroUncheckedCreateNestedManyWithoutPlanillaInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaCreateOrConnectWithoutProyectoInput = {
@@ -589,9 +540,6 @@ export type PlanillaScalarWhereInput = {
   proyectoId?: Prisma.StringFilter<"Planilla"> | string
   nombre?: Prisma.StringFilter<"Planilla"> | string
   periodo?: Prisma.StringNullableFilter<"Planilla"> | string | null
-  fechaInicio?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaFin?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
-  fechaPago?: Prisma.DateTimeNullableFilter<"Planilla"> | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFilter<"Planilla"> | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Planilla"> | Date | string
@@ -601,14 +549,12 @@ export type PlanillaCreateWithoutRegistrosInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutPlanillasInput
   asignaciones?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaUncheckedCreateWithoutRegistrosInput = {
@@ -616,13 +562,11 @@ export type PlanillaUncheckedCreateWithoutRegistrosInput = {
   proyectoId: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaCreateOrConnectWithoutRegistrosInput = {
@@ -645,14 +589,12 @@ export type PlanillaUpdateWithoutRegistrosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutPlanillasNestedInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaUncheckedUpdateWithoutRegistrosInput = {
@@ -660,27 +602,23 @@ export type PlanillaUncheckedUpdateWithoutRegistrosInput = {
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaCreateWithoutAsignacionesInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutPlanillasInput
   registros?: Prisma.PlanillaRegistroCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaUncheckedCreateWithoutAsignacionesInput = {
@@ -688,13 +626,11 @@ export type PlanillaUncheckedCreateWithoutAsignacionesInput = {
   proyectoId: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
   registros?: Prisma.PlanillaRegistroUncheckedCreateNestedManyWithoutPlanillaInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutPlanillaInput
 }
 
 export type PlanillaCreateOrConnectWithoutAsignacionesInput = {
@@ -717,14 +653,12 @@ export type PlanillaUpdateWithoutAsignacionesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutPlanillasNestedInput
   registros?: Prisma.PlanillaRegistroUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaUncheckedUpdateWithoutAsignacionesInput = {
@@ -732,22 +666,81 @@ export type PlanillaUncheckedUpdateWithoutAsignacionesInput = {
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registros?: Prisma.PlanillaRegistroUncheckedUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutPlanillaNestedInput
+}
+
+export type PlanillaCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  nombre: string
+  periodo?: string | null
+  estado?: $Enums.EstadoPlanillaEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proyecto: Prisma.ProyectoCreateNestedOneWithoutPlanillasInput
+  registros?: Prisma.PlanillaRegistroCreateNestedManyWithoutPlanillaInput
+  asignaciones?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutPlanillaInput
+}
+
+export type PlanillaUncheckedCreateWithoutAsignacionesTareaInput = {
+  id?: string
+  proyectoId: string
+  nombre: string
+  periodo?: string | null
+  estado?: $Enums.EstadoPlanillaEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  registros?: Prisma.PlanillaRegistroUncheckedCreateNestedManyWithoutPlanillaInput
+  asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedCreateNestedManyWithoutPlanillaInput
+}
+
+export type PlanillaCreateOrConnectWithoutAsignacionesTareaInput = {
+  where: Prisma.PlanillaWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlanillaCreateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedCreateWithoutAsignacionesTareaInput>
+}
+
+export type PlanillaUpsertWithoutAsignacionesTareaInput = {
+  update: Prisma.XOR<Prisma.PlanillaUpdateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedUpdateWithoutAsignacionesTareaInput>
+  create: Prisma.XOR<Prisma.PlanillaCreateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedCreateWithoutAsignacionesTareaInput>
+  where?: Prisma.PlanillaWhereInput
+}
+
+export type PlanillaUpdateToOneWithWhereWithoutAsignacionesTareaInput = {
+  where?: Prisma.PlanillaWhereInput
+  data: Prisma.XOR<Prisma.PlanillaUpdateWithoutAsignacionesTareaInput, Prisma.PlanillaUncheckedUpdateWithoutAsignacionesTareaInput>
+}
+
+export type PlanillaUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutPlanillasNestedInput
+  registros?: Prisma.PlanillaRegistroUpdateManyWithoutPlanillaNestedInput
+  asignaciones?: Prisma.PlanillaAsignadaFaseUpdateManyWithoutPlanillaNestedInput
+}
+
+export type PlanillaUncheckedUpdateWithoutAsignacionesTareaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registros?: Prisma.PlanillaRegistroUncheckedUpdateManyWithoutPlanillaNestedInput
+  asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaCreateManyProyectoInput = {
   id?: string
   nombre: string
   periodo?: string | null
-  fechaInicio?: Date | string | null
-  fechaFin?: Date | string | null
-  fechaPago?: Date | string | null
   estado?: $Enums.EstadoPlanillaEnum
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -757,37 +750,30 @@ export type PlanillaUpdateWithoutProyectoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registros?: Prisma.PlanillaRegistroUpdateManyWithoutPlanillaNestedInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaUncheckedUpdateWithoutProyectoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registros?: Prisma.PlanillaRegistroUncheckedUpdateManyWithoutPlanillaNestedInput
   asignaciones?: Prisma.PlanillaAsignadaFaseUncheckedUpdateManyWithoutPlanillaNestedInput
+  asignacionesTarea?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutPlanillaNestedInput
 }
 
 export type PlanillaUncheckedUpdateManyWithoutProyectoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   periodo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  fechaPago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado?: Prisma.EnumEstadoPlanillaEnumFieldUpdateOperationsInput | $Enums.EstadoPlanillaEnum
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -801,11 +787,13 @@ export type PlanillaUncheckedUpdateManyWithoutProyectoInput = {
 export type PlanillaCountOutputType = {
   registros: number
   asignaciones: number
+  asignacionesTarea: number
 }
 
 export type PlanillaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   registros?: boolean | PlanillaCountOutputTypeCountRegistrosArgs
   asignaciones?: boolean | PlanillaCountOutputTypeCountAsignacionesArgs
+  asignacionesTarea?: boolean | PlanillaCountOutputTypeCountAsignacionesTareaArgs
 }
 
 /**
@@ -832,21 +820,26 @@ export type PlanillaCountOutputTypeCountAsignacionesArgs<ExtArgs extends runtime
   where?: Prisma.PlanillaAsignadaFaseWhereInput
 }
 
+/**
+ * PlanillaCountOutputType without action
+ */
+export type PlanillaCountOutputTypeCountAsignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlanillaAsignadaTareaWhereInput
+}
+
 
 export type PlanillaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   proyectoId?: boolean
   nombre?: boolean
   periodo?: boolean
-  fechaInicio?: boolean
-  fechaFin?: boolean
-  fechaPago?: boolean
   estado?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   proyecto?: boolean | Prisma.ProyectoDefaultArgs<ExtArgs>
   registros?: boolean | Prisma.Planilla$registrosArgs<ExtArgs>
   asignaciones?: boolean | Prisma.Planilla$asignacionesArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.Planilla$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.PlanillaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["planilla"]>
 
@@ -857,19 +850,17 @@ export type PlanillaSelectScalar = {
   proyectoId?: boolean
   nombre?: boolean
   periodo?: boolean
-  fechaInicio?: boolean
-  fechaFin?: boolean
-  fechaPago?: boolean
   estado?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlanillaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proyectoId" | "nombre" | "periodo" | "fechaInicio" | "fechaFin" | "fechaPago" | "estado" | "createdAt" | "updatedAt", ExtArgs["result"]["planilla"]>
+export type PlanillaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proyectoId" | "nombre" | "periodo" | "estado" | "createdAt" | "updatedAt", ExtArgs["result"]["planilla"]>
 export type PlanillaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   proyecto?: boolean | Prisma.ProyectoDefaultArgs<ExtArgs>
   registros?: boolean | Prisma.Planilla$registrosArgs<ExtArgs>
   asignaciones?: boolean | Prisma.Planilla$asignacionesArgs<ExtArgs>
+  asignacionesTarea?: boolean | Prisma.Planilla$asignacionesTareaArgs<ExtArgs>
   _count?: boolean | Prisma.PlanillaCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -879,15 +870,13 @@ export type $PlanillaPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     proyecto: Prisma.$ProyectoPayload<ExtArgs>
     registros: Prisma.$PlanillaRegistroPayload<ExtArgs>[]
     asignaciones: Prisma.$PlanillaAsignadaFasePayload<ExtArgs>[]
+    asignacionesTarea: Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     proyectoId: string
     nombre: string
     periodo: string | null
-    fechaInicio: Date | null
-    fechaFin: Date | null
-    fechaPago: Date | null
     estado: $Enums.EstadoPlanillaEnum
     createdAt: Date
     updatedAt: Date
@@ -1234,6 +1223,7 @@ export interface Prisma__PlanillaClient<T, Null = never, ExtArgs extends runtime
   proyecto<T extends Prisma.ProyectoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProyectoDefaultArgs<ExtArgs>>): Prisma.Prisma__ProyectoClient<runtime.Types.Result.GetResult<Prisma.$ProyectoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   registros<T extends Prisma.Planilla$registrosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Planilla$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaRegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   asignaciones<T extends Prisma.Planilla$asignacionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Planilla$asignacionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaAsignadaFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  asignacionesTarea<T extends Prisma.Planilla$asignacionesTareaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Planilla$asignacionesTareaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1267,9 +1257,6 @@ export interface PlanillaFieldRefs {
   readonly proyectoId: Prisma.FieldRef<"Planilla", 'String'>
   readonly nombre: Prisma.FieldRef<"Planilla", 'String'>
   readonly periodo: Prisma.FieldRef<"Planilla", 'String'>
-  readonly fechaInicio: Prisma.FieldRef<"Planilla", 'DateTime'>
-  readonly fechaFin: Prisma.FieldRef<"Planilla", 'DateTime'>
-  readonly fechaPago: Prisma.FieldRef<"Planilla", 'DateTime'>
   readonly estado: Prisma.FieldRef<"Planilla", 'EstadoPlanillaEnum'>
   readonly createdAt: Prisma.FieldRef<"Planilla", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Planilla", 'DateTime'>
@@ -1661,6 +1648,30 @@ export type Planilla$asignacionesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PlanillaAsignadaFaseScalarFieldEnum | Prisma.PlanillaAsignadaFaseScalarFieldEnum[]
+}
+
+/**
+ * Planilla.asignacionesTarea
+ */
+export type Planilla$asignacionesTareaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanillaAsignadaTarea
+   */
+  select?: Prisma.PlanillaAsignadaTareaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlanillaAsignadaTarea
+   */
+  omit?: Prisma.PlanillaAsignadaTareaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanillaAsignadaTareaInclude<ExtArgs> | null
+  where?: Prisma.PlanillaAsignadaTareaWhereInput
+  orderBy?: Prisma.PlanillaAsignadaTareaOrderByWithRelationInput | Prisma.PlanillaAsignadaTareaOrderByWithRelationInput[]
+  cursor?: Prisma.PlanillaAsignadaTareaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlanillaAsignadaTareaScalarFieldEnum | Prisma.PlanillaAsignadaTareaScalarFieldEnum[]
 }
 
 /**

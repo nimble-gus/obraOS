@@ -39,6 +39,7 @@ export type FaseSumAggregateOutputType = {
 export type FaseMinAggregateOutputType = {
   id: string | null
   proyectoId: string | null
+  catalogoFaseId: string | null
   nombre: string | null
   status: $Enums.StatusEnum | null
   pctAvance: number | null
@@ -52,6 +53,7 @@ export type FaseMinAggregateOutputType = {
 export type FaseMaxAggregateOutputType = {
   id: string | null
   proyectoId: string | null
+  catalogoFaseId: string | null
   nombre: string | null
   status: $Enums.StatusEnum | null
   pctAvance: number | null
@@ -65,6 +67,7 @@ export type FaseMaxAggregateOutputType = {
 export type FaseCountAggregateOutputType = {
   id: number
   proyectoId: number
+  catalogoFaseId: number
   nombre: number
   status: number
   pctAvance: number
@@ -91,6 +94,7 @@ export type FaseSumAggregateInputType = {
 export type FaseMinAggregateInputType = {
   id?: true
   proyectoId?: true
+  catalogoFaseId?: true
   nombre?: true
   status?: true
   pctAvance?: true
@@ -104,6 +108,7 @@ export type FaseMinAggregateInputType = {
 export type FaseMaxAggregateInputType = {
   id?: true
   proyectoId?: true
+  catalogoFaseId?: true
   nombre?: true
   status?: true
   pctAvance?: true
@@ -117,6 +122,7 @@ export type FaseMaxAggregateInputType = {
 export type FaseCountAggregateInputType = {
   id?: true
   proyectoId?: true
+  catalogoFaseId?: true
   nombre?: true
   status?: true
   pctAvance?: true
@@ -218,6 +224,7 @@ export type FaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type FaseGroupByOutputType = {
   id: string
   proyectoId: string
+  catalogoFaseId: string | null
   nombre: string
   status: $Enums.StatusEnum
   pctAvance: number
@@ -255,6 +262,7 @@ export type FaseWhereInput = {
   NOT?: Prisma.FaseWhereInput | Prisma.FaseWhereInput[]
   id?: Prisma.StringFilter<"Fase"> | string
   proyectoId?: Prisma.StringFilter<"Fase"> | string
+  catalogoFaseId?: Prisma.StringNullableFilter<"Fase"> | string | null
   nombre?: Prisma.StringFilter<"Fase"> | string
   status?: Prisma.EnumStatusEnumFilter<"Fase"> | $Enums.StatusEnum
   pctAvance?: Prisma.IntFilter<"Fase"> | number
@@ -265,6 +273,7 @@ export type FaseWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Fase"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Fase"> | Date | string
   proyecto?: Prisma.XOR<Prisma.ProyectoScalarRelationFilter, Prisma.ProyectoWhereInput>
+  catalogoFase?: Prisma.XOR<Prisma.CatalogoFaseNullableScalarRelationFilter, Prisma.CatalogoFaseWhereInput> | null
   materiales?: Prisma.MaterialFaseListRelationFilter
   partesVisibles?: Prisma.FaseParte3DListRelationFilter
   unidadesFaseActiva?: Prisma.UnidadListRelationFilter
@@ -277,6 +286,7 @@ export type FaseWhereInput = {
 export type FaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   proyectoId?: Prisma.SortOrder
+  catalogoFaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   nombre?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pctAvance?: Prisma.SortOrder
@@ -287,6 +297,7 @@ export type FaseOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   proyecto?: Prisma.ProyectoOrderByWithRelationInput
+  catalogoFase?: Prisma.CatalogoFaseOrderByWithRelationInput
   materiales?: Prisma.MaterialFaseOrderByRelationAggregateInput
   partesVisibles?: Prisma.FaseParte3DOrderByRelationAggregateInput
   unidadesFaseActiva?: Prisma.UnidadOrderByRelationAggregateInput
@@ -303,6 +314,7 @@ export type FaseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FaseWhereInput[]
   NOT?: Prisma.FaseWhereInput | Prisma.FaseWhereInput[]
   proyectoId?: Prisma.StringFilter<"Fase"> | string
+  catalogoFaseId?: Prisma.StringNullableFilter<"Fase"> | string | null
   nombre?: Prisma.StringFilter<"Fase"> | string
   status?: Prisma.EnumStatusEnumFilter<"Fase"> | $Enums.StatusEnum
   pctAvance?: Prisma.IntFilter<"Fase"> | number
@@ -313,6 +325,7 @@ export type FaseWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Fase"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Fase"> | Date | string
   proyecto?: Prisma.XOR<Prisma.ProyectoScalarRelationFilter, Prisma.ProyectoWhereInput>
+  catalogoFase?: Prisma.XOR<Prisma.CatalogoFaseNullableScalarRelationFilter, Prisma.CatalogoFaseWhereInput> | null
   materiales?: Prisma.MaterialFaseListRelationFilter
   partesVisibles?: Prisma.FaseParte3DListRelationFilter
   unidadesFaseActiva?: Prisma.UnidadListRelationFilter
@@ -325,6 +338,7 @@ export type FaseWhereUniqueInput = Prisma.AtLeast<{
 export type FaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   proyectoId?: Prisma.SortOrder
+  catalogoFaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   nombre?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pctAvance?: Prisma.SortOrder
@@ -347,6 +361,7 @@ export type FaseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FaseScalarWhereWithAggregatesInput | Prisma.FaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Fase"> | string
   proyectoId?: Prisma.StringWithAggregatesFilter<"Fase"> | string
+  catalogoFaseId?: Prisma.StringNullableWithAggregatesFilter<"Fase"> | string | null
   nombre?: Prisma.StringWithAggregatesFilter<"Fase"> | string
   status?: Prisma.EnumStatusEnumWithAggregatesFilter<"Fase"> | $Enums.StatusEnum
   pctAvance?: Prisma.IntWithAggregatesFilter<"Fase"> | number
@@ -370,6 +385,7 @@ export type FaseCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
@@ -382,6 +398,7 @@ export type FaseCreateInput = {
 export type FaseUncheckedCreateInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -412,6 +429,7 @@ export type FaseUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -424,6 +442,7 @@ export type FaseUpdateInput = {
 export type FaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -445,6 +464,7 @@ export type FaseUncheckedUpdateInput = {
 export type FaseCreateManyInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -472,6 +492,7 @@ export type FaseUpdateManyMutationInput = {
 export type FaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -507,6 +528,7 @@ export type FaseOrderByRelevanceInput = {
 export type FaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   proyectoId?: Prisma.SortOrder
+  catalogoFaseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pctAvance?: Prisma.SortOrder
@@ -526,6 +548,7 @@ export type FaseAvgOrderByAggregateInput = {
 export type FaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   proyectoId?: Prisma.SortOrder
+  catalogoFaseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pctAvance?: Prisma.SortOrder
@@ -539,6 +562,7 @@ export type FaseMaxOrderByAggregateInput = {
 export type FaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   proyectoId?: Prisma.SortOrder
+  catalogoFaseId?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pctAvance?: Prisma.SortOrder
@@ -613,6 +637,48 @@ export type FaseUpdateOneRequiredWithoutPlanillasAsignadasNestedInput = {
   upsert?: Prisma.FaseUpsertWithoutPlanillasAsignadasInput
   connect?: Prisma.FaseWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.FaseUpdateToOneWithWhereWithoutPlanillasAsignadasInput, Prisma.FaseUpdateWithoutPlanillasAsignadasInput>, Prisma.FaseUncheckedUpdateWithoutPlanillasAsignadasInput>
+}
+
+export type FaseCreateNestedManyWithoutCatalogoFaseInput = {
+  create?: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput> | Prisma.FaseCreateWithoutCatalogoFaseInput[] | Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput[]
+  connectOrCreate?: Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput | Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput[]
+  createMany?: Prisma.FaseCreateManyCatalogoFaseInputEnvelope
+  connect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+}
+
+export type FaseUncheckedCreateNestedManyWithoutCatalogoFaseInput = {
+  create?: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput> | Prisma.FaseCreateWithoutCatalogoFaseInput[] | Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput[]
+  connectOrCreate?: Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput | Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput[]
+  createMany?: Prisma.FaseCreateManyCatalogoFaseInputEnvelope
+  connect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+}
+
+export type FaseUpdateManyWithoutCatalogoFaseNestedInput = {
+  create?: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput> | Prisma.FaseCreateWithoutCatalogoFaseInput[] | Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput[]
+  connectOrCreate?: Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput | Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput[]
+  upsert?: Prisma.FaseUpsertWithWhereUniqueWithoutCatalogoFaseInput | Prisma.FaseUpsertWithWhereUniqueWithoutCatalogoFaseInput[]
+  createMany?: Prisma.FaseCreateManyCatalogoFaseInputEnvelope
+  set?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  disconnect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  delete?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  connect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  update?: Prisma.FaseUpdateWithWhereUniqueWithoutCatalogoFaseInput | Prisma.FaseUpdateWithWhereUniqueWithoutCatalogoFaseInput[]
+  updateMany?: Prisma.FaseUpdateManyWithWhereWithoutCatalogoFaseInput | Prisma.FaseUpdateManyWithWhereWithoutCatalogoFaseInput[]
+  deleteMany?: Prisma.FaseScalarWhereInput | Prisma.FaseScalarWhereInput[]
+}
+
+export type FaseUncheckedUpdateManyWithoutCatalogoFaseNestedInput = {
+  create?: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput> | Prisma.FaseCreateWithoutCatalogoFaseInput[] | Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput[]
+  connectOrCreate?: Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput | Prisma.FaseCreateOrConnectWithoutCatalogoFaseInput[]
+  upsert?: Prisma.FaseUpsertWithWhereUniqueWithoutCatalogoFaseInput | Prisma.FaseUpsertWithWhereUniqueWithoutCatalogoFaseInput[]
+  createMany?: Prisma.FaseCreateManyCatalogoFaseInputEnvelope
+  set?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  disconnect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  delete?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  connect?: Prisma.FaseWhereUniqueInput | Prisma.FaseWhereUniqueInput[]
+  update?: Prisma.FaseUpdateWithWhereUniqueWithoutCatalogoFaseInput | Prisma.FaseUpdateWithWhereUniqueWithoutCatalogoFaseInput[]
+  updateMany?: Prisma.FaseUpdateManyWithWhereWithoutCatalogoFaseInput | Prisma.FaseUpdateManyWithWhereWithoutCatalogoFaseInput[]
+  deleteMany?: Prisma.FaseScalarWhereInput | Prisma.FaseScalarWhereInput[]
 }
 
 export type FaseCreateNestedOneWithoutServiciosInput = {
@@ -716,6 +782,7 @@ export type FaseCreateWithoutProyectoInput = {
   partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
@@ -727,6 +794,7 @@ export type FaseCreateWithoutProyectoInput = {
 
 export type FaseUncheckedCreateWithoutProyectoInput = {
   id?: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -777,6 +845,7 @@ export type FaseScalarWhereInput = {
   NOT?: Prisma.FaseScalarWhereInput | Prisma.FaseScalarWhereInput[]
   id?: Prisma.StringFilter<"Fase"> | string
   proyectoId?: Prisma.StringFilter<"Fase"> | string
+  catalogoFaseId?: Prisma.StringNullableFilter<"Fase"> | string | null
   nombre?: Prisma.StringFilter<"Fase"> | string
   status?: Prisma.EnumStatusEnumFilter<"Fase"> | $Enums.StatusEnum
   pctAvance?: Prisma.IntFilter<"Fase"> | number
@@ -800,6 +869,7 @@ export type FaseCreateWithoutPlanillasAsignadasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
@@ -811,6 +881,7 @@ export type FaseCreateWithoutPlanillasAsignadasInput = {
 export type FaseUncheckedCreateWithoutPlanillasAsignadasInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -856,6 +927,7 @@ export type FaseUpdateWithoutPlanillasAsignadasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -867,6 +939,7 @@ export type FaseUpdateWithoutPlanillasAsignadasInput = {
 export type FaseUncheckedUpdateWithoutPlanillasAsignadasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -884,7 +957,7 @@ export type FaseUncheckedUpdateWithoutPlanillasAsignadasInput = {
   servicios?: Prisma.ServicioFaseUncheckedUpdateManyWithoutFaseNestedInput
 }
 
-export type FaseCreateWithoutServiciosInput = {
+export type FaseCreateWithoutCatalogoFaseInput = {
   id?: string
   nombre: string
   status?: $Enums.StatusEnum
@@ -902,11 +975,81 @@ export type FaseCreateWithoutServiciosInput = {
   avancesUnidad?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutFaseInput
   tareas?: Prisma.TareaCreateNestedManyWithoutFaseInput
   planillasAsignadas?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutFaseInput
+  servicios?: Prisma.ServicioFaseCreateNestedManyWithoutFaseInput
+}
+
+export type FaseUncheckedCreateWithoutCatalogoFaseInput = {
+  id?: string
+  proyectoId: string
+  nombre: string
+  status?: $Enums.StatusEnum
+  pctAvance?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  orden?: number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  materiales?: Prisma.MaterialFaseUncheckedCreateNestedManyWithoutFaseInput
+  partesVisibles?: Prisma.FaseParte3DUncheckedCreateNestedManyWithoutFaseInput
+  unidadesFaseActiva?: Prisma.UnidadUncheckedCreateNestedManyWithoutFaseActualInput
+  avancesUnidad?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutFaseInput
+  tareas?: Prisma.TareaUncheckedCreateNestedManyWithoutFaseInput
+  planillasAsignadas?: Prisma.PlanillaAsignadaFaseUncheckedCreateNestedManyWithoutFaseInput
+  servicios?: Prisma.ServicioFaseUncheckedCreateNestedManyWithoutFaseInput
+}
+
+export type FaseCreateOrConnectWithoutCatalogoFaseInput = {
+  where: Prisma.FaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput>
+}
+
+export type FaseCreateManyCatalogoFaseInputEnvelope = {
+  data: Prisma.FaseCreateManyCatalogoFaseInput | Prisma.FaseCreateManyCatalogoFaseInput[]
+  skipDuplicates?: boolean
+}
+
+export type FaseUpsertWithWhereUniqueWithoutCatalogoFaseInput = {
+  where: Prisma.FaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.FaseUpdateWithoutCatalogoFaseInput, Prisma.FaseUncheckedUpdateWithoutCatalogoFaseInput>
+  create: Prisma.XOR<Prisma.FaseCreateWithoutCatalogoFaseInput, Prisma.FaseUncheckedCreateWithoutCatalogoFaseInput>
+}
+
+export type FaseUpdateWithWhereUniqueWithoutCatalogoFaseInput = {
+  where: Prisma.FaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.FaseUpdateWithoutCatalogoFaseInput, Prisma.FaseUncheckedUpdateWithoutCatalogoFaseInput>
+}
+
+export type FaseUpdateManyWithWhereWithoutCatalogoFaseInput = {
+  where: Prisma.FaseScalarWhereInput
+  data: Prisma.XOR<Prisma.FaseUpdateManyMutationInput, Prisma.FaseUncheckedUpdateManyWithoutCatalogoFaseInput>
+}
+
+export type FaseCreateWithoutServiciosInput = {
+  id?: string
+  nombre: string
+  status?: $Enums.StatusEnum
+  pctAvance?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  orden?: number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
+  materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
+  partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
+  unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
+  avancesUnidad?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutFaseInput
+  tareas?: Prisma.TareaCreateNestedManyWithoutFaseInput
+  planillasAsignadas?: Prisma.PlanillaAsignadaFaseCreateNestedManyWithoutFaseInput
 }
 
 export type FaseUncheckedCreateWithoutServiciosInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -952,6 +1095,7 @@ export type FaseUpdateWithoutServiciosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -963,6 +1107,7 @@ export type FaseUpdateWithoutServiciosInput = {
 export type FaseUncheckedUpdateWithoutServiciosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -992,6 +1137,7 @@ export type FaseCreateWithoutMaterialesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
   avancesUnidad?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutFaseInput
@@ -1003,6 +1149,7 @@ export type FaseCreateWithoutMaterialesInput = {
 export type FaseUncheckedCreateWithoutMaterialesInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1048,6 +1195,7 @@ export type FaseUpdateWithoutMaterialesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
   avancesUnidad?: Prisma.AvanceUnidadFaseUpdateManyWithoutFaseNestedInput
@@ -1059,6 +1207,7 @@ export type FaseUpdateWithoutMaterialesInput = {
 export type FaseUncheckedUpdateWithoutMaterialesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1088,6 +1237,7 @@ export type FaseCreateWithoutUnidadesFaseActivaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   avancesUnidad?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutFaseInput
@@ -1099,6 +1249,7 @@ export type FaseCreateWithoutUnidadesFaseActivaInput = {
 export type FaseUncheckedCreateWithoutUnidadesFaseActivaInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1144,6 +1295,7 @@ export type FaseUpdateWithoutUnidadesFaseActivaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   avancesUnidad?: Prisma.AvanceUnidadFaseUpdateManyWithoutFaseNestedInput
@@ -1155,6 +1307,7 @@ export type FaseUpdateWithoutUnidadesFaseActivaInput = {
 export type FaseUncheckedUpdateWithoutUnidadesFaseActivaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1184,6 +1337,7 @@ export type FaseCreateWithoutTareasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
@@ -1195,6 +1349,7 @@ export type FaseCreateWithoutTareasInput = {
 export type FaseUncheckedCreateWithoutTareasInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1240,6 +1395,7 @@ export type FaseUpdateWithoutTareasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -1251,6 +1407,7 @@ export type FaseUpdateWithoutTareasInput = {
 export type FaseUncheckedUpdateWithoutTareasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1280,6 +1437,7 @@ export type FaseCreateWithoutAvancesUnidadInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   partesVisibles?: Prisma.FaseParte3DCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
@@ -1291,6 +1449,7 @@ export type FaseCreateWithoutAvancesUnidadInput = {
 export type FaseUncheckedCreateWithoutAvancesUnidadInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1336,6 +1495,7 @@ export type FaseUpdateWithoutAvancesUnidadInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -1347,6 +1507,7 @@ export type FaseUpdateWithoutAvancesUnidadInput = {
 export type FaseUncheckedUpdateWithoutAvancesUnidadInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1376,6 +1537,7 @@ export type FaseCreateWithoutPartesVisiblesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proyecto: Prisma.ProyectoCreateNestedOneWithoutFasesInput
+  catalogoFase?: Prisma.CatalogoFaseCreateNestedOneWithoutFasesInput
   materiales?: Prisma.MaterialFaseCreateNestedManyWithoutFaseInput
   unidadesFaseActiva?: Prisma.UnidadCreateNestedManyWithoutFaseActualInput
   avancesUnidad?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutFaseInput
@@ -1387,6 +1549,7 @@ export type FaseCreateWithoutPartesVisiblesInput = {
 export type FaseUncheckedCreateWithoutPartesVisiblesInput = {
   id?: string
   proyectoId: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1432,6 +1595,7 @@ export type FaseUpdateWithoutPartesVisiblesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
   avancesUnidad?: Prisma.AvanceUnidadFaseUpdateManyWithoutFaseNestedInput
@@ -1443,6 +1607,7 @@ export type FaseUpdateWithoutPartesVisiblesInput = {
 export type FaseUncheckedUpdateWithoutPartesVisiblesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1462,6 +1627,7 @@ export type FaseUncheckedUpdateWithoutPartesVisiblesInput = {
 
 export type FaseCreateManyProyectoInput = {
   id?: string
+  catalogoFaseId?: string | null
   nombre: string
   status?: $Enums.StatusEnum
   pctAvance?: number
@@ -1484,6 +1650,7 @@ export type FaseUpdateWithoutProyectoInput = {
   partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  catalogoFase?: Prisma.CatalogoFaseUpdateOneWithoutFasesNestedInput
   materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
   partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
   unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
@@ -1495,6 +1662,7 @@ export type FaseUpdateWithoutProyectoInput = {
 
 export type FaseUncheckedUpdateWithoutProyectoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1515,6 +1683,77 @@ export type FaseUncheckedUpdateWithoutProyectoInput = {
 
 export type FaseUncheckedUpdateManyWithoutProyectoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  catalogoFaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FaseCreateManyCatalogoFaseInput = {
+  id?: string
+  proyectoId: string
+  nombre: string
+  status?: $Enums.StatusEnum
+  pctAvance?: number
+  fechaInicio?: Date | string | null
+  fechaFin?: Date | string | null
+  orden?: number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FaseUpdateWithoutCatalogoFaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutFasesNestedInput
+  materiales?: Prisma.MaterialFaseUpdateManyWithoutFaseNestedInput
+  partesVisibles?: Prisma.FaseParte3DUpdateManyWithoutFaseNestedInput
+  unidadesFaseActiva?: Prisma.UnidadUpdateManyWithoutFaseActualNestedInput
+  avancesUnidad?: Prisma.AvanceUnidadFaseUpdateManyWithoutFaseNestedInput
+  tareas?: Prisma.TareaUpdateManyWithoutFaseNestedInput
+  planillasAsignadas?: Prisma.PlanillaAsignadaFaseUpdateManyWithoutFaseNestedInput
+  servicios?: Prisma.ServicioFaseUpdateManyWithoutFaseNestedInput
+}
+
+export type FaseUncheckedUpdateWithoutCatalogoFaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
+  pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
+  fechaInicio?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaFin?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orden?: Prisma.IntFieldUpdateOperationsInput | number
+  partes3D?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materiales?: Prisma.MaterialFaseUncheckedUpdateManyWithoutFaseNestedInput
+  partesVisibles?: Prisma.FaseParte3DUncheckedUpdateManyWithoutFaseNestedInput
+  unidadesFaseActiva?: Prisma.UnidadUncheckedUpdateManyWithoutFaseActualNestedInput
+  avancesUnidad?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutFaseNestedInput
+  tareas?: Prisma.TareaUncheckedUpdateManyWithoutFaseNestedInput
+  planillasAsignadas?: Prisma.PlanillaAsignadaFaseUncheckedUpdateManyWithoutFaseNestedInput
+  servicios?: Prisma.ServicioFaseUncheckedUpdateManyWithoutFaseNestedInput
+}
+
+export type FaseUncheckedUpdateManyWithoutCatalogoFaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumStatusEnumFieldUpdateOperationsInput | $Enums.StatusEnum
   pctAvance?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1614,6 +1853,7 @@ export type FaseCountOutputTypeCountServiciosArgs<ExtArgs extends runtime.Types.
 export type FaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   proyectoId?: boolean
+  catalogoFaseId?: boolean
   nombre?: boolean
   status?: boolean
   pctAvance?: boolean
@@ -1624,6 +1864,7 @@ export type FaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   proyecto?: boolean | Prisma.ProyectoDefaultArgs<ExtArgs>
+  catalogoFase?: boolean | Prisma.Fase$catalogoFaseArgs<ExtArgs>
   materiales?: boolean | Prisma.Fase$materialesArgs<ExtArgs>
   partesVisibles?: boolean | Prisma.Fase$partesVisiblesArgs<ExtArgs>
   unidadesFaseActiva?: boolean | Prisma.Fase$unidadesFaseActivaArgs<ExtArgs>
@@ -1639,6 +1880,7 @@ export type FaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type FaseSelectScalar = {
   id?: boolean
   proyectoId?: boolean
+  catalogoFaseId?: boolean
   nombre?: boolean
   status?: boolean
   pctAvance?: boolean
@@ -1650,9 +1892,10 @@ export type FaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proyectoId" | "nombre" | "status" | "pctAvance" | "fechaInicio" | "fechaFin" | "orden" | "partes3D" | "createdAt" | "updatedAt", ExtArgs["result"]["fase"]>
+export type FaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "proyectoId" | "catalogoFaseId" | "nombre" | "status" | "pctAvance" | "fechaInicio" | "fechaFin" | "orden" | "partes3D" | "createdAt" | "updatedAt", ExtArgs["result"]["fase"]>
 export type FaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   proyecto?: boolean | Prisma.ProyectoDefaultArgs<ExtArgs>
+  catalogoFase?: boolean | Prisma.Fase$catalogoFaseArgs<ExtArgs>
   materiales?: boolean | Prisma.Fase$materialesArgs<ExtArgs>
   partesVisibles?: boolean | Prisma.Fase$partesVisiblesArgs<ExtArgs>
   unidadesFaseActiva?: boolean | Prisma.Fase$unidadesFaseActivaArgs<ExtArgs>
@@ -1667,6 +1910,7 @@ export type $FasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Fase"
   objects: {
     proyecto: Prisma.$ProyectoPayload<ExtArgs>
+    catalogoFase: Prisma.$CatalogoFasePayload<ExtArgs> | null
     materiales: Prisma.$MaterialFasePayload<ExtArgs>[]
     partesVisibles: Prisma.$FaseParte3DPayload<ExtArgs>[]
     unidadesFaseActiva: Prisma.$UnidadPayload<ExtArgs>[]
@@ -1678,6 +1922,7 @@ export type $FasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     proyectoId: string
+    catalogoFaseId: string | null
     nombre: string
     status: $Enums.StatusEnum
     pctAvance: number
@@ -2028,6 +2273,7 @@ readonly fields: FaseFieldRefs;
 export interface Prisma__FaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   proyecto<T extends Prisma.ProyectoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProyectoDefaultArgs<ExtArgs>>): Prisma.Prisma__ProyectoClient<runtime.Types.Result.GetResult<Prisma.$ProyectoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  catalogoFase<T extends Prisma.Fase$catalogoFaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fase$catalogoFaseArgs<ExtArgs>>): Prisma.Prisma__CatalogoFaseClient<runtime.Types.Result.GetResult<Prisma.$CatalogoFasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   materiales<T extends Prisma.Fase$materialesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fase$materialesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialFasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   partesVisibles<T extends Prisma.Fase$partesVisiblesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fase$partesVisiblesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaseParte3DPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   unidadesFaseActiva<T extends Prisma.Fase$unidadesFaseActivaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fase$unidadesFaseActivaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UnidadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2066,6 +2312,7 @@ export interface Prisma__FaseClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface FaseFieldRefs {
   readonly id: Prisma.FieldRef<"Fase", 'String'>
   readonly proyectoId: Prisma.FieldRef<"Fase", 'String'>
+  readonly catalogoFaseId: Prisma.FieldRef<"Fase", 'String'>
   readonly nombre: Prisma.FieldRef<"Fase", 'String'>
   readonly status: Prisma.FieldRef<"Fase", 'StatusEnum'>
   readonly pctAvance: Prisma.FieldRef<"Fase", 'Int'>
@@ -2415,6 +2662,25 @@ export type FaseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Fases to delete.
    */
   limit?: number
+}
+
+/**
+ * Fase.catalogoFase
+ */
+export type Fase$catalogoFaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CatalogoFase
+   */
+  select?: Prisma.CatalogoFaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CatalogoFase
+   */
+  omit?: Prisma.CatalogoFaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CatalogoFaseInclude<ExtArgs> | null
+  where?: Prisma.CatalogoFaseWhereInput
 }
 
 /**

@@ -36,6 +36,8 @@ export async function PATCH(
 
   const data: Record<string, unknown> = {};
   if (body.etiqueta != null) data.etiqueta = String(body.etiqueta);
+  if (body.fechaEntregaEstimada !== undefined)
+    data.fechaEntregaEstimada = body.fechaEntregaEstimada ? new Date(body.fechaEntregaEstimada) : null;
   if (body.faseActualId != null) data.faseActualId = body.faseActualId || null;
   if (body.modeloCasaId != null) data.modeloCasaId = body.modeloCasaId || null;
   if (body.pctAvanceGlobal != null) data.pctAvanceGlobal = Math.max(0, Math.min(100, Number(body.pctAvanceGlobal)));

@@ -8,33 +8,36 @@ export default async function ContenidoPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Contenido</h1>
-      <p className="mt-1 text-slate-400">
+      <h1 className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--text)" }}>Contenido</h1>
+      <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
         Páginas estáticas, términos, FAQs y otros contenidos
       </p>
       <div className="mt-6 space-y-4">
         {contenidos.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-slate-600 p-8 text-center text-slate-400">
+          <p
+            className="rounded-xl border border-dashed p-8 text-center"
+            style={{ borderColor: "var(--border2)", color: "var(--text3)" }}
+          >
             No hay contenido. Crea páginas desde el API o seed.
           </p>
         ) : (
           contenidos.map((c) => (
             <div
               key={c.id}
-              className="flex items-center justify-between rounded-xl border border-slate-700 bg-slate-800 p-4"
+              className="flex items-center justify-between rounded-xl border p-4"
+              style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
             >
               <div>
-                <span className="font-mono text-sm text-amber-400">
+                <span className="font-mono text-sm" style={{ color: "var(--accent)" }}>
                   {c.slug}
                 </span>
                 {c.titulo && (
-                  <p className="mt-0.5 text-sm text-slate-300">{c.titulo}</p>
+                  <p className="mt-0.5 text-sm" style={{ color: "var(--text2)" }}>{c.titulo}</p>
                 )}
               </div>
               <span
-                className={`rounded-full px-2 py-0.5 text-xs ${
-                  c.activo ? "bg-green-500/20 text-green-400" : "bg-slate-600 text-slate-400"
-                }`}
+                className="rounded-full px-2 py-0.5 text-xs"
+                style={c.activo ? { background: "rgba(34,197,94,0.15)", color: "var(--green)" } : { background: "var(--bg3)", color: "var(--text3)" }}
               >
                 {c.activo ? "Activo" : "Inactivo"}
               </span>

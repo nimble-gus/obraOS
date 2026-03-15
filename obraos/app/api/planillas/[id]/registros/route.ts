@@ -2,19 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 
-function calcularTotal(
-  tarifaDia: number,
-  diasTrabajados: number,
-  horasExtras: number,
-  tarifaHoraExtra: number | null
-): number {
-  const regular = tarifaDia * diasTrabajados;
-  const thExtra =
-    tarifaHoraExtra ?? (tarifaDia / 8) * 1.5;
-  const extras = horasExtras * thExtra;
-  return Math.round((regular + extras) * 100) / 100;
-}
-
+// Crear registro en un bloque de planilla: nombre, unidad (DIA|M2|M3), tarifa
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -26,32 +14,31 @@ export async function POST(
 
   const { id: planillaId } = await params;
   const body = await req.json();
-  const { nombrePersona, tarifaDia, diasTrabajados, horasExtras, tarifaHoraExtra } =
-    body;
+  const { nombre, unidad, tarifa } = body;
 
-  if (!nombrePersona?.trim() || tarifaDia == null || diasTrabajados == null) {
-    return NextResponse.json(
-      { error: "nombrePersona, tarifaDia y diasTrabajados son requeridos" },
-      { status: 400 }
-    );
+  if (!nombre?.trim()) {
+    return NextResponse.json({ error: "nombre es requerido" }, { status: 400 });
+  }
+  const unidades = ["DIA", "M2", "M3"];
+  if (!unidad || !unidades.includes(String(unidad).toUpperCase())) {
+    return NextResponse.json({ error: "unidad debe ser DIA, M2 o M3" }, { status: 400 });
+  }
+  const tarifaNum = parseFloat(String(tarifa));
+  if (isNaN(tarifaNum) || tarifaNum < 0) {
+    return NextResponse.json({ error: "tarifa debe ser un número >= 0" }, { status: 400 });
   }
 
-  const td = parseFloat(String(tarifaDia)) || 0;
-  const dias = Math.max(0, parseInt(String(diasTrabajados)) || 0);
-  const he = Math.max(0, parseInt(String(horasExtras)) || 0);
-  const the = tarifaHoraExtra != null ? parseFloat(String(tarifaHoraExtra)) : null;
-
-  const total = calcularTotal(td, dias, he, the);
+  const planilla = await prisma.planilla.findUnique({ where: { id: planillaId } });
+  if (!planilla) {
+    return NextResponse.json({ error: "Planilla no encontrada" }, { status: 404 });
+  }
 
   const registro = await prisma.planillaRegistro.create({
     data: {
       planillaId,
-      nombrePersona: nombrePersona.trim(),
-      tarifaDia: td,
-      diasTrabajados: dias,
-      horasExtras: he,
-      tarifaHoraExtra: the,
-      total,
+      nombre: nombre.trim(),
+      unidad: String(unidad).toUpperCase() as "DIA" | "M2" | "M3",
+      tarifa: tarifaNum,
     },
   });
 

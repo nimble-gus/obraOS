@@ -6,12 +6,13 @@ export default function NuevoUsuarioPage() {
     <div>
       <Link
         href="/admin/usuarios"
-        className="mb-4 inline-block text-sm text-slate-400 hover:text-white"
+        className="mb-4 inline-block text-sm hover:underline"
+        style={{ color: "var(--text3)" }}
       >
         ← Volver a usuarios
       </Link>
-      <h1 className="text-2xl font-bold text-white">Nuevo usuario</h1>
-      <p className="mt-1 text-sm text-slate-400">
+      <h1 className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--text)" }}>Nuevo usuario</h1>
+      <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
         Los usuarios no-admin solo verán los módulos que selecciones
       </p>
       <CrearUsuarioForm />

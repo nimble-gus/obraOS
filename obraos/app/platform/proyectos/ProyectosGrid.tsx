@@ -1,20 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { ModalNuevoProyecto } from "./ModalNuevoProyecto";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "@/app/components/Link";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  LinearProgress,
-  Chip,
-  IconButton,
-  CircularProgress,
-} from "@mui/material";
-import { PhotoCamera as PhotoCameraIcon, Add as AddIcon } from "@mui/icons-material";
 import { UnidadesAvanceExpandible } from "./UnidadesAvanceExpandible";
 
 const TIPO_LABEL: Record<string, string> = {
@@ -38,18 +28,62 @@ type ProyectoCard = {
   pctPorUnidad: { etiqueta: string; numero: number; pct: number }[];
 };
 
+function CloseIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function PhotoCameraIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
+  );
+}
+
+function AddIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
 export function ProyectosGrid({
   proyectos,
+  pms = [],
   esAdmin = false,
   puedeCrear = false,
 }: {
   proyectos: ProyectoCard[];
+  pms?: { id: string; nombre: string }[];
   esAdmin?: boolean;
   puedeCrear?: boolean;
 }) {
   const router = useRouter();
+  const [showModalNuevo, setShowModalNuevo] = useState(false);
   const [uploadingId, setUploadingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  const handleDeleteProject = async (proyectoId: string, nombre: string) => {
+    if (!confirm(`¿Eliminar el proyecto "${nombre}"? Se borrarán todas las fases, unidades, planillas y datos asociados. Esta acción no se puede deshacer.`)) return;
+    setDeletingId(proyectoId);
+    try {
+      const res = await fetch(`/api/proyectos/${proyectoId}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Error al eliminar");
+      router.refresh();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Error al eliminar proyecto");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   const handleAddImage = async (proyectoId: string, file: File) => {
     if (!file.type.startsWith("image/")) return;
@@ -74,55 +108,34 @@ export function ProyectosGrid({
   };
 
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gap: 2,
-        gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" },
-      }}
+    <div
+      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      style={{ gap: "var(--spacing, 16px)" }}
     >
       {proyectos.map((p) => {
         const pct = p.pctTotal;
         const status = pct >= 80 ? "done" : pct >= 20 ? "active" : "planning";
-        const colorTheme =
+        const colorCss = status === "done" ? "var(--green)" : status === "active" ? "var(--accent)" : "var(--blue)";
+        const bgGradient =
           status === "done"
-            ? "success.main"
+            ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
             : status === "active"
-              ? "primary.main"
-              : "info.main";
-        const colorCss =
-          status === "done"
-            ? "var(--green)"
-            : status === "active"
-              ? "var(--accent)"
-              : "var(--blue)";
+              ? "linear-gradient(135deg, rgba(92,149,255,0.15), rgba(92,149,255,0.05))"
+              : "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05))";
 
         return (
-          <Card
+          <div
             key={p.id}
-            sx={{
-              textDecoration: "none",
-              color: "inherit",
-              transition: "transform 0.2s, box-shadow 0.2s",
-              "&:hover": {
-                transform: "translateY(-2px)",
-                boxShadow: 4,
-              },
-              overflow: "hidden",
+            className="overflow-hidden rounded-xl transition"
+            style={{
+              background: "var(--bg2)",
+              border: "1px solid var(--border)",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
             }}
           >
-              <Box
-              sx={{
-                position: "relative",
-                height: 144,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-                background: p.imagenUrl
-                  ? "transparent"
-                  : `linear-gradient(135deg, ${status === "done" ? "rgba(34,197,94,0.15)" : status === "active" ? "rgba(92,149,255,0.15)" : "rgba(59,130,246,0.15)"}, ${status === "done" ? "rgba(34,197,94,0.05)" : status === "active" ? "rgba(92,149,255,0.05)" : "rgba(59,130,246,0.05)"})`,
-              }}
+            <div
+              className="relative flex h-36 items-center justify-center overflow-hidden"
+              style={{ background: p.imagenUrl ? "transparent" : bgGradient }}
             >
               {p.imagenUrl ? (
                 <Image
@@ -134,186 +147,144 @@ export function ProyectosGrid({
                   unoptimized
                 />
               ) : (
-                <Typography variant="overline" fontWeight={600} color={colorTheme}>
+                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: colorCss }}>
                   {TIPO_LABEL[p.tipo] ?? "Proyecto"}
-                </Typography>
+                </span>
               )}
-              <Chip
-                label={status === "done" ? `${pct}% LISTO` : status === "active" ? "ACTIVO" : "INICIO"}
-                size="small"
-                sx={{
-                  position: "absolute",
-                  top: 12,
-                  right: 12,
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  bgcolor: "rgba(15,23,42,0.9)", // fondo oscuro para máximo contraste
-                  color: "#f9fafb",
-                  zIndex: 1,
-                  backdropFilter: "blur(6px)",
-                  boxShadow: `0 0 0 1px ${colorTheme}`,
-                }}
-              />
               {esAdmin && (
-                <IconButton
-                  size="small"
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
+                <button
+                  type="button"
+                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const input = fileInputRefs.current[p.id];
-                    if (input) input.click();
+                    handleDeleteProject(p.id, p.nombre);
                   }}
-                  disabled={uploadingId === p.id}
-                  sx={{
-                    position: "absolute",
-                    bottom: 12,
-                    left: 12,
-                    bgcolor: "rgba(0,0,0,0.5)",
-                    color: "white",
-                    zIndex: 1,
-                    "&:hover": { bgcolor: "rgba(0,0,0,0.7)" },
-                    "&:disabled": { bgcolor: "rgba(0,0,0,0.3)" },
+                  disabled={deletingId === p.id}
+                  className="absolute left-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-lg text-white transition disabled:opacity-60"
+                  style={{
+                    background: deletingId === p.id ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.6)",
                   }}
+                  aria-label="Eliminar proyecto"
                 >
-                  {uploadingId === p.id ? (
-                    <CircularProgress size={20} color="inherit" />
+                  {deletingId === p.id ? (
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   ) : (
-                    <PhotoCameraIcon fontSize="small" />
+                    <CloseIcon />
                   )}
-                </IconButton>
+                </button>
               )}
-              <input
-                ref={(el) => {
-                  fileInputRefs.current[p.id] = el;
-                }}
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleAddImage(p.id, file);
-                  e.target.value = "";
-                }}
-              />
-            </Box>
-            <CardContent
-              component={Link}
+              <span
+                className="absolute right-3 top-3 z-10 rounded px-2 py-0.5 text-[10px] font-bold"
+                style={{ background: "rgba(15,23,42,0.9)", color: "#f9fafb" }}
+              >
+                {status === "done" ? `${pct}% LISTO` : status === "active" ? "ACTIVO" : "INICIO"}
+              </span>
+              {esAdmin && (
+                <>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const input = fileInputRefs.current[p.id];
+                      if (input) input.click();
+                    }}
+                    disabled={uploadingId === p.id}
+                    className="absolute bottom-3 left-3 z-10 flex h-8 w-8 items-center justify-center rounded-lg text-white transition disabled:opacity-60"
+                    style={{ background: "rgba(0,0,0,0.5)" }}
+                  >
+                    {uploadingId === p.id ? (
+                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    ) : (
+                      <PhotoCameraIcon />
+                    )}
+                  </button>
+                  <input
+                    ref={(el) => { fileInputRefs.current[p.id] = el; }}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleAddImage(p.id, file);
+                      e.target.value = "";
+                    }}
+                  />
+                </>
+              )}
+            </div>
+            <Link
               href={`/platform/proyectos/${p.id}`}
-              sx={{
-                display: "block",
-                textDecoration: "none",
-                color: "inherit",
-              }}
+              className="block p-4 no-underline transition hover:opacity-95"
+              style={{ color: "var(--text)" }}
             >
-              <Typography variant="subtitle1" fontWeight={700}>
-                {p.nombre}
-              </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1.5 }}>
+              <h3 className="font-bold" style={{ color: "var(--text)" }}>{p.nombre}</h3>
+              <p className="mt-1 text-xs" style={{ color: "var(--text2)" }}>
                 {p.tipo} · {p.ubicacion}
-              </Typography>
-              <Box sx={{ display: "flex", gap: 2, mb: 1.5 }}>
-                <Typography variant="body2" color="text.secondary">
-                  <Box component="span" fontWeight={600} color="text.primary">
-                    {p.numUnidades}
-                  </Box>
-                  {" "}Unidades
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <Box component="span" fontWeight={600} color="text.primary">
+              </p>
+              <div className="mt-2 flex gap-4 text-sm" style={{ color: "var(--text2)" }}>
+                <span>
+                  <strong style={{ color: "var(--text)" }}>{p.numUnidades}</strong> Unidades
+                </span>
+                <span>
+                  <strong style={{ color: "var(--text)" }}>
                     Q{p.presupuestoObra >= 1e6 ? `${(p.presupuestoObra / 1e6).toFixed(1)}M` : Math.round(p.presupuestoObra).toLocaleString()}
-                  </Box>
-                  {" "}Presupuesto
-                </Typography>
-              </Box>
-              <LinearProgress
-                variant="determinate"
-                value={pct}
-                sx={{
-                  height: 6,
-                  borderRadius: 3,
-                  mb: 1.5,
-                  bgcolor: "action.hover",
-                  "& .MuiLinearProgress-bar": {
-                    borderRadius: 3,
-                    bgcolor: colorTheme,
-                  },
-                }}
-              />
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-                <Typography variant="caption" color="text.secondary">
-                  PM: <Box component="span" fontWeight={600} color="text.secondary">{p.pmAsignado.nombre}</Box>
-                </Typography>
-                <Typography variant="caption" fontWeight={600} color={colorTheme}>
-                  {pct}% total
-                </Typography>
-              </Box>
-              {p.pctPorUnidad.length > 0 && (
-                <UnidadesAvanceExpandible
-                  pctPorUnidad={p.pctPorUnidad}
-                  pctTotal={pct}
-                  color={colorCss}
+                  </strong>{" "}
+                  Presupuesto
+                </span>
+              </div>
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full" style={{ background: "var(--bg3)" }}>
+                <div
+                  className="h-full rounded-full transition-all"
+                  style={{ width: `${pct}%`, background: colorCss }}
                 />
+              </div>
+              <div className="mt-2 flex justify-between text-xs" style={{ color: "var(--text2)" }}>
+                <span>
+                  PM: <strong style={{ color: "var(--text2)" }}>{p.pmAsignado.nombre}</strong>
+                </span>
+                <span className="font-semibold" style={{ color: colorCss }}>
+                  {pct}% total
+                </span>
+              </div>
+              {p.pctPorUnidad.length > 0 && (
+                <UnidadesAvanceExpandible pctPorUnidad={p.pctPorUnidad} pctTotal={pct} color={colorCss} />
               )}
-            </CardContent>
-          </Card>
+            </Link>
+          </div>
         );
       })}
 
       {puedeCrear && (
-        <Card
-          component={Link}
-          href="/platform/proyectos/nuevo"
-          sx={{
-            minHeight: 240,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "1px dashed rgba(148,163,184,0.6)",
-            background:
-              "radial-gradient(circle at top left, rgba(59,130,246,0.12), transparent 60%)",
-            textDecoration: "none",
-            color: "inherit",
-            transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s, background-color 0.2s",
-            "&:hover": {
-              transform: "translateY(-2px)",
-              boxShadow: 4,
-              borderColor: "var(--accent)",
-              backgroundColor: "rgba(15,23,42,0.9)",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              width: 56,
-              height: 56,
-              borderRadius: "999px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              mb: 1.5,
-              bgcolor: "rgba(59,130,246,0.12)",
-              color: "var(--accent)",
+        <>
+          <button
+            type="button"
+            onClick={() => setShowModalNuevo(true)}
+            className="flex min-h-[240px] flex-col items-center justify-center rounded-xl border border-dashed p-6 transition hover:-translate-y-0.5 hover:shadow-md"
+            style={{
+              borderColor: "rgba(148,163,184,0.6)",
+              background: "radial-gradient(circle at top left, rgba(59,130,246,0.12), transparent 60%)",
+              color: "var(--text)",
             }}
           >
-            <AddIcon />
-          </Box>
-          <Typography variant="subtitle1" fontWeight={700}>
-            Agregar proyecto
-          </Typography>
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ mt: 0.5, maxWidth: 200, textAlign: "center" }}
-          >
-            Crea un nuevo proyecto para empezar a dar seguimiento.
-          </Typography>
-        </Card>
+            <div
+              className="mb-3 flex h-14 w-14 items-center justify-center rounded-full"
+              style={{ background: "rgba(59,130,246,0.12)", color: "var(--accent)" }}
+            >
+              <AddIcon />
+            </div>
+            <span className="font-bold">Agregar proyecto</span>
+            <span className="mt-1 max-w-[200px] text-center text-sm" style={{ color: "var(--text2)" }}>
+              Crea un nuevo proyecto para empezar a dar seguimiento.
+            </span>
+          </button>
+          {showModalNuevo && (
+            <ModalNuevoProyecto pms={pms} onClose={() => setShowModalNuevo(false)} />
+          )}
+        </>
       )}
-    </Box>
+    </div>
   );
 }

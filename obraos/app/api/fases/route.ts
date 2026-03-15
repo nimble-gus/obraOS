@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const { proyectoId, nombre, orden, partes3D } = body;
+  const { proyectoId, nombre, orden, partes3D, catalogoFaseId } = body;
 
   if (!proyectoId || !nombre) {
     return NextResponse.json(
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
   const fase = await prisma.fase.create({
     data: {
       proyectoId,
+      catalogoFaseId: catalogoFaseId || null,
       nombre: String(nombre),
       orden: nextOrden,
       status: "PENDING",

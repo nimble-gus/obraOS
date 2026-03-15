@@ -396,13 +396,19 @@ export const ModelName = {
   Planilla: 'Planilla',
   PlanillaRegistro: 'PlanillaRegistro',
   PlanillaAsignadaFase: 'PlanillaAsignadaFase',
+  PlanillaAsignadaTarea: 'PlanillaAsignadaTarea',
+  PlanillaRegistroAsignadoTarea: 'PlanillaRegistroAsignadoTarea',
+  CatalogoFase: 'CatalogoFase',
   CatalogoTipoServicio: 'CatalogoTipoServicio',
   CatalogoServicio: 'CatalogoServicio',
   ServicioFase: 'ServicioFase',
+  ServicioAsignadoTarea: 'ServicioAsignadoTarea',
   Fase: 'Fase',
   MaterialFase: 'MaterialFase',
   MaterialFaseUnidad: 'MaterialFaseUnidad',
   CatalogoMaterial: 'CatalogoMaterial',
+  LoteMaterial: 'LoteMaterial',
+  MaterialAsignadoTarea: 'MaterialAsignadoTarea',
   InventarioMovimiento: 'InventarioMovimiento',
   Unidad: 'Unidad',
   Tarea: 'Tarea',
@@ -426,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "proyecto" | "presupuestoRubro" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
+    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "proyecto" | "presupuestoRubro" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "planillaAsignadaTarea" | "planillaRegistroAsignadoTarea" | "catalogoFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "servicioAsignadoTarea" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "loteMaterial" | "materialAsignadoTarea" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1222,6 +1228,204 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PlanillaAsignadaTarea: {
+      payload: Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>
+      fields: Prisma.PlanillaAsignadaTareaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlanillaAsignadaTareaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlanillaAsignadaTareaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        findFirst: {
+          args: Prisma.PlanillaAsignadaTareaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlanillaAsignadaTareaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        findMany: {
+          args: Prisma.PlanillaAsignadaTareaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>[]
+        }
+        create: {
+          args: Prisma.PlanillaAsignadaTareaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        createMany: {
+          args: Prisma.PlanillaAsignadaTareaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PlanillaAsignadaTareaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        update: {
+          args: Prisma.PlanillaAsignadaTareaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlanillaAsignadaTareaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlanillaAsignadaTareaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PlanillaAsignadaTareaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaAsignadaTareaPayload>
+        }
+        aggregate: {
+          args: Prisma.PlanillaAsignadaTareaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlanillaAsignadaTarea>
+        }
+        groupBy: {
+          args: Prisma.PlanillaAsignadaTareaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlanillaAsignadaTareaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlanillaAsignadaTareaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlanillaAsignadaTareaCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlanillaRegistroAsignadoTarea: {
+      payload: Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>
+      fields: Prisma.PlanillaRegistroAsignadoTareaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlanillaRegistroAsignadoTareaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlanillaRegistroAsignadoTareaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        findFirst: {
+          args: Prisma.PlanillaRegistroAsignadoTareaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlanillaRegistroAsignadoTareaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        findMany: {
+          args: Prisma.PlanillaRegistroAsignadoTareaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>[]
+        }
+        create: {
+          args: Prisma.PlanillaRegistroAsignadoTareaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        createMany: {
+          args: Prisma.PlanillaRegistroAsignadoTareaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PlanillaRegistroAsignadoTareaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        update: {
+          args: Prisma.PlanillaRegistroAsignadoTareaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlanillaRegistroAsignadoTareaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlanillaRegistroAsignadoTareaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PlanillaRegistroAsignadoTareaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlanillaRegistroAsignadoTareaPayload>
+        }
+        aggregate: {
+          args: Prisma.PlanillaRegistroAsignadoTareaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlanillaRegistroAsignadoTarea>
+        }
+        groupBy: {
+          args: Prisma.PlanillaRegistroAsignadoTareaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlanillaRegistroAsignadoTareaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlanillaRegistroAsignadoTareaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlanillaRegistroAsignadoTareaCountAggregateOutputType> | number
+        }
+      }
+    }
+    CatalogoFase: {
+      payload: Prisma.$CatalogoFasePayload<ExtArgs>
+      fields: Prisma.CatalogoFaseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CatalogoFaseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CatalogoFaseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        findFirst: {
+          args: Prisma.CatalogoFaseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CatalogoFaseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        findMany: {
+          args: Prisma.CatalogoFaseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>[]
+        }
+        create: {
+          args: Prisma.CatalogoFaseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        createMany: {
+          args: Prisma.CatalogoFaseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CatalogoFaseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        update: {
+          args: Prisma.CatalogoFaseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        deleteMany: {
+          args: Prisma.CatalogoFaseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CatalogoFaseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CatalogoFaseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CatalogoFasePayload>
+        }
+        aggregate: {
+          args: Prisma.CatalogoFaseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCatalogoFase>
+        }
+        groupBy: {
+          args: Prisma.CatalogoFaseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogoFaseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CatalogoFaseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CatalogoFaseCountAggregateOutputType> | number
+        }
+      }
+    }
     CatalogoTipoServicio: {
       payload: Prisma.$CatalogoTipoServicioPayload<ExtArgs>
       fields: Prisma.CatalogoTipoServicioFieldRefs
@@ -1417,6 +1621,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ServicioFaseCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ServicioFaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServicioAsignadoTarea: {
+      payload: Prisma.$ServicioAsignadoTareaPayload<ExtArgs>
+      fields: Prisma.ServicioAsignadoTareaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServicioAsignadoTareaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServicioAsignadoTareaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        findFirst: {
+          args: Prisma.ServicioAsignadoTareaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServicioAsignadoTareaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        findMany: {
+          args: Prisma.ServicioAsignadoTareaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>[]
+        }
+        create: {
+          args: Prisma.ServicioAsignadoTareaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        createMany: {
+          args: Prisma.ServicioAsignadoTareaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ServicioAsignadoTareaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        update: {
+          args: Prisma.ServicioAsignadoTareaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServicioAsignadoTareaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServicioAsignadoTareaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ServicioAsignadoTareaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicioAsignadoTareaPayload>
+        }
+        aggregate: {
+          args: Prisma.ServicioAsignadoTareaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServicioAsignadoTarea>
+        }
+        groupBy: {
+          args: Prisma.ServicioAsignadoTareaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServicioAsignadoTareaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServicioAsignadoTareaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServicioAsignadoTareaCountAggregateOutputType> | number
         }
       }
     }
@@ -1681,6 +1951,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CatalogoMaterialCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CatalogoMaterialCountAggregateOutputType> | number
+        }
+      }
+    }
+    LoteMaterial: {
+      payload: Prisma.$LoteMaterialPayload<ExtArgs>
+      fields: Prisma.LoteMaterialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoteMaterialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoteMaterialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        findFirst: {
+          args: Prisma.LoteMaterialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoteMaterialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        findMany: {
+          args: Prisma.LoteMaterialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>[]
+        }
+        create: {
+          args: Prisma.LoteMaterialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        createMany: {
+          args: Prisma.LoteMaterialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.LoteMaterialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        update: {
+          args: Prisma.LoteMaterialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoteMaterialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoteMaterialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.LoteMaterialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoteMaterialPayload>
+        }
+        aggregate: {
+          args: Prisma.LoteMaterialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoteMaterial>
+        }
+        groupBy: {
+          args: Prisma.LoteMaterialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoteMaterialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoteMaterialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoteMaterialCountAggregateOutputType> | number
+        }
+      }
+    }
+    MaterialAsignadoTarea: {
+      payload: Prisma.$MaterialAsignadoTareaPayload<ExtArgs>
+      fields: Prisma.MaterialAsignadoTareaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MaterialAsignadoTareaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MaterialAsignadoTareaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        findFirst: {
+          args: Prisma.MaterialAsignadoTareaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MaterialAsignadoTareaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        findMany: {
+          args: Prisma.MaterialAsignadoTareaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>[]
+        }
+        create: {
+          args: Prisma.MaterialAsignadoTareaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        createMany: {
+          args: Prisma.MaterialAsignadoTareaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MaterialAsignadoTareaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        update: {
+          args: Prisma.MaterialAsignadoTareaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        deleteMany: {
+          args: Prisma.MaterialAsignadoTareaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MaterialAsignadoTareaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MaterialAsignadoTareaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialAsignadoTareaPayload>
+        }
+        aggregate: {
+          args: Prisma.MaterialAsignadoTareaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMaterialAsignadoTarea>
+        }
+        groupBy: {
+          args: Prisma.MaterialAsignadoTareaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialAsignadoTareaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MaterialAsignadoTareaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialAsignadoTareaCountAggregateOutputType> | number
         }
       }
     }
@@ -2378,9 +2780,6 @@ export const PlanillaScalarFieldEnum = {
   proyectoId: 'proyectoId',
   nombre: 'nombre',
   periodo: 'periodo',
-  fechaInicio: 'fechaInicio',
-  fechaFin: 'fechaFin',
-  fechaPago: 'fechaPago',
   estado: 'estado',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2392,12 +2791,10 @@ export type PlanillaScalarFieldEnum = (typeof PlanillaScalarFieldEnum)[keyof typ
 export const PlanillaRegistroScalarFieldEnum = {
   id: 'id',
   planillaId: 'planillaId',
-  nombrePersona: 'nombrePersona',
-  tarifaDia: 'tarifaDia',
-  diasTrabajados: 'diasTrabajados',
-  horasExtras: 'horasExtras',
-  tarifaHoraExtra: 'tarifaHoraExtra',
-  total: 'total'
+  nombre: 'nombre',
+  unidad: 'unidad',
+  tarifa: 'tarifa',
+  createdAt: 'createdAt'
 } as const
 
 export type PlanillaRegistroScalarFieldEnum = (typeof PlanillaRegistroScalarFieldEnum)[keyof typeof PlanillaRegistroScalarFieldEnum]
@@ -2411,6 +2808,45 @@ export const PlanillaAsignadaFaseScalarFieldEnum = {
 } as const
 
 export type PlanillaAsignadaFaseScalarFieldEnum = (typeof PlanillaAsignadaFaseScalarFieldEnum)[keyof typeof PlanillaAsignadaFaseScalarFieldEnum]
+
+
+export const PlanillaAsignadaTareaScalarFieldEnum = {
+  id: 'id',
+  planillaId: 'planillaId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId',
+  unidadTipo: 'unidadTipo',
+  cantidad: 'cantidad',
+  monto: 'monto',
+  createdAt: 'createdAt'
+} as const
+
+export type PlanillaAsignadaTareaScalarFieldEnum = (typeof PlanillaAsignadaTareaScalarFieldEnum)[keyof typeof PlanillaAsignadaTareaScalarFieldEnum]
+
+
+export const PlanillaRegistroAsignadoTareaScalarFieldEnum = {
+  id: 'id',
+  planillaRegistroId: 'planillaRegistroId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId',
+  cantidad: 'cantidad',
+  monto: 'monto',
+  createdAt: 'createdAt'
+} as const
+
+export type PlanillaRegistroAsignadoTareaScalarFieldEnum = (typeof PlanillaRegistroAsignadoTareaScalarFieldEnum)[keyof typeof PlanillaRegistroAsignadoTareaScalarFieldEnum]
+
+
+export const CatalogoFaseScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  orden: 'orden',
+  activo: 'activo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CatalogoFaseScalarFieldEnum = (typeof CatalogoFaseScalarFieldEnum)[keyof typeof CatalogoFaseScalarFieldEnum]
 
 
 export const CatalogoTipoServicioScalarFieldEnum = {
@@ -2449,9 +2885,23 @@ export const ServicioFaseScalarFieldEnum = {
 export type ServicioFaseScalarFieldEnum = (typeof ServicioFaseScalarFieldEnum)[keyof typeof ServicioFaseScalarFieldEnum]
 
 
+export const ServicioAsignadoTareaScalarFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId',
+  cantidad: 'cantidad',
+  monto: 'monto',
+  createdAt: 'createdAt'
+} as const
+
+export type ServicioAsignadoTareaScalarFieldEnum = (typeof ServicioAsignadoTareaScalarFieldEnum)[keyof typeof ServicioAsignadoTareaScalarFieldEnum]
+
+
 export const FaseScalarFieldEnum = {
   id: 'id',
   proyectoId: 'proyectoId',
+  catalogoFaseId: 'catalogoFaseId',
   nombre: 'nombre',
   status: 'status',
   pctAvance: 'pctAvance',
@@ -2506,6 +2956,35 @@ export const CatalogoMaterialScalarFieldEnum = {
 export type CatalogoMaterialScalarFieldEnum = (typeof CatalogoMaterialScalarFieldEnum)[keyof typeof CatalogoMaterialScalarFieldEnum]
 
 
+export const LoteMaterialScalarFieldEnum = {
+  id: 'id',
+  catalogoMaterialId: 'catalogoMaterialId',
+  proyectoId: 'proyectoId',
+  cantidad: 'cantidad',
+  cantidadInicial: 'cantidadInicial',
+  precioUnitario: 'precioUnitario',
+  total: 'total',
+  descripcion: 'descripcion',
+  createdAt: 'createdAt'
+} as const
+
+export type LoteMaterialScalarFieldEnum = (typeof LoteMaterialScalarFieldEnum)[keyof typeof LoteMaterialScalarFieldEnum]
+
+
+export const MaterialAsignadoTareaScalarFieldEnum = {
+  id: 'id',
+  catalogoMaterialId: 'catalogoMaterialId',
+  loteId: 'loteId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId',
+  cantidad: 'cantidad',
+  monto: 'monto',
+  createdAt: 'createdAt'
+} as const
+
+export type MaterialAsignadoTareaScalarFieldEnum = (typeof MaterialAsignadoTareaScalarFieldEnum)[keyof typeof MaterialAsignadoTareaScalarFieldEnum]
+
+
 export const InventarioMovimientoScalarFieldEnum = {
   id: 'id',
   materialId: 'materialId',
@@ -2528,6 +3007,7 @@ export const UnidadScalarFieldEnum = {
   proyectoId: 'proyectoId',
   numero: 'numero',
   etiqueta: 'etiqueta',
+  fechaEntregaEstimada: 'fechaEntregaEstimada',
   modeloCasaId: 'modeloCasaId',
   faseActualId: 'faseActualId',
   pctAvanceGlobal: 'pctAvanceGlobal',
@@ -2544,6 +3024,10 @@ export const TareaScalarFieldEnum = {
   faseId: 'faseId',
   nombre: 'nombre',
   orden: 'orden',
+  fechaInicio: 'fechaInicio',
+  fechaFin: 'fechaFin',
+  cantidadM2: 'cantidadM2',
+  cantidadM3: 'cantidadM3',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2773,7 +3257,7 @@ export type PlanillaOrderByRelevanceFieldEnum = (typeof PlanillaOrderByRelevance
 export const PlanillaRegistroOrderByRelevanceFieldEnum = {
   id: 'id',
   planillaId: 'planillaId',
-  nombrePersona: 'nombrePersona'
+  nombre: 'nombre'
 } as const
 
 export type PlanillaRegistroOrderByRelevanceFieldEnum = (typeof PlanillaRegistroOrderByRelevanceFieldEnum)[keyof typeof PlanillaRegistroOrderByRelevanceFieldEnum]
@@ -2786,6 +3270,34 @@ export const PlanillaAsignadaFaseOrderByRelevanceFieldEnum = {
 } as const
 
 export type PlanillaAsignadaFaseOrderByRelevanceFieldEnum = (typeof PlanillaAsignadaFaseOrderByRelevanceFieldEnum)[keyof typeof PlanillaAsignadaFaseOrderByRelevanceFieldEnum]
+
+
+export const PlanillaAsignadaTareaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  planillaId: 'planillaId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId'
+} as const
+
+export type PlanillaAsignadaTareaOrderByRelevanceFieldEnum = (typeof PlanillaAsignadaTareaOrderByRelevanceFieldEnum)[keyof typeof PlanillaAsignadaTareaOrderByRelevanceFieldEnum]
+
+
+export const PlanillaRegistroAsignadoTareaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  planillaRegistroId: 'planillaRegistroId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId'
+} as const
+
+export type PlanillaRegistroAsignadoTareaOrderByRelevanceFieldEnum = (typeof PlanillaRegistroAsignadoTareaOrderByRelevanceFieldEnum)[keyof typeof PlanillaRegistroAsignadoTareaOrderByRelevanceFieldEnum]
+
+
+export const CatalogoFaseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  nombre: 'nombre'
+} as const
+
+export type CatalogoFaseOrderByRelevanceFieldEnum = (typeof CatalogoFaseOrderByRelevanceFieldEnum)[keyof typeof CatalogoFaseOrderByRelevanceFieldEnum]
 
 
 export const CatalogoTipoServicioOrderByRelevanceFieldEnum = {
@@ -2815,9 +3327,20 @@ export const ServicioFaseOrderByRelevanceFieldEnum = {
 export type ServicioFaseOrderByRelevanceFieldEnum = (typeof ServicioFaseOrderByRelevanceFieldEnum)[keyof typeof ServicioFaseOrderByRelevanceFieldEnum]
 
 
+export const ServicioAsignadoTareaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId'
+} as const
+
+export type ServicioAsignadoTareaOrderByRelevanceFieldEnum = (typeof ServicioAsignadoTareaOrderByRelevanceFieldEnum)[keyof typeof ServicioAsignadoTareaOrderByRelevanceFieldEnum]
+
+
 export const FaseOrderByRelevanceFieldEnum = {
   id: 'id',
   proyectoId: 'proyectoId',
+  catalogoFaseId: 'catalogoFaseId',
   nombre: 'nombre'
 } as const
 
@@ -2850,6 +3373,27 @@ export const CatalogoMaterialOrderByRelevanceFieldEnum = {
 } as const
 
 export type CatalogoMaterialOrderByRelevanceFieldEnum = (typeof CatalogoMaterialOrderByRelevanceFieldEnum)[keyof typeof CatalogoMaterialOrderByRelevanceFieldEnum]
+
+
+export const LoteMaterialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  catalogoMaterialId: 'catalogoMaterialId',
+  proyectoId: 'proyectoId',
+  descripcion: 'descripcion'
+} as const
+
+export type LoteMaterialOrderByRelevanceFieldEnum = (typeof LoteMaterialOrderByRelevanceFieldEnum)[keyof typeof LoteMaterialOrderByRelevanceFieldEnum]
+
+
+export const MaterialAsignadoTareaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  catalogoMaterialId: 'catalogoMaterialId',
+  loteId: 'loteId',
+  tareaId: 'tareaId',
+  unidadId: 'unidadId'
+} as const
+
+export type MaterialAsignadoTareaOrderByRelevanceFieldEnum = (typeof MaterialAsignadoTareaOrderByRelevanceFieldEnum)[keyof typeof MaterialAsignadoTareaOrderByRelevanceFieldEnum]
 
 
 export const InventarioMovimientoOrderByRelevanceFieldEnum = {
@@ -3017,6 +3561,13 @@ export type EnumEstadoPlanillaEnumFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'UnidadPlanillaEnum'
+ */
+export type EnumUnidadPlanillaEnumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnidadPlanillaEnum'>
+    
+
+
+/**
  * Reference to a field of type 'StatusEnum'
  */
 export type EnumStatusEnumFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusEnum'>
@@ -3150,13 +3701,19 @@ export type GlobalOmitConfig = {
   planilla?: Prisma.PlanillaOmit
   planillaRegistro?: Prisma.PlanillaRegistroOmit
   planillaAsignadaFase?: Prisma.PlanillaAsignadaFaseOmit
+  planillaAsignadaTarea?: Prisma.PlanillaAsignadaTareaOmit
+  planillaRegistroAsignadoTarea?: Prisma.PlanillaRegistroAsignadoTareaOmit
+  catalogoFase?: Prisma.CatalogoFaseOmit
   catalogoTipoServicio?: Prisma.CatalogoTipoServicioOmit
   catalogoServicio?: Prisma.CatalogoServicioOmit
   servicioFase?: Prisma.ServicioFaseOmit
+  servicioAsignadoTarea?: Prisma.ServicioAsignadoTareaOmit
   fase?: Prisma.FaseOmit
   materialFase?: Prisma.MaterialFaseOmit
   materialFaseUnidad?: Prisma.MaterialFaseUnidadOmit
   catalogoMaterial?: Prisma.CatalogoMaterialOmit
+  loteMaterial?: Prisma.LoteMaterialOmit
+  materialAsignadoTarea?: Prisma.MaterialAsignadoTareaOmit
   inventarioMovimiento?: Prisma.InventarioMovimientoOmit
   unidad?: Prisma.UnidadOmit
   tarea?: Prisma.TareaOmit

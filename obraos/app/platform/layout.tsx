@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { PlatformShell } from "../components/PlatformShell";
+import { PlatformShell } from "@/app/components/PlatformShell";
 import { PlatformGuard } from "./PlatformGuard";
 
 export default async function PlatformLayout({

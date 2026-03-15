@@ -69,60 +69,72 @@ export function TiposServicioClient({
   return (
     <div className="mt-6 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-sm text-slate-400">{tiposIniciales.length} tipos</span>
+        <span className="text-sm" style={{ color: "var(--text3)" }}>{tiposIniciales.length} tipos</span>
         <button
           onClick={() => setShowNuevo(true)}
-          className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-500"
+          className="rounded-lg px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90"
+          style={{ background: "var(--accent)" }}
         >
           + Nuevo tipo
         </button>
       </div>
 
       {showNuevo && (
-        <div className="flex items-center gap-3 rounded-xl border border-slate-700 bg-slate-800 p-4">
+        <div
+          className="flex items-center gap-3 rounded-xl border p-4"
+          style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        >
           <input
             value={nombreNuevo}
             onChange={(e) => setNombreNuevo(e.target.value)}
             placeholder="Ej. Renta grúa, Fletes"
-            className="flex-1 rounded border border-slate-600 bg-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-amber-500"
+            className="flex-1 rounded border px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+            style={{
+              background: "var(--bg3)",
+              borderColor: "var(--border)",
+              color: "var(--text)",
+            }}
           />
           <button
             onClick={agregar}
-            className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-500"
+            className="rounded-lg px-4 py-2 text-sm font-semibold text-black transition hover:opacity-90"
+            style={{ background: "var(--accent)" }}
           >
             Crear
           </button>
           <button
             onClick={() => { setShowNuevo(false); setNombreNuevo(""); }}
-            className="rounded border border-slate-600 px-4 py-2 text-sm text-slate-400 hover:text-white"
+            className="rounded border px-4 py-2 text-sm transition"
+            style={{ borderColor: "var(--border)", color: "var(--text2)" }}
           >
             Cancelar
           </button>
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-slate-700">
-        <table className="min-w-full divide-y divide-slate-700">
-          <thead className="bg-slate-800">
+      <div className="overflow-hidden rounded-xl border" style={{ borderColor: "var(--border)" }}>
+        <table className="min-w-full divide-y" style={{ borderColor: "var(--border)" }}>
+          <thead style={{ background: "var(--bg3)" }}>
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase text-slate-400">Orden</th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase text-slate-400">Nombre</th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase text-slate-400">Acciones</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase" style={{ color: "var(--text3)" }}>Orden</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase" style={{ color: "var(--text3)" }}>Nombre</th>
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase" style={{ color: "var(--text3)" }}>Acciones</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-700 bg-slate-800/50">
+          <tbody className="divide-y" style={{ borderColor: "var(--border)", background: "var(--bg2)" }}>
             {tiposIniciales.map((t) => (
-              <tr key={t.id} className="hover:bg-slate-700/30">
-                <td className="px-4 py-3 text-sm text-slate-400">{t.orden}</td>
+              <tr key={t.id} style={{ background: "var(--bg2)" }} className="hover:opacity-90">
+                <td className="px-4 py-3 text-sm" style={{ color: "var(--text3)" }}>{t.orden}</td>
                 <td className="px-4 py-3">
                   {editando === t.id ? (
                     <input
                       value={nombreEdit}
                       onChange={(e) => setNombreEdit(e.target.value)}
-                      className="w-64 rounded border border-slate-600 bg-slate-700 px-2 py-1 text-sm text-white"
+                      className="w-64 rounded border px-2 py-1 text-sm"
+                      style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
                     />
                   ) : (
-                    <span className="text-sm text-white">{t.nombre}</span>
+                    <span className="text-sm" style={{ color: "var(--text)" }}>{t.nombre}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right">
@@ -130,13 +142,15 @@ export function TiposServicioClient({
                     <>
                       <button
                         onClick={() => actualizar(t.id)}
-                        className="mr-2 text-sm text-amber-400 hover:text-amber-300"
+                        className="mr-2 text-sm hover:underline"
+                        style={{ color: "var(--accent)" }}
                       >
                         Guardar
                       </button>
                       <button
                         onClick={() => { setEditando(null); setNombreEdit(""); }}
-                        className="text-sm text-slate-400 hover:text-white"
+                        className="text-sm hover:underline"
+                        style={{ color: "var(--text3)" }}
                       >
                         Cancelar
                       </button>
@@ -145,13 +159,15 @@ export function TiposServicioClient({
                     <>
                       <button
                         onClick={() => { setEditando(t.id); setNombreEdit(t.nombre); }}
-                        className="mr-3 text-sm text-amber-400 hover:text-amber-300"
+                        className="mr-3 text-sm hover:underline"
+                        style={{ color: "var(--accent)" }}
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => eliminar(t.id)}
-                        className="text-sm text-red-400 hover:text-red-300"
+                        className="text-sm hover:underline"
+                        style={{ color: "var(--red)" }}
                       >
                         Eliminar
                       </button>
@@ -165,7 +181,10 @@ export function TiposServicioClient({
       </div>
 
       {tiposIniciales.length === 0 && !showNuevo && (
-        <p className="rounded-xl border border-dashed border-slate-600 p-8 text-center text-slate-400">
+        <p
+          className="rounded-xl border border-dashed p-8 text-center"
+          style={{ borderColor: "var(--border2)", color: "var(--text3)" }}
+        >
           No hay tipos de servicio. Crea el primero para poder clasificar costos varios.
         </p>
       )}

@@ -1,120 +1,35 @@
 import { prisma } from "@/lib/db";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
-import Link from "@/app/components/Link";
-import { Box, Typography, Button } from "@mui/material";
-import { puedeConfigurarModeloFinanciero } from "@/lib/permissions";
-import { ProyectoDashboardClient } from "./ProyectoDashboardClient";
+import Link from "next/link";
 
-type ServicioConTipo = {
-  cantidadRequerida: number;
-  servicio: { costoUnitario: number; tipoServicio?: { id: string; nombre: string } | null };
+const TIPO_LABEL: Record<string, string> = {
+  RESIDENCIAL: "Residencial",
+  APARTAMENTOS: "Apartamentos",
+  VILLAS: "Villas",
+  CONDOMINIO: "Condominio",
+  COMERCIAL: "Comercial",
 };
 
-function calcularCostoComprometido(proyecto: {
-  fases?: {
-    materiales: { cantidadRequerida: number; material: { costoUnitario: number } }[];
-    servicios: ServicioConTipo[];
-    planillasAsignadas: { monto: number }[];
-  }[];
-}) {
-  let total = 0;
-  for (const fase of proyecto.fases ?? []) {
-    for (const mf of fase.materiales ?? []) {
-      total += mf.cantidadRequerida * mf.material.costoUnitario;
-    }
-    for (const sf of fase.servicios ?? []) {
-      total += sf.cantidadRequerida * sf.servicio.costoUnitario;
-    }
-    for (const pa of fase.planillasAsignadas ?? []) {
-      total += pa.monto;
-    }
-  }
-  return total;
+const STATUS_LABEL: Record<string, string> = {
+  PENDING: "Pendiente",
+  ACTIVE: "En curso",
+  DONE: "Listo",
+};
+
+function fmtQ(n: number): string {
+  if (n >= 1e6) return `Q${(n / 1e6).toFixed(1)}M`;
+  if (n >= 1e3) return `Q${(n / 1e3).toFixed(0)}K`;
+  return `Q${Math.round(n).toLocaleString()}`;
 }
 
-function calcularDesglose(proyecto: {
-  fases?: {
-    materiales: { cantidadRequerida: number; material: { costoUnitario: number } }[];
-    servicios: ServicioConTipo[];
-    planillasAsignadas: { monto: number }[];
-  }[];
-}): {
-  materiales: number;
-  planilla: number;
-  costosVarios: { tipoNombre: string; monto: number }[];
-} {
-  let materiales = 0;
-  let planilla = 0;
-  const porTipo = new Map<string, number>();
-
-  for (const fase of proyecto.fases ?? []) {
-    for (const mf of fase.materiales ?? []) {
-      materiales += mf.cantidadRequerida * mf.material.costoUnitario;
-    }
-    for (const pa of fase.planillasAsignadas ?? []) {
-      planilla += pa.monto;
-    }
-    for (const sf of fase.servicios ?? []) {
-      const monto = sf.cantidadRequerida * sf.servicio.costoUnitario;
-      const nombre = sf.servicio.tipoServicio?.nombre ?? "Sin clasificar";
-      porTipo.set(nombre, (porTipo.get(nombre) ?? 0) + monto);
-    }
-  }
-
-  const costosVarios = Array.from(porTipo.entries())
-    .map(([tipoNombre, monto]) => ({ tipoNombre, monto }))
-    .sort((a, b) => b.monto - a.monto);
-
-  return { materiales, planilla, costosVarios };
-}
-
-function calcularAvanceTotal(p: {
-  unidades: { id: string }[];
-  fases: {
-    tareas: { completadas: { unidadId: string }[] }[];
-    avancesUnidad: { unidadId: string; pctAvance: number }[];
-    pctAvance: number;
-  }[];
-  numUnidades: number;
-}) {
-  const numFases = p.fases.length;
-  const numPlanificadas = Math.max(1, p.numUnidades);
-  if (p.unidades.length === 0) {
-    if (numFases === 0) return 0;
-    return Math.round(
-      p.fases.reduce((s, f) => s + f.pctAvance, 0) / numFases
-    );
-  }
-  if (numFases === 0) return 0;
-  let sumaTotal = 0;
-  for (const u of p.unidades) {
-    let sumaPctFase = 0;
-    for (const fase of p.fases) {
-      const totalEnFase = fase.tareas.length;
-      if (totalEnFase > 0) {
-        const completadas = fase.tareas.filter((t) =>
-          t.completadas.some((c) => c.unidadId === u.id)
-        ).length;
-        sumaPctFase += (completadas / totalEnFase) * 100;
-      } else {
-        const av = fase.avancesUnidad?.find((a) => a.unidadId === u.id);
-        sumaPctFase += av?.pctAvance ?? 0;
-      }
-    }
-    sumaTotal += sumaPctFase / numFases;
-  }
-  return Math.round(sumaTotal / numPlanificadas);
-}
-
-export default async function ProyectoDashboardPage({
+export default async function ProyectoPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const session = await auth();
   const { id } = await params;
-  const puedeConfig = puedeConfigurarModeloFinanciero(session?.user?.role ?? "");
+  const session = await auth();
 
   const proyecto = await prisma.proyecto.findUnique({
     where: { id },
@@ -129,81 +44,326 @@ export default async function ProyectoDashboardPage({
         orderBy: { orden: "asc" },
         include: {
           tareas: { include: { completadas: { select: { unidadId: true } } } },
-          materiales: { include: { material: { select: { costoUnitario: true } } } },
+          avancesUnidad: { select: { unidadId: true, pctAvance: true } },
           servicios: {
             include: {
-              servicio: {
-                include: { tipoServicio: { select: { id: true, nombre: true } } },
-              },
+              servicio: { select: { costoUnitario: true, nombre: true } },
             },
           },
-          planillasAsignadas: { select: { monto: true } },
-          avancesUnidad: { select: { unidadId: true, pctAvance: true } },
         },
       },
-      presupuestoRubros: { orderBy: { rubro: "asc" } },
+      planillas: {
+        include: {
+          registros: { select: { tarifa: true } },
+        },
+      },
+      presupuestoRubros: true,
     },
   });
 
   if (!proyecto) notFound();
 
-  const presupuestoRubros = proyecto.presupuestoRubros;
+  // Calcular avance total (igual lógica que en proyectos/page)
+  function calcularAvance(p: typeof proyecto) {
+    if (!p) return { pctTotal: 0, pctPorFase: [] as number[] };
+    const unidades = p.unidades;
+    const numFases = p.fases.length;
+    const numPlanificadas = Math.max(1, p.numUnidades);
+    if (unidades.length === 0) {
+      const pctFases = numFases
+        ? Math.round(
+            p.fases.reduce((s, f) => s + f.pctAvance, 0) / numFases
+          )
+        : 0;
+      return {
+        pctTotal: pctFases,
+        pctPorFase: p.fases.map((f) => f.pctAvance),
+      };
+    }
+    if (numFases === 0) {
+      return {
+        pctTotal: 0,
+        pctPorFase: [] as number[],
+      };
+    }
+    const pctPorUnidad = unidades.map((u) => {
+      let sumaPctFase = 0;
+      for (const fase of p.fases) {
+        const totalEnFase = fase.tareas.length;
+        let pctFase: number;
+        if (totalEnFase > 0) {
+          let completadas = 0;
+          for (const t of fase.tareas) {
+            if (t.completadas.some((c) => c.unidadId === u.id)) completadas++;
+          }
+          pctFase = (completadas / totalEnFase) * 100;
+        } else {
+          const avance = fase.avancesUnidad?.find(
+            (a) => a.unidadId === u.id
+          );
+          pctFase = avance?.pctAvance ?? 0;
+        }
+        sumaPctFase += pctFase;
+      }
+      return sumaPctFase / numFases;
+    });
+    const sumaPcts = pctPorUnidad.reduce((s, x) => s + x, 0);
+    const pctTotal = Math.round(sumaPcts / numPlanificadas);
+    return {
+      pctTotal,
+      pctPorFase: p.fases.map((f) => f.pctAvance),
+    };
+  }
 
-  const costoComprometido = calcularCostoComprometido(proyecto);
-  const desglose = calcularDesglose(proyecto);
-  const pctAvance = calcularAvanceTotal(proyecto);
-  const presupuestoTotal = proyecto.presupuestoTotal ?? 0;
-  const restante = Math.max(0, presupuestoTotal - costoComprometido);
-  const costoIndirectos = presupuestoTotal * (proyecto.pctCostosIndirectos ?? 0);
-  const contingencia = presupuestoTotal * (proyecto.pctContingencia ?? 0);
+  const avance = calcularAvance(proyecto);
+
+  // Presupuesto de obra directa
+  const pctDirecto =
+    1 -
+    (proyecto.pctCostosIndirectos ?? 0) -
+    (proyecto.pctContingencia ?? 0) -
+    (proyecto.margenObjetivo ?? 0);
+  const presupuestoObra =
+    (proyecto.presupuestoTotal ?? 0) * Math.max(0, pctDirecto);
+
+  // OPEX (costos varios) = suma de servicios por fases del proyecto
+  let opexTotal = 0;
+  for (const fase of proyecto.fases) {
+    for (const sf of fase.servicios) {
+      opexTotal +=
+        sf.cantidadRequerida * (sf.servicio?.costoUnitario ?? 0);
+    }
+  }
+
+  // Planilla: suma de tarifas de todos los registros (indicativo)
+  const planillaTotal = proyecto.planillas.reduce((s, pl) => {
+    const sumaTarifas = pl.registros.reduce((a, r) => a + r.tarifa, 0);
+    return s + sumaTarifas;
+  }, 0);
+
+  const statusAvance =
+    avance.pctTotal >= 80
+      ? "done"
+      : avance.pctTotal >= 20
+        ? "active"
+        : "planning";
+  const colorAvance =
+    statusAvance === "done"
+      ? "var(--green)"
+      : statusAvance === "active"
+        ? "var(--accent)"
+        : "var(--blue)";
 
   return (
-    <Box>
-      <Box sx={{ mb: 3, display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 2 }}>
-        <Box>
-          <Link href="/platform/proyectos">
-            <Typography component="span" variant="body2" color="text.secondary" sx={{ "&:hover": { textDecoration: "underline" }, cursor: "pointer" }}>
-              ← Proyectos
-            </Typography>
-          </Link>
-          <Typography variant="h4" fontWeight={800} sx={{ mt: 1 }}>
+    <div>
+      <Link
+        href="/platform/proyectos"
+        className="mb-4 inline-block text-sm hover:underline"
+        style={{ color: "var(--text3)" }}
+      >
+        ← Volver a proyectos
+      </Link>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight">
             {proyecto.nombre}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-            {proyecto.tipo} · {proyecto.ubicacion} · PM: {proyecto.pmAsignado.nombre}
-          </Typography>
-        </Box>
-        <Button
-          component={Link}
-          href={`/platform/visor?proyecto=${proyecto.id}`}
-          variant="contained"
-          color="primary"
+          </h1>
+          <p className="mt-0.5 text-sm" style={{ color: "var(--text3)" }}>
+            {TIPO_LABEL[proyecto.tipo] ?? proyecto.tipo} · {proyecto.ubicacion} · PM:{" "}
+            {proyecto.pmAsignado.nombre}
+          </p>
+        </div>
+        <Link
+          href={`/platform/visor?proyecto=${id}`}
+          className="rounded-lg px-4 py-2.5 text-sm font-semibold text-black transition hover:opacity-90"
+          style={{ background: "var(--accent)" }}
         >
-          Abrir Visor 3D
-        </Button>
-      </Box>
+          Control de Obra →
+        </Link>
+      </div>
 
+      {/* Stats grid */}
+      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className="rounded-xl border p-4"
+          style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        >
+          <div
+            className="text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--text3)" }}
+          >
+            Avance total
+          </div>
+          <div
+            className="mt-1 text-2xl font-bold"
+            style={{ color: colorAvance }}
+          >
+            {avance.pctTotal}%
+          </div>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full" style={{ background: "var(--bg3)" }}>
+            <div
+              className="h-full rounded-full transition-all"
+              style={{ width: `${avance.pctTotal}%`, background: colorAvance }}
+            />
+          </div>
+        </div>
+        <div
+          className="rounded-xl border p-4"
+          style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        >
+          <div
+            className="text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--text3)" }}
+          >
+            Presupuesto obra
+          </div>
+          <div className="mt-1 text-2xl font-bold" style={{ color: "var(--text)" }}>
+            {fmtQ(presupuestoObra)}
+          </div>
+          <div className="mt-1 text-xs" style={{ color: "var(--text3)" }}>
+            Total planificado
+          </div>
+        </div>
+        <div
+          className="rounded-xl border p-4"
+          style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        >
+          <div
+            className="text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--text3)" }}
+          >
+            OPEX / Costos varios
+          </div>
+          <div className="mt-1 text-2xl font-bold" style={{ color: "var(--accent)" }}>
+            {fmtQ(opexTotal)}
+          </div>
+          <div className="mt-1 text-xs" style={{ color: "var(--text3)" }}>
+            Servicios por fase
+          </div>
+        </div>
+        <div
+          className="rounded-xl border p-4"
+          style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+        >
+          <div
+            className="text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--text3)" }}
+          >
+            Unidades · Planilla
+          </div>
+          <div className="mt-1 text-2xl font-bold" style={{ color: "var(--text)" }}>
+            {proyecto.numUnidades} un.
+          </div>
+          <div className="mt-1 text-xs" style={{ color: "var(--text3)" }}>
+            Planilla: {fmtQ(planillaTotal)}
+          </div>
+        </div>
+      </div>
 
-      <ProyectoDashboardClient
-        proyecto={{
-          id: proyecto.id,
-          nombre: proyecto.nombre,
-          presupuestoTotal,
-          costoComprometido,
-          restante,
-          costoIndirectos,
-          contingencia,
-          margenObjetivo: proyecto.margenObjetivo ?? 0.25,
-          pctCostosIndirectos: proyecto.pctCostosIndirectos ?? 0.12,
-          pctContingencia: proyecto.pctContingencia ?? 0.05,
-          precioVenta: proyecto.precioVenta ?? 0,
-          fechaEntregaEstimada: proyecto.fechaEntregaEstimada,
-          pctAvance,
-        }}
-        desglose={desglose}
-        presupuestoRubros={presupuestoRubros}
-        puedeConfigurar={puedeConfig}
-      />
-    </Box>
+      {/* Fases */}
+      <div
+        className="rounded-xl border p-6"
+        style={{ background: "var(--bg2)", borderColor: "var(--border)" }}
+      >
+        <h2 className="mb-4 font-bold" style={{ color: "var(--text)" }}>
+          Fases
+        </h2>
+        {proyecto.fases.length === 0 ? (
+          <p className="text-sm" style={{ color: "var(--text3)" }}>
+            Sin fases definidas. Configura las fases desde Control de Obra.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            {proyecto.fases.map((fase) => {
+              const status =
+                fase.status === "DONE"
+                  ? "done"
+                  : fase.status === "ACTIVE"
+                    ? "active"
+                    : "pending";
+              const color =
+                status === "done"
+                  ? "var(--green)"
+                  : status === "active"
+                    ? "var(--accent)"
+                    : "var(--text3)";
+              return (
+                <div
+                  key={fase.id}
+                  className="flex flex-wrap items-center gap-4 rounded-lg border py-3 px-4"
+                  style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+                >
+                  <div
+                    className="h-2 w-2 shrink-0 rounded-full"
+                    style={{ background: color }}
+                  />
+                  <span className="min-w-[140px] font-medium">
+                    {fase.nombre}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="h-1.5 overflow-hidden rounded-full" style={{ background: "var(--bg3)" }}>
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${Math.min(100, fase.pctAvance)}%`,
+                          background: color,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span
+                    className="shrink-0 text-sm font-mono"
+                    style={{ color }}
+                  >
+                    {fase.pctAvance}%
+                  </span>
+                  <span
+                    className="shrink-0 rounded px-2 py-0.5 text-xs font-semibold"
+                    style={{
+                      background: `${color}22`,
+                      color,
+                    }}
+                  >
+                    {STATUS_LABEL[fase.status] ?? fase.status}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Accesos rápidos */}
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          href={`/platform/visor?proyecto=${id}`}
+          className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-90"
+          style={{ borderColor: "var(--border)", color: "var(--text)" }}
+        >
+          Visor 3D
+        </Link>
+        <Link
+          href="/platform/materiales"
+          className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-90"
+          style={{ borderColor: "var(--border)", color: "var(--text)" }}
+        >
+          Materiales
+        </Link>
+        <Link
+          href="/platform/planilla"
+          className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-90"
+          style={{ borderColor: "var(--border)", color: "var(--text)" }}
+        >
+          Planilla
+        </Link>
+        <Link
+          href="/platform/servicios"
+          className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-90"
+          style={{ borderColor: "var(--border)", color: "var(--text)" }}
+        >
+          Costos varios
+        </Link>
+      </div>
+    </div>
   );
 }

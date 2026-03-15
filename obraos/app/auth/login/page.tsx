@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -37,17 +38,35 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ background: "var(--bg)" }}>
-      <div className="w-full max-w-sm rounded-2xl border p-8 shadow-sm" style={{ background: "var(--bg2)", borderColor: "var(--border)" }}>
-        <h1 className="mb-2 text-2xl font-bold" style={{ color: "var(--text)" }}>obraOS</h1>
-        <p className="mb-6 text-sm" style={{ color: "var(--text3)" }}>
+    <div
+      className="flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat px-4"
+      style={{ backgroundImage: "url(/login.jpg)" }}
+    >
+      <div className="absolute inset-0 bg-black/20" aria-hidden />
+      <div
+        className="relative z-10 w-full max-w-sm rounded-2xl border border-white/20 p-8 shadow-2xl backdrop-blur-xl"
+        style={{ background: "rgba(55,55,55,0.5)" }}
+      >
+        <div className="mb-6 flex justify-center">
+          <Image
+            src="/obri.png"
+            alt="obraOS"
+            width={204}
+            height={204}
+            className="h-[10.2rem] w-[10.2rem] object-contain"
+          />
+        </div>
+        <h2 className="mb-1 text-center text-xl font-bold text-gray-300">
+          Iniciar sesión
+        </h2>
+        <p className="mb-6 text-center text-sm text-gray-400">
           Gestión de proyectos de construcción
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <div
               role="alert"
-              className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700"
+              className="rounded-lg bg-red-500/20 px-3 py-2 text-sm text-red-200"
             >
               {error}
             </div>
@@ -55,8 +74,7 @@ function LoginForm() {
           <div>
             <label
               htmlFor="email"
-              className="mb-1 block text-sm font-medium"
-              style={{ color: "var(--text2)" }}
+              className="mb-1 block text-sm font-medium text-gray-300"
             >
               Email
             </label>
@@ -67,15 +85,13 @@ function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="w-full rounded-xl border px-3 py-2.5 outline-none transition focus:ring-2"
-              style={{ borderColor: "var(--border2)", background: "var(--bg3)", color: "var(--text)" }}
+              className="w-full rounded-xl border border-white/30 bg-white/90 px-3 py-2.5 text-black outline-none transition placeholder:text-black/50 focus:ring-2 focus:ring-white/50"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="mb-1 block text-sm font-medium"
-              style={{ color: "var(--text2)" }}
+              className="mb-1 block text-sm font-medium text-gray-300"
             >
               Contraseña
             </label>
@@ -86,8 +102,7 @@ function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="w-full rounded-xl border px-3 py-2.5 outline-none transition focus:ring-2"
-              style={{ borderColor: "var(--border2)", background: "var(--bg3)", color: "var(--text)" }}
+              className="w-full rounded-xl border border-white/30 bg-white/90 px-3 py-2.5 text-black outline-none transition placeholder:text-black/50 focus:ring-2 focus:ring-white/50"
             />
           </div>
           <button
@@ -106,7 +121,16 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center" style={{ background: "var(--bg)" }}>Cargando...</div>}>
+    <Suspense
+      fallback={
+        <div
+          className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url(/login.jpg)" }}
+        >
+          <span className="text-white drop-shadow">Cargando...</span>
+        </div>
+      }
+    >
       <LoginForm />
     </Suspense>
   );

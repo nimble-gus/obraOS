@@ -102,6 +102,21 @@ export type PlanillaRegistro = Prisma.PlanillaRegistroModel
  */
 export type PlanillaAsignadaFase = Prisma.PlanillaAsignadaFaseModel
 /**
+ * Model PlanillaAsignadaTarea
+ * 
+ */
+export type PlanillaAsignadaTarea = Prisma.PlanillaAsignadaTareaModel
+/**
+ * Model PlanillaRegistroAsignadoTarea
+ * 
+ */
+export type PlanillaRegistroAsignadoTarea = Prisma.PlanillaRegistroAsignadoTareaModel
+/**
+ * Model CatalogoFase
+ * 
+ */
+export type CatalogoFase = Prisma.CatalogoFaseModel
+/**
  * Model CatalogoTipoServicio
  * 
  */
@@ -116,6 +131,11 @@ export type CatalogoServicio = Prisma.CatalogoServicioModel
  * 
  */
 export type ServicioFase = Prisma.ServicioFaseModel
+/**
+ * Model ServicioAsignadoTarea
+ * 
+ */
+export type ServicioAsignadoTarea = Prisma.ServicioAsignadoTareaModel
 /**
  * Model Fase
  * 
@@ -136,6 +156,16 @@ export type MaterialFaseUnidad = Prisma.MaterialFaseUnidadModel
  * 
  */
 export type CatalogoMaterial = Prisma.CatalogoMaterialModel
+/**
+ * Model LoteMaterial
+ * 
+ */
+export type LoteMaterial = Prisma.LoteMaterialModel
+/**
+ * Model MaterialAsignadoTarea
+ * 
+ */
+export type MaterialAsignadoTarea = Prisma.MaterialAsignadoTareaModel
 /**
  * Model InventarioMovimiento
  * 

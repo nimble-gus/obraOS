@@ -105,6 +105,15 @@ export const EstadoPlanillaEnum = {
 export type EstadoPlanillaEnum = (typeof EstadoPlanillaEnum)[keyof typeof EstadoPlanillaEnum]
 
 
+export const UnidadPlanillaEnum = {
+  DIA: 'DIA',
+  M2: 'M2',
+  M3: 'M3'
+} as const
+
+export type UnidadPlanillaEnum = (typeof UnidadPlanillaEnum)[keyof typeof UnidadPlanillaEnum]
+
+
 export const TipoMovimientoEnum = {
   ENTRADA: 'ENTRADA',
   SALIDA: 'SALIDA'
