@@ -174,8 +174,8 @@ export function ComprasDashboard({
                       border: "1px solid var(--border)",
                       fontSize: 12,
                     }}
-                    formatter={(value: unknown) =>
-                      typeof value === "number" ? formatMoneda(value) : value
+                    formatter={(value) =>
+                      typeof value === "number" ? formatMoneda(value) : (value as string | number)
                     }
                     labelFormatter={(label) => `Día ${label}`}
                   />
