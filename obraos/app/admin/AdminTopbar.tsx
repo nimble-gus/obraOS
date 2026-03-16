@@ -25,7 +25,7 @@ export function AdminTopbar({ userName }: { userName?: string }) {
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("obraos-theme", next);
+    localStorage.setItem("obrit-theme", next);
     setThemeState(next);
   };
 
@@ -43,7 +43,7 @@ export function AdminTopbar({ userName }: { userName?: string }) {
         className="text-sm font-semibold"
         style={{ color: "var(--text2)" }}
       >
-        obraOS Admin <span style={{ color: "var(--text)" }}>/ {label}</span>
+        obrit Admin <span style={{ color: "var(--text)" }}>/ {label}</span>
       </div>
       <div className="flex items-center gap-3">
         <button

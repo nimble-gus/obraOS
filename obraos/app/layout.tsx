@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "obraOS - Gestión de Proyectos",
+  title: "obrit - Gestión de Proyectos",
   description: "Plataforma de gestión de proyectos de construcción",
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem("obraos-theme");var d=window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:d?"dark":"light");})()`,
+            __html: `(function(){var t=localStorage.getItem("obrit-theme");var d=window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:d?"dark":"light");})()`,
           }}
         />
       </head>

@@ -7,7 +7,7 @@ const adapter = new PrismaMariaDb(process.env.DATABASE_URL!);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const adminEmail = "admin@obraos.com";
+  const adminEmail = "admin@obrit.com";
   const existing = await prisma.usuario.findUnique({
     where: { email: adminEmail },
   });
@@ -29,7 +29,7 @@ async function main() {
   }
 
   // PM de ejemplo
-  const pmEmail = "pm@obraos.com";
+  const pmEmail = "pm@obrit.com";
   let pm = await prisma.usuario.findUnique({ where: { email: pmEmail } });
   if (!pm) {
     const pw = await bcrypt.hash("pm123", 10);

@@ -86,7 +86,7 @@ export function PlatformShell({
           <Link href="/platform/proyectos" className="block platform-sidebar-logo">
             <Image
               src="/obri.png"
-              alt="obraOS"
+              alt="obrit"
               width={168}
               height={168}
               className="h-[10.5rem] w-[10.5rem] object-contain"

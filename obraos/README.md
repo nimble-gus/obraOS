@@ -1,6 +1,6 @@
-## obraOS – Plataforma de control de obra
+## obrit – Plataforma de control de obra
 
-obraOS es una plataforma para gestionar proyectos de construcción a nivel de:
+obrit es una plataforma para gestionar proyectos de construcción a nivel de:
 
 - **Proyectos** (presupuesto, unidades, equipo PM)
 - **Bloques / Unidades** (fases, tareas, avance físico)
@@ -374,4 +374,4 @@ Se utiliza para poblar los selectores en:
   - `/platform/equipo`
   - `/platform/perfil`
 
-Esta documentación debería darte una visión completa del funcionamiento de la plataforma, de cómo interactúan **bloques/unidades**, **materiales**, **planillas** y **costos varios**, y de las rutas/API más importantes para seguir desarrollando obraOS.
+Esta documentación debería darte una visión completa del funcionamiento de la plataforma, de cómo interactúan **bloques/unidades**, **materiales**, **planillas** y **costos varios**, y de las rutas/API más importantes para seguir desarrollando obrit.

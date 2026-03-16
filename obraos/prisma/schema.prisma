@@ -109,7 +109,7 @@ model AuditLog {
 }
 
 // =============================================================================
-// DOMINIO OBRAOS (Proyectos, Fases, Materiales, 3D)
+// DOMINIO obrit (Proyectos, Fases, Materiales, 3D)
 // =============================================================================
 
 enum StatusEnum {

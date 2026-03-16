@@ -50,7 +50,7 @@ function LoginForm() {
         <div className="mb-6 flex justify-center">
           <Image
             src="/obri.png"
-            alt="obraOS"
+            alt="obrit"
             width={308}
             height={168}
             className="h-[6.3rem] w-[12.6rem] object-contain"

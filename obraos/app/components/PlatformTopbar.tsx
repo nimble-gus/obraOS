@@ -27,7 +27,7 @@ export function PlatformTopbar({ userName }: { userName?: string }) {
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("obraos-theme", next);
+    localStorage.setItem("obrit-theme", next);
     setThemeState(next);
   };
 

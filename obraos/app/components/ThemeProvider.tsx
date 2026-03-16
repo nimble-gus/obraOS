@@ -15,7 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("obraos-theme") as Theme | null;
+    const stored = localStorage.getItem("obrit-theme") as Theme | null;
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (stored && (stored === "light" || stored === "dark")) {
       setThemeState(stored);
@@ -27,7 +27,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("obraos-theme", theme);
+    localStorage.setItem("obrit-theme", theme);
   }, [theme, mounted]);
 
   const setTheme = (t: Theme) => setThemeState(t);

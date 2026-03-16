@@ -27,7 +27,7 @@ export default async function AdminLayout({
           style={{ borderBottom: "1px solid var(--sidebar-border)" }}
         >
           <Link href="/admin" className="font-semibold" style={{ color: "var(--accent)" }}>
-            obraOS
+            obrit
           </Link>
           <span className="ml-2 text-xs" style={{ color: "var(--sidebar-text-muted)" }}>
             Admin
