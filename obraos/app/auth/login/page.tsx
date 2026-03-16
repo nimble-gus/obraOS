@@ -51,9 +51,9 @@ function LoginForm() {
           <Image
             src="/obri.png"
             alt="obraOS"
-            width={204}
-            height={204}
-            className="h-[10.2rem] w-[10.2rem] object-contain"
+            width={308}
+            height={168}
+            className="h-[6.3rem] w-[12.6rem] object-contain"
           />
         </div>
         <h2 className="mb-1 text-center text-xl font-bold text-gray-300">
