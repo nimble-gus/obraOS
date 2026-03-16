@@ -279,6 +279,7 @@ export type UnidadWhereInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaListRelationFilter
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaListRelationFilter
+  desembolsosProyecto?: Prisma.DesembolsoProyectoListRelationFilter
 }
 
 export type UnidadOrderByWithRelationInput = {
@@ -304,6 +305,7 @@ export type UnidadOrderByWithRelationInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaOrderByRelationAggregateInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaOrderByRelationAggregateInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaOrderByRelationAggregateInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoOrderByRelationAggregateInput
   _relevance?: Prisma.UnidadOrderByRelevanceInput
 }
 
@@ -334,6 +336,7 @@ export type UnidadWhereUniqueInput = Prisma.AtLeast<{
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaListRelationFilter
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaListRelationFilter
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaListRelationFilter
+  desembolsosProyecto?: Prisma.DesembolsoProyectoListRelationFilter
 }, "id" | "proyectoId_numero">
 
 export type UnidadOrderByWithAggregationInput = {
@@ -392,6 +395,7 @@ export type UnidadCreateInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateInput = {
@@ -414,6 +418,7 @@ export type UnidadUncheckedCreateInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUpdateInput = {
@@ -436,6 +441,7 @@ export type UnidadUpdateInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateInput = {
@@ -458,6 +464,7 @@ export type UnidadUncheckedUpdateInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateManyInput = {
@@ -509,14 +516,14 @@ export type UnidadOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UnidadScalarRelationFilter = {
-  is?: Prisma.UnidadWhereInput
-  isNot?: Prisma.UnidadWhereInput
-}
-
 export type UnidadNullableScalarRelationFilter = {
   is?: Prisma.UnidadWhereInput | null
   isNot?: Prisma.UnidadWhereInput | null
+}
+
+export type UnidadScalarRelationFilter = {
+  is?: Prisma.UnidadWhereInput
+  isNot?: Prisma.UnidadWhereInput
 }
 
 export type UnidadOrderByRelevanceInput = {
@@ -622,6 +629,22 @@ export type UnidadUncheckedUpdateManyWithoutProyectoNestedInput = {
   update?: Prisma.UnidadUpdateWithWhereUniqueWithoutProyectoInput | Prisma.UnidadUpdateWithWhereUniqueWithoutProyectoInput[]
   updateMany?: Prisma.UnidadUpdateManyWithWhereWithoutProyectoInput | Prisma.UnidadUpdateManyWithWhereWithoutProyectoInput[]
   deleteMany?: Prisma.UnidadScalarWhereInput | Prisma.UnidadScalarWhereInput[]
+}
+
+export type UnidadCreateNestedOneWithoutDesembolsosProyectoInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedCreateWithoutDesembolsosProyectoInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutDesembolsosProyectoInput
+  connect?: Prisma.UnidadWhereUniqueInput
+}
+
+export type UnidadUpdateOneWithoutDesembolsosProyectoNestedInput = {
+  create?: Prisma.XOR<Prisma.UnidadCreateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedCreateWithoutDesembolsosProyectoInput>
+  connectOrCreate?: Prisma.UnidadCreateOrConnectWithoutDesembolsosProyectoInput
+  upsert?: Prisma.UnidadUpsertWithoutDesembolsosProyectoInput
+  disconnect?: Prisma.UnidadWhereInput | boolean
+  delete?: Prisma.UnidadWhereInput | boolean
+  connect?: Prisma.UnidadWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UnidadUpdateToOneWithWhereWithoutDesembolsosProyectoInput, Prisma.UnidadUpdateWithoutDesembolsosProyectoInput>, Prisma.UnidadUncheckedUpdateWithoutDesembolsosProyectoInput>
 }
 
 export type UnidadCreateNestedOneWithoutPlanillasBloqueAsignadasInput = {
@@ -841,6 +864,7 @@ export type UnidadCreateWithoutProyectoInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutProyectoInput = {
@@ -862,6 +886,7 @@ export type UnidadUncheckedCreateWithoutProyectoInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutProyectoInput = {
@@ -907,6 +932,110 @@ export type UnidadScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Unidad"> | Date | string
 }
 
+export type UnidadCreateWithoutDesembolsosProyectoInput = {
+  id?: string
+  numero: number
+  etiqueta: string
+  fechaEntregaEstimada?: Date | string | null
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  proyecto: Prisma.ProyectoCreateNestedOneWithoutUnidadesInput
+  modeloCasa?: Prisma.ModeloCasaCreateNestedOneWithoutUnidadesInput
+  faseActual?: Prisma.FaseCreateNestedOneWithoutUnidadesFaseActivaInput
+  avancesFase?: Prisma.AvanceUnidadFaseCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoCreateNestedManyWithoutUnidadInput
+  materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutUnidadInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
+  serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadUncheckedCreateWithoutDesembolsosProyectoInput = {
+  id?: string
+  proyectoId: string
+  numero: number
+  etiqueta: string
+  fechaEntregaEstimada?: Date | string | null
+  modeloCasaId?: string | null
+  faseActualId?: string | null
+  pctAvanceGlobal?: number
+  activa?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedCreateNestedManyWithoutUnidadInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedCreateNestedManyWithoutUnidadInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedCreateNestedManyWithoutUnidadInput
+  materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
+  serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+}
+
+export type UnidadCreateOrConnectWithoutDesembolsosProyectoInput = {
+  where: Prisma.UnidadWhereUniqueInput
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedCreateWithoutDesembolsosProyectoInput>
+}
+
+export type UnidadUpsertWithoutDesembolsosProyectoInput = {
+  update: Prisma.XOR<Prisma.UnidadUpdateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedUpdateWithoutDesembolsosProyectoInput>
+  create: Prisma.XOR<Prisma.UnidadCreateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedCreateWithoutDesembolsosProyectoInput>
+  where?: Prisma.UnidadWhereInput
+}
+
+export type UnidadUpdateToOneWithWhereWithoutDesembolsosProyectoInput = {
+  where?: Prisma.UnidadWhereInput
+  data: Prisma.XOR<Prisma.UnidadUpdateWithoutDesembolsosProyectoInput, Prisma.UnidadUncheckedUpdateWithoutDesembolsosProyectoInput>
+}
+
+export type UnidadUpdateWithoutDesembolsosProyectoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proyecto?: Prisma.ProyectoUpdateOneRequiredWithoutUnidadesNestedInput
+  modeloCasa?: Prisma.ModeloCasaUpdateOneWithoutUnidadesNestedInput
+  faseActual?: Prisma.FaseUpdateOneWithoutUnidadesFaseActivaNestedInput
+  avancesFase?: Prisma.AvanceUnidadFaseUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUpdateManyWithoutUnidadNestedInput
+  materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
+  serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+}
+
+export type UnidadUncheckedUpdateWithoutDesembolsosProyectoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  proyectoId?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.IntFieldUpdateOperationsInput | number
+  etiqueta?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  modeloCasaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faseActualId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pctAvanceGlobal?: Prisma.FloatFieldUpdateOperationsInput | number
+  activa?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  avancesFase?: Prisma.AvanceUnidadFaseUncheckedUpdateManyWithoutUnidadNestedInput
+  tareasCompletadas?: Prisma.TareaCompletadaUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignados?: Prisma.MaterialFaseUnidadUncheckedUpdateManyWithoutUnidadNestedInput
+  movimientosInventario?: Prisma.InventarioMovimientoUncheckedUpdateManyWithoutUnidadNestedInput
+  materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+}
+
 export type UnidadCreateWithoutPlanillasBloqueAsignadasInput = {
   id?: string
   numero: number
@@ -926,6 +1055,7 @@ export type UnidadCreateWithoutPlanillasBloqueAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutPlanillasBloqueAsignadasInput = {
@@ -947,6 +1077,7 @@ export type UnidadUncheckedCreateWithoutPlanillasBloqueAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutPlanillasBloqueAsignadasInput = {
@@ -984,6 +1115,7 @@ export type UnidadUpdateWithoutPlanillasBloqueAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutPlanillasBloqueAsignadasInput = {
@@ -1005,6 +1137,7 @@ export type UnidadUncheckedUpdateWithoutPlanillasBloqueAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutPlanillasRegistroAsignadasInput = {
@@ -1026,6 +1159,7 @@ export type UnidadCreateWithoutPlanillasRegistroAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutPlanillasRegistroAsignadasInput = {
@@ -1047,6 +1181,7 @@ export type UnidadUncheckedCreateWithoutPlanillasRegistroAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutPlanillasRegistroAsignadasInput = {
@@ -1084,6 +1219,7 @@ export type UnidadUpdateWithoutPlanillasRegistroAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutPlanillasRegistroAsignadasInput = {
@@ -1105,6 +1241,7 @@ export type UnidadUncheckedUpdateWithoutPlanillasRegistroAsignadasInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutServiciosAsignadosTareaInput = {
@@ -1126,6 +1263,7 @@ export type UnidadCreateWithoutServiciosAsignadosTareaInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutServiciosAsignadosTareaInput = {
@@ -1147,6 +1285,7 @@ export type UnidadUncheckedCreateWithoutServiciosAsignadosTareaInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutServiciosAsignadosTareaInput = {
@@ -1184,6 +1323,7 @@ export type UnidadUpdateWithoutServiciosAsignadosTareaInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutServiciosAsignadosTareaInput = {
@@ -1205,6 +1345,7 @@ export type UnidadUncheckedUpdateWithoutServiciosAsignadosTareaInput = {
   materialesAsignadosTarea?: Prisma.MaterialAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutFaseActualInput = {
@@ -1226,6 +1367,7 @@ export type UnidadCreateWithoutFaseActualInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutFaseActualInput = {
@@ -1247,6 +1389,7 @@ export type UnidadUncheckedCreateWithoutFaseActualInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutFaseActualInput = {
@@ -1294,6 +1437,7 @@ export type UnidadCreateWithoutMaterialesAsignadosInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutMaterialesAsignadosInput = {
@@ -1315,6 +1459,7 @@ export type UnidadUncheckedCreateWithoutMaterialesAsignadosInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutMaterialesAsignadosInput = {
@@ -1352,6 +1497,7 @@ export type UnidadUpdateWithoutMaterialesAsignadosInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutMaterialesAsignadosInput = {
@@ -1373,6 +1519,7 @@ export type UnidadUncheckedUpdateWithoutMaterialesAsignadosInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutMaterialesAsignadosTareaInput = {
@@ -1394,6 +1541,7 @@ export type UnidadCreateWithoutMaterialesAsignadosTareaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutMaterialesAsignadosTareaInput = {
@@ -1415,6 +1563,7 @@ export type UnidadUncheckedCreateWithoutMaterialesAsignadosTareaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutMaterialesAsignadosTareaInput = {
@@ -1452,6 +1601,7 @@ export type UnidadUpdateWithoutMaterialesAsignadosTareaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutMaterialesAsignadosTareaInput = {
@@ -1473,6 +1623,7 @@ export type UnidadUncheckedUpdateWithoutMaterialesAsignadosTareaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutMovimientosInventarioInput = {
@@ -1494,6 +1645,7 @@ export type UnidadCreateWithoutMovimientosInventarioInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutMovimientosInventarioInput = {
@@ -1515,6 +1667,7 @@ export type UnidadUncheckedCreateWithoutMovimientosInventarioInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutMovimientosInventarioInput = {
@@ -1552,6 +1705,7 @@ export type UnidadUpdateWithoutMovimientosInventarioInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutMovimientosInventarioInput = {
@@ -1573,6 +1727,7 @@ export type UnidadUncheckedUpdateWithoutMovimientosInventarioInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutTareasCompletadasInput = {
@@ -1594,6 +1749,7 @@ export type UnidadCreateWithoutTareasCompletadasInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutTareasCompletadasInput = {
@@ -1615,6 +1771,7 @@ export type UnidadUncheckedCreateWithoutTareasCompletadasInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutTareasCompletadasInput = {
@@ -1652,6 +1809,7 @@ export type UnidadUpdateWithoutTareasCompletadasInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutTareasCompletadasInput = {
@@ -1673,6 +1831,7 @@ export type UnidadUncheckedUpdateWithoutTareasCompletadasInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutAvancesFaseInput = {
@@ -1694,6 +1853,7 @@ export type UnidadCreateWithoutAvancesFaseInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutAvancesFaseInput = {
@@ -1715,6 +1875,7 @@ export type UnidadUncheckedCreateWithoutAvancesFaseInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutAvancesFaseInput = {
@@ -1752,6 +1913,7 @@ export type UnidadUpdateWithoutAvancesFaseInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutAvancesFaseInput = {
@@ -1773,6 +1935,7 @@ export type UnidadUncheckedUpdateWithoutAvancesFaseInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadCreateWithoutModeloCasaInput = {
@@ -1794,6 +1957,7 @@ export type UnidadCreateWithoutModeloCasaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadUncheckedCreateWithoutModeloCasaInput = {
@@ -1815,6 +1979,7 @@ export type UnidadUncheckedCreateWithoutModeloCasaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedCreateNestedManyWithoutUnidadInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedCreateNestedManyWithoutUnidadInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutUnidadInput
 }
 
 export type UnidadCreateOrConnectWithoutModeloCasaInput = {
@@ -1875,6 +2040,7 @@ export type UnidadUpdateWithoutProyectoInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutProyectoInput = {
@@ -1896,6 +2062,7 @@ export type UnidadUncheckedUpdateWithoutProyectoInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutProyectoInput = {
@@ -1943,6 +2110,7 @@ export type UnidadUpdateWithoutFaseActualInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutFaseActualInput = {
@@ -1964,6 +2132,7 @@ export type UnidadUncheckedUpdateWithoutFaseActualInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutFaseActualInput = {
@@ -2011,6 +2180,7 @@ export type UnidadUpdateWithoutModeloCasaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateWithoutModeloCasaInput = {
@@ -2032,6 +2202,7 @@ export type UnidadUncheckedUpdateWithoutModeloCasaInput = {
   planillasRegistroAsignadas?: Prisma.PlanillaRegistroAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
   planillasBloqueAsignadas?: Prisma.PlanillaAsignadaTareaUncheckedUpdateManyWithoutUnidadNestedInput
   serviciosAsignadosTarea?: Prisma.ServicioAsignadoTareaUncheckedUpdateManyWithoutUnidadNestedInput
+  desembolsosProyecto?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutUnidadNestedInput
 }
 
 export type UnidadUncheckedUpdateManyWithoutModeloCasaInput = {
@@ -2061,6 +2232,7 @@ export type UnidadCountOutputType = {
   planillasRegistroAsignadas: number
   planillasBloqueAsignadas: number
   serviciosAsignadosTarea: number
+  desembolsosProyecto: number
 }
 
 export type UnidadCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2072,6 +2244,7 @@ export type UnidadCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   planillasRegistroAsignadas?: boolean | UnidadCountOutputTypeCountPlanillasRegistroAsignadasArgs
   planillasBloqueAsignadas?: boolean | UnidadCountOutputTypeCountPlanillasBloqueAsignadasArgs
   serviciosAsignadosTarea?: boolean | UnidadCountOutputTypeCountServiciosAsignadosTareaArgs
+  desembolsosProyecto?: boolean | UnidadCountOutputTypeCountDesembolsosProyectoArgs
 }
 
 /**
@@ -2140,6 +2313,13 @@ export type UnidadCountOutputTypeCountServiciosAsignadosTareaArgs<ExtArgs extend
   where?: Prisma.ServicioAsignadoTareaWhereInput
 }
 
+/**
+ * UnidadCountOutputType without action
+ */
+export type UnidadCountOutputTypeCountDesembolsosProyectoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DesembolsoProyectoWhereInput
+}
+
 
 export type UnidadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2164,6 +2344,7 @@ export type UnidadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   planillasRegistroAsignadas?: boolean | Prisma.Unidad$planillasRegistroAsignadasArgs<ExtArgs>
   planillasBloqueAsignadas?: boolean | Prisma.Unidad$planillasBloqueAsignadasArgs<ExtArgs>
   serviciosAsignadosTarea?: boolean | Prisma.Unidad$serviciosAsignadosTareaArgs<ExtArgs>
+  desembolsosProyecto?: boolean | Prisma.Unidad$desembolsosProyectoArgs<ExtArgs>
   _count?: boolean | Prisma.UnidadCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unidad"]>
 
@@ -2196,6 +2377,7 @@ export type UnidadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   planillasRegistroAsignadas?: boolean | Prisma.Unidad$planillasRegistroAsignadasArgs<ExtArgs>
   planillasBloqueAsignadas?: boolean | Prisma.Unidad$planillasBloqueAsignadasArgs<ExtArgs>
   serviciosAsignadosTarea?: boolean | Prisma.Unidad$serviciosAsignadosTareaArgs<ExtArgs>
+  desembolsosProyecto?: boolean | Prisma.Unidad$desembolsosProyectoArgs<ExtArgs>
   _count?: boolean | Prisma.UnidadCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -2213,6 +2395,7 @@ export type $UnidadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     planillasRegistroAsignadas: Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>[]
     planillasBloqueAsignadas: Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>[]
     serviciosAsignadosTarea: Prisma.$ServicioAsignadoTareaPayload<ExtArgs>[]
+    desembolsosProyecto: Prisma.$DesembolsoProyectoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2577,6 +2760,7 @@ export interface Prisma__UnidadClient<T, Null = never, ExtArgs extends runtime.T
   planillasRegistroAsignadas<T extends Prisma.Unidad$planillasRegistroAsignadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$planillasRegistroAsignadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaRegistroAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   planillasBloqueAsignadas<T extends Prisma.Unidad$planillasBloqueAsignadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$planillasBloqueAsignadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaAsignadaTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviciosAsignadosTarea<T extends Prisma.Unidad$serviciosAsignadosTareaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$serviciosAsignadosTareaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioAsignadoTareaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  desembolsosProyecto<T extends Prisma.Unidad$desembolsosProyectoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unidad$desembolsosProyectoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesembolsoProyectoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3187,6 +3371,30 @@ export type Unidad$serviciosAsignadosTareaArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.ServicioAsignadoTareaScalarFieldEnum | Prisma.ServicioAsignadoTareaScalarFieldEnum[]
+}
+
+/**
+ * Unidad.desembolsosProyecto
+ */
+export type Unidad$desembolsosProyectoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DesembolsoProyecto
+   */
+  select?: Prisma.DesembolsoProyectoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DesembolsoProyecto
+   */
+  omit?: Prisma.DesembolsoProyectoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DesembolsoProyectoInclude<ExtArgs> | null
+  where?: Prisma.DesembolsoProyectoWhereInput
+  orderBy?: Prisma.DesembolsoProyectoOrderByWithRelationInput | Prisma.DesembolsoProyectoOrderByWithRelationInput[]
+  cursor?: Prisma.DesembolsoProyectoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DesembolsoProyectoScalarFieldEnum | Prisma.DesembolsoProyectoScalarFieldEnum[]
 }
 
 /**

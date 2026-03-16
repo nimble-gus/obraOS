@@ -87,6 +87,11 @@ export type Proyecto = Prisma.ProyectoModel
  */
 export type PresupuestoRubro = Prisma.PresupuestoRubroModel
 /**
+ * Model DesembolsoProyecto
+ * 
+ */
+export type DesembolsoProyecto = Prisma.DesembolsoProyectoModel
+/**
  * Model Planilla
  * 
  */

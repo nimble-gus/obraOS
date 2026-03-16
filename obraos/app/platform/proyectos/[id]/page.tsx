@@ -2,6 +2,8 @@ import { prisma } from "@/lib/db";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { CapexPanel } from "../CapexPanel";
+import { FondosPanel } from "../FondosPanel";
 
 const TIPO_LABEL: Record<string, string> = {
   RESIDENCIAL: "Residencial",
@@ -154,6 +156,52 @@ export default async function ProyectoPage({
         ? "var(--accent)"
         : "var(--blue)";
 
+  // Fondos desembolsados
+  const desembolsos = await prisma.desembolsoProyecto.findMany({
+    where: { proyectoId: id },
+    orderBy: { fecha: "asc" },
+    select: {
+      id: true,
+      fecha: true,
+      monto: true,
+      descripcion: true,
+      unidad: { select: { id: true, etiqueta: true, numero: true } },
+    },
+  });
+
+  const totalDesembolsado = desembolsos.reduce((s, d) => s + d.monto, 0);
+
+  // Ejecución real (materiales + planilla + servicios)
+  const [
+    matAgg,
+    planBloqueAgg,
+    planRegAgg,
+    servAgg,
+  ] = await Promise.all([
+    prisma.materialAsignadoTarea.aggregate({
+      where: { unidad: { proyectoId: id } },
+      _sum: { monto: true },
+    }),
+    prisma.planillaAsignadaTarea.aggregate({
+      where: { unidad: { proyectoId: id } },
+      _sum: { monto: true },
+    }),
+    prisma.planillaRegistroAsignadoTarea.aggregate({
+      where: { unidad: { proyectoId: id } },
+      _sum: { monto: true },
+    }),
+    prisma.servicioAsignadoTarea.aggregate({
+      where: { unidad: { proyectoId: id } },
+      _sum: { monto: true },
+    }),
+  ]);
+
+  const totalEjecutado =
+    (matAgg._sum.monto ?? 0) +
+    (planBloqueAgg._sum.monto ?? 0) +
+    (planRegAgg._sum.monto ?? 0) +
+    (servAgg._sum.monto ?? 0);
+
   return (
     <div>
       <Link
@@ -181,6 +229,38 @@ export default async function ProyectoPage({
           Control de Obra →
         </Link>
       </div>
+
+      <CapexPanel
+        proyectoId={id}
+        precioVenta={proyecto.precioVenta}
+        presupuestoTotal={proyecto.presupuestoTotal}
+        margenObjetivo={proyecto.margenObjetivo}
+        pctCostosIndirectos={proyecto.pctCostosIndirectos}
+        pctContingencia={proyecto.pctContingencia}
+        presupuestoRubros={proyecto.presupuestoRubros}
+        puedeEditar={!!session && (session.user as any)?.role === "ADMIN"}
+      />
+
+      <FondosPanel
+        proyectoId={id}
+        desembolsos={desembolsos.map((d) => ({
+          id: d.id,
+          fecha: d.fecha.toISOString().slice(0, 10),
+          monto: d.monto,
+          descripcion: d.descripcion,
+          unidad: d.unidad
+            ? {
+                id: d.unidad.id,
+                etiqueta: d.unidad.etiqueta,
+                numero: d.unidad.numero,
+              }
+            : null,
+        }))}
+        totalDesembolsado={totalDesembolsado}
+        totalEjecutado={totalEjecutado}
+        unidades={proyecto.unidades}
+        puedeEditar={!!session && (session.user as any)?.role === "ADMIN"}
+      />
 
       {/* Stats grid */}
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -249,13 +329,10 @@ export default async function ProyectoPage({
             className="text-xs font-semibold uppercase tracking-wider"
             style={{ color: "var(--text3)" }}
           >
-            Unidades · Planilla
+            Unidades
           </div>
           <div className="mt-1 text-2xl font-bold" style={{ color: "var(--text)" }}>
             {proyecto.numUnidades} un.
-          </div>
-          <div className="mt-1 text-xs" style={{ color: "var(--text3)" }}>
-            Planilla: {fmtQ(planillaTotal)}
           </div>
         </div>
       </div>

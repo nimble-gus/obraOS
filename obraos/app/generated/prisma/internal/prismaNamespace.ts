@@ -393,6 +393,7 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   Proyecto: 'Proyecto',
   PresupuestoRubro: 'PresupuestoRubro',
+  DesembolsoProyecto: 'DesembolsoProyecto',
   Planilla: 'Planilla',
   PlanillaRegistro: 'PlanillaRegistro',
   PlanillaAsignadaFase: 'PlanillaAsignadaFase',
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "proyecto" | "presupuestoRubro" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "planillaAsignadaTarea" | "planillaRegistroAsignadoTarea" | "catalogoFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "servicioAsignadoTarea" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "loteMaterial" | "materialAsignadoTarea" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
+    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "proyecto" | "presupuestoRubro" | "desembolsoProyecto" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "planillaAsignadaTarea" | "planillaRegistroAsignadoTarea" | "catalogoFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "servicioAsignadoTarea" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "loteMaterial" | "materialAsignadoTarea" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1027,6 +1028,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PresupuestoRubroCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PresupuestoRubroCountAggregateOutputType> | number
+        }
+      }
+    }
+    DesembolsoProyecto: {
+      payload: Prisma.$DesembolsoProyectoPayload<ExtArgs>
+      fields: Prisma.DesembolsoProyectoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DesembolsoProyectoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DesembolsoProyectoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        findFirst: {
+          args: Prisma.DesembolsoProyectoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DesembolsoProyectoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        findMany: {
+          args: Prisma.DesembolsoProyectoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>[]
+        }
+        create: {
+          args: Prisma.DesembolsoProyectoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        createMany: {
+          args: Prisma.DesembolsoProyectoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DesembolsoProyectoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        update: {
+          args: Prisma.DesembolsoProyectoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        deleteMany: {
+          args: Prisma.DesembolsoProyectoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DesembolsoProyectoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DesembolsoProyectoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesembolsoProyectoPayload>
+        }
+        aggregate: {
+          args: Prisma.DesembolsoProyectoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDesembolsoProyecto>
+        }
+        groupBy: {
+          args: Prisma.DesembolsoProyectoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesembolsoProyectoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DesembolsoProyectoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesembolsoProyectoCountAggregateOutputType> | number
         }
       }
     }
@@ -2775,6 +2842,19 @@ export const PresupuestoRubroScalarFieldEnum = {
 export type PresupuestoRubroScalarFieldEnum = (typeof PresupuestoRubroScalarFieldEnum)[keyof typeof PresupuestoRubroScalarFieldEnum]
 
 
+export const DesembolsoProyectoScalarFieldEnum = {
+  id: 'id',
+  proyectoId: 'proyectoId',
+  unidadId: 'unidadId',
+  monto: 'monto',
+  fecha: 'fecha',
+  descripcion: 'descripcion',
+  rubro: 'rubro'
+} as const
+
+export type DesembolsoProyectoScalarFieldEnum = (typeof DesembolsoProyectoScalarFieldEnum)[keyof typeof DesembolsoProyectoScalarFieldEnum]
+
+
 export const PlanillaScalarFieldEnum = {
   id: 'id',
   proyectoId: 'proyectoId',
@@ -3244,6 +3324,17 @@ export const PresupuestoRubroOrderByRelevanceFieldEnum = {
 export type PresupuestoRubroOrderByRelevanceFieldEnum = (typeof PresupuestoRubroOrderByRelevanceFieldEnum)[keyof typeof PresupuestoRubroOrderByRelevanceFieldEnum]
 
 
+export const DesembolsoProyectoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  proyectoId: 'proyectoId',
+  unidadId: 'unidadId',
+  descripcion: 'descripcion',
+  rubro: 'rubro'
+} as const
+
+export type DesembolsoProyectoOrderByRelevanceFieldEnum = (typeof DesembolsoProyectoOrderByRelevanceFieldEnum)[keyof typeof DesembolsoProyectoOrderByRelevanceFieldEnum]
+
+
 export const PlanillaOrderByRelevanceFieldEnum = {
   id: 'id',
   proyectoId: 'proyectoId',
@@ -3698,6 +3789,7 @@ export type GlobalOmitConfig = {
   auditLog?: Prisma.AuditLogOmit
   proyecto?: Prisma.ProyectoOmit
   presupuestoRubro?: Prisma.PresupuestoRubroOmit
+  desembolsoProyecto?: Prisma.DesembolsoProyectoOmit
   planilla?: Prisma.PlanillaOmit
   planillaRegistro?: Prisma.PlanillaRegistroOmit
   planillaAsignadaFase?: Prisma.PlanillaAsignadaFaseOmit

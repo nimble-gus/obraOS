@@ -60,6 +60,7 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   Proyecto: 'Proyecto',
   PresupuestoRubro: 'PresupuestoRubro',
+  DesembolsoProyecto: 'DesembolsoProyecto',
   Planilla: 'Planilla',
   PlanillaRegistro: 'PlanillaRegistro',
   PlanillaAsignadaFase: 'PlanillaAsignadaFase',
@@ -222,6 +223,19 @@ export const PresupuestoRubroScalarFieldEnum = {
 } as const
 
 export type PresupuestoRubroScalarFieldEnum = (typeof PresupuestoRubroScalarFieldEnum)[keyof typeof PresupuestoRubroScalarFieldEnum]
+
+
+export const DesembolsoProyectoScalarFieldEnum = {
+  id: 'id',
+  proyectoId: 'proyectoId',
+  unidadId: 'unidadId',
+  monto: 'monto',
+  fecha: 'fecha',
+  descripcion: 'descripcion',
+  rubro: 'rubro'
+} as const
+
+export type DesembolsoProyectoScalarFieldEnum = (typeof DesembolsoProyectoScalarFieldEnum)[keyof typeof DesembolsoProyectoScalarFieldEnum]
 
 
 export const PlanillaScalarFieldEnum = {
@@ -691,6 +705,17 @@ export const PresupuestoRubroOrderByRelevanceFieldEnum = {
 } as const
 
 export type PresupuestoRubroOrderByRelevanceFieldEnum = (typeof PresupuestoRubroOrderByRelevanceFieldEnum)[keyof typeof PresupuestoRubroOrderByRelevanceFieldEnum]
+
+
+export const DesembolsoProyectoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  proyectoId: 'proyectoId',
+  unidadId: 'unidadId',
+  descripcion: 'descripcion',
+  rubro: 'rubro'
+} as const
+
+export type DesembolsoProyectoOrderByRelevanceFieldEnum = (typeof DesembolsoProyectoOrderByRelevanceFieldEnum)[keyof typeof DesembolsoProyectoOrderByRelevanceFieldEnum]
 
 
 export const PlanillaOrderByRelevanceFieldEnum = {

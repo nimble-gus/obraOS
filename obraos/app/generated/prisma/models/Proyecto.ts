@@ -331,6 +331,7 @@ export type ProyectoWhereInput = {
   planillas?: Prisma.PlanillaListRelationFilter
   presupuestoRubros?: Prisma.PresupuestoRubroListRelationFilter
   lotesMaterial?: Prisma.LoteMaterialListRelationFilter
+  desembolsos?: Prisma.DesembolsoProyectoListRelationFilter
 }
 
 export type ProyectoOrderByWithRelationInput = {
@@ -357,6 +358,7 @@ export type ProyectoOrderByWithRelationInput = {
   planillas?: Prisma.PlanillaOrderByRelationAggregateInput
   presupuestoRubros?: Prisma.PresupuestoRubroOrderByRelationAggregateInput
   lotesMaterial?: Prisma.LoteMaterialOrderByRelationAggregateInput
+  desembolsos?: Prisma.DesembolsoProyectoOrderByRelationAggregateInput
   _relevance?: Prisma.ProyectoOrderByRelevanceInput
 }
 
@@ -387,6 +389,7 @@ export type ProyectoWhereUniqueInput = Prisma.AtLeast<{
   planillas?: Prisma.PlanillaListRelationFilter
   presupuestoRubros?: Prisma.PresupuestoRubroListRelationFilter
   lotesMaterial?: Prisma.LoteMaterialListRelationFilter
+  desembolsos?: Prisma.DesembolsoProyectoListRelationFilter
 }, "id">
 
 export type ProyectoOrderByWithAggregationInput = {
@@ -458,6 +461,7 @@ export type ProyectoCreateInput = {
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateInput = {
@@ -483,6 +487,7 @@ export type ProyectoUncheckedCreateInput = {
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUpdateInput = {
@@ -508,6 +513,7 @@ export type ProyectoUpdateInput = {
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateInput = {
@@ -533,6 +539,7 @@ export type ProyectoUncheckedUpdateInput = {
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateManyInput = {
@@ -767,6 +774,20 @@ export type ProyectoUpdateOneRequiredWithoutPresupuestoRubrosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProyectoUpdateToOneWithWhereWithoutPresupuestoRubrosInput, Prisma.ProyectoUpdateWithoutPresupuestoRubrosInput>, Prisma.ProyectoUncheckedUpdateWithoutPresupuestoRubrosInput>
 }
 
+export type ProyectoCreateNestedOneWithoutDesembolsosInput = {
+  create?: Prisma.XOR<Prisma.ProyectoCreateWithoutDesembolsosInput, Prisma.ProyectoUncheckedCreateWithoutDesembolsosInput>
+  connectOrCreate?: Prisma.ProyectoCreateOrConnectWithoutDesembolsosInput
+  connect?: Prisma.ProyectoWhereUniqueInput
+}
+
+export type ProyectoUpdateOneRequiredWithoutDesembolsosNestedInput = {
+  create?: Prisma.XOR<Prisma.ProyectoCreateWithoutDesembolsosInput, Prisma.ProyectoUncheckedCreateWithoutDesembolsosInput>
+  connectOrCreate?: Prisma.ProyectoCreateOrConnectWithoutDesembolsosInput
+  upsert?: Prisma.ProyectoUpsertWithoutDesembolsosInput
+  connect?: Prisma.ProyectoWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProyectoUpdateToOneWithWhereWithoutDesembolsosInput, Prisma.ProyectoUpdateWithoutDesembolsosInput>, Prisma.ProyectoUncheckedUpdateWithoutDesembolsosInput>
+}
+
 export type ProyectoCreateNestedOneWithoutPlanillasInput = {
   create?: Prisma.XOR<Prisma.ProyectoCreateWithoutPlanillasInput, Prisma.ProyectoUncheckedCreateWithoutPlanillasInput>
   connectOrCreate?: Prisma.ProyectoCreateOrConnectWithoutPlanillasInput
@@ -859,6 +880,7 @@ export type ProyectoCreateWithoutPmAsignadoInput = {
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutPmAsignadoInput = {
@@ -883,6 +905,7 @@ export type ProyectoUncheckedCreateWithoutPmAsignadoInput = {
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutPmAsignadoInput = {
@@ -955,6 +978,7 @@ export type ProyectoCreateWithoutPresupuestoRubrosInput = {
   partes3D?: Prisma.Parte3DCreateNestedManyWithoutProyectoInput
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutPresupuestoRubrosInput = {
@@ -979,6 +1003,7 @@ export type ProyectoUncheckedCreateWithoutPresupuestoRubrosInput = {
   partes3D?: Prisma.Parte3DUncheckedCreateNestedManyWithoutProyectoInput
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutPresupuestoRubrosInput = {
@@ -1019,6 +1044,7 @@ export type ProyectoUpdateWithoutPresupuestoRubrosInput = {
   partes3D?: Prisma.Parte3DUpdateManyWithoutProyectoNestedInput
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutPresupuestoRubrosInput = {
@@ -1042,6 +1068,123 @@ export type ProyectoUncheckedUpdateWithoutPresupuestoRubrosInput = {
   unidades?: Prisma.UnidadUncheckedUpdateManyWithoutProyectoNestedInput
   partes3D?: Prisma.Parte3DUncheckedUpdateManyWithoutProyectoNestedInput
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
+  lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
+}
+
+export type ProyectoCreateWithoutDesembolsosInput = {
+  id?: string
+  nombre: string
+  tipo: $Enums.TipoProyectoEnum
+  ubicacion: string
+  numUnidades: number
+  precioVenta: number
+  margenObjetivo: number
+  pctCostosIndirectos: number
+  pctContingencia: number
+  presupuestoTotal?: number | null
+  imagenUrl?: string | null
+  status?: $Enums.StatusProyectoEnum
+  fechaEntregaEstimada?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pmAsignado: Prisma.UsuarioCreateNestedOneWithoutProyectosAsignadosInput
+  fases?: Prisma.FaseCreateNestedManyWithoutProyectoInput
+  unidades?: Prisma.UnidadCreateNestedManyWithoutProyectoInput
+  partes3D?: Prisma.Parte3DCreateNestedManyWithoutProyectoInput
+  planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
+  presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
+  lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+}
+
+export type ProyectoUncheckedCreateWithoutDesembolsosInput = {
+  id?: string
+  nombre: string
+  tipo: $Enums.TipoProyectoEnum
+  ubicacion: string
+  numUnidades: number
+  pmAsignadoId: string
+  precioVenta: number
+  margenObjetivo: number
+  pctCostosIndirectos: number
+  pctContingencia: number
+  presupuestoTotal?: number | null
+  imagenUrl?: string | null
+  status?: $Enums.StatusProyectoEnum
+  fechaEntregaEstimada?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fases?: Prisma.FaseUncheckedCreateNestedManyWithoutProyectoInput
+  unidades?: Prisma.UnidadUncheckedCreateNestedManyWithoutProyectoInput
+  partes3D?: Prisma.Parte3DUncheckedCreateNestedManyWithoutProyectoInput
+  planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
+  presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
+  lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+}
+
+export type ProyectoCreateOrConnectWithoutDesembolsosInput = {
+  where: Prisma.ProyectoWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProyectoCreateWithoutDesembolsosInput, Prisma.ProyectoUncheckedCreateWithoutDesembolsosInput>
+}
+
+export type ProyectoUpsertWithoutDesembolsosInput = {
+  update: Prisma.XOR<Prisma.ProyectoUpdateWithoutDesembolsosInput, Prisma.ProyectoUncheckedUpdateWithoutDesembolsosInput>
+  create: Prisma.XOR<Prisma.ProyectoCreateWithoutDesembolsosInput, Prisma.ProyectoUncheckedCreateWithoutDesembolsosInput>
+  where?: Prisma.ProyectoWhereInput
+}
+
+export type ProyectoUpdateToOneWithWhereWithoutDesembolsosInput = {
+  where?: Prisma.ProyectoWhereInput
+  data: Prisma.XOR<Prisma.ProyectoUpdateWithoutDesembolsosInput, Prisma.ProyectoUncheckedUpdateWithoutDesembolsosInput>
+}
+
+export type ProyectoUpdateWithoutDesembolsosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoProyectoEnumFieldUpdateOperationsInput | $Enums.TipoProyectoEnum
+  ubicacion?: Prisma.StringFieldUpdateOperationsInput | string
+  numUnidades?: Prisma.IntFieldUpdateOperationsInput | number
+  precioVenta?: Prisma.FloatFieldUpdateOperationsInput | number
+  margenObjetivo?: Prisma.FloatFieldUpdateOperationsInput | number
+  pctCostosIndirectos?: Prisma.FloatFieldUpdateOperationsInput | number
+  pctContingencia?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoTotal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  imagenUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumStatusProyectoEnumFieldUpdateOperationsInput | $Enums.StatusProyectoEnum
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pmAsignado?: Prisma.UsuarioUpdateOneRequiredWithoutProyectosAsignadosNestedInput
+  fases?: Prisma.FaseUpdateManyWithoutProyectoNestedInput
+  unidades?: Prisma.UnidadUpdateManyWithoutProyectoNestedInput
+  partes3D?: Prisma.Parte3DUpdateManyWithoutProyectoNestedInput
+  planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
+  presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
+  lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+}
+
+export type ProyectoUncheckedUpdateWithoutDesembolsosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoProyectoEnumFieldUpdateOperationsInput | $Enums.TipoProyectoEnum
+  ubicacion?: Prisma.StringFieldUpdateOperationsInput | string
+  numUnidades?: Prisma.IntFieldUpdateOperationsInput | number
+  pmAsignadoId?: Prisma.StringFieldUpdateOperationsInput | string
+  precioVenta?: Prisma.FloatFieldUpdateOperationsInput | number
+  margenObjetivo?: Prisma.FloatFieldUpdateOperationsInput | number
+  pctCostosIndirectos?: Prisma.FloatFieldUpdateOperationsInput | number
+  pctContingencia?: Prisma.FloatFieldUpdateOperationsInput | number
+  presupuestoTotal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  imagenUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumStatusProyectoEnumFieldUpdateOperationsInput | $Enums.StatusProyectoEnum
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fases?: Prisma.FaseUncheckedUpdateManyWithoutProyectoNestedInput
+  unidades?: Prisma.UnidadUncheckedUpdateManyWithoutProyectoNestedInput
+  partes3D?: Prisma.Parte3DUncheckedUpdateManyWithoutProyectoNestedInput
+  planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
+  presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
@@ -1067,6 +1210,7 @@ export type ProyectoCreateWithoutPlanillasInput = {
   partes3D?: Prisma.Parte3DCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutPlanillasInput = {
@@ -1091,6 +1235,7 @@ export type ProyectoUncheckedCreateWithoutPlanillasInput = {
   partes3D?: Prisma.Parte3DUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutPlanillasInput = {
@@ -1131,6 +1276,7 @@ export type ProyectoUpdateWithoutPlanillasInput = {
   partes3D?: Prisma.Parte3DUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutPlanillasInput = {
@@ -1155,6 +1301,7 @@ export type ProyectoUncheckedUpdateWithoutPlanillasInput = {
   partes3D?: Prisma.Parte3DUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateWithoutFasesInput = {
@@ -1179,6 +1326,7 @@ export type ProyectoCreateWithoutFasesInput = {
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutFasesInput = {
@@ -1203,6 +1351,7 @@ export type ProyectoUncheckedCreateWithoutFasesInput = {
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutFasesInput = {
@@ -1243,6 +1392,7 @@ export type ProyectoUpdateWithoutFasesInput = {
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutFasesInput = {
@@ -1267,6 +1417,7 @@ export type ProyectoUncheckedUpdateWithoutFasesInput = {
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateWithoutLotesMaterialInput = {
@@ -1291,6 +1442,7 @@ export type ProyectoCreateWithoutLotesMaterialInput = {
   partes3D?: Prisma.Parte3DCreateNestedManyWithoutProyectoInput
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutLotesMaterialInput = {
@@ -1315,6 +1467,7 @@ export type ProyectoUncheckedCreateWithoutLotesMaterialInput = {
   partes3D?: Prisma.Parte3DUncheckedCreateNestedManyWithoutProyectoInput
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutLotesMaterialInput = {
@@ -1355,6 +1508,7 @@ export type ProyectoUpdateWithoutLotesMaterialInput = {
   partes3D?: Prisma.Parte3DUpdateManyWithoutProyectoNestedInput
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutLotesMaterialInput = {
@@ -1379,6 +1533,7 @@ export type ProyectoUncheckedUpdateWithoutLotesMaterialInput = {
   partes3D?: Prisma.Parte3DUncheckedUpdateManyWithoutProyectoNestedInput
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateWithoutUnidadesInput = {
@@ -1403,6 +1558,7 @@ export type ProyectoCreateWithoutUnidadesInput = {
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutUnidadesInput = {
@@ -1427,6 +1583,7 @@ export type ProyectoUncheckedCreateWithoutUnidadesInput = {
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutUnidadesInput = {
@@ -1467,6 +1624,7 @@ export type ProyectoUpdateWithoutUnidadesInput = {
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutUnidadesInput = {
@@ -1491,6 +1649,7 @@ export type ProyectoUncheckedUpdateWithoutUnidadesInput = {
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateWithoutPartes3DInput = {
@@ -1515,6 +1674,7 @@ export type ProyectoCreateWithoutPartes3DInput = {
   planillas?: Prisma.PlanillaCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoUncheckedCreateWithoutPartes3DInput = {
@@ -1539,6 +1699,7 @@ export type ProyectoUncheckedCreateWithoutPartes3DInput = {
   planillas?: Prisma.PlanillaUncheckedCreateNestedManyWithoutProyectoInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedCreateNestedManyWithoutProyectoInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedCreateNestedManyWithoutProyectoInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedCreateNestedManyWithoutProyectoInput
 }
 
 export type ProyectoCreateOrConnectWithoutPartes3DInput = {
@@ -1579,6 +1740,7 @@ export type ProyectoUpdateWithoutPartes3DInput = {
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutPartes3DInput = {
@@ -1603,6 +1765,7 @@ export type ProyectoUncheckedUpdateWithoutPartes3DInput = {
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoCreateManyPmAsignadoInput = {
@@ -1645,6 +1808,7 @@ export type ProyectoUpdateWithoutPmAsignadoInput = {
   planillas?: Prisma.PlanillaUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateWithoutPmAsignadoInput = {
@@ -1669,6 +1833,7 @@ export type ProyectoUncheckedUpdateWithoutPmAsignadoInput = {
   planillas?: Prisma.PlanillaUncheckedUpdateManyWithoutProyectoNestedInput
   presupuestoRubros?: Prisma.PresupuestoRubroUncheckedUpdateManyWithoutProyectoNestedInput
   lotesMaterial?: Prisma.LoteMaterialUncheckedUpdateManyWithoutProyectoNestedInput
+  desembolsos?: Prisma.DesembolsoProyectoUncheckedUpdateManyWithoutProyectoNestedInput
 }
 
 export type ProyectoUncheckedUpdateManyWithoutPmAsignadoInput = {
@@ -1701,6 +1866,7 @@ export type ProyectoCountOutputType = {
   planillas: number
   presupuestoRubros: number
   lotesMaterial: number
+  desembolsos: number
 }
 
 export type ProyectoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1710,6 +1876,7 @@ export type ProyectoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   planillas?: boolean | ProyectoCountOutputTypeCountPlanillasArgs
   presupuestoRubros?: boolean | ProyectoCountOutputTypeCountPresupuestoRubrosArgs
   lotesMaterial?: boolean | ProyectoCountOutputTypeCountLotesMaterialArgs
+  desembolsos?: boolean | ProyectoCountOutputTypeCountDesembolsosArgs
 }
 
 /**
@@ -1764,6 +1931,13 @@ export type ProyectoCountOutputTypeCountLotesMaterialArgs<ExtArgs extends runtim
   where?: Prisma.LoteMaterialWhereInput
 }
 
+/**
+ * ProyectoCountOutputType without action
+ */
+export type ProyectoCountOutputTypeCountDesembolsosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DesembolsoProyectoWhereInput
+}
+
 
 export type ProyectoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1789,6 +1963,7 @@ export type ProyectoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   planillas?: boolean | Prisma.Proyecto$planillasArgs<ExtArgs>
   presupuestoRubros?: boolean | Prisma.Proyecto$presupuestoRubrosArgs<ExtArgs>
   lotesMaterial?: boolean | Prisma.Proyecto$lotesMaterialArgs<ExtArgs>
+  desembolsos?: boolean | Prisma.Proyecto$desembolsosArgs<ExtArgs>
   _count?: boolean | Prisma.ProyectoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proyecto"]>
 
@@ -1822,6 +1997,7 @@ export type ProyectoInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   planillas?: boolean | Prisma.Proyecto$planillasArgs<ExtArgs>
   presupuestoRubros?: boolean | Prisma.Proyecto$presupuestoRubrosArgs<ExtArgs>
   lotesMaterial?: boolean | Prisma.Proyecto$lotesMaterialArgs<ExtArgs>
+  desembolsos?: boolean | Prisma.Proyecto$desembolsosArgs<ExtArgs>
   _count?: boolean | Prisma.ProyectoCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1835,6 +2011,7 @@ export type $ProyectoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     planillas: Prisma.$PlanillaPayload<ExtArgs>[]
     presupuestoRubros: Prisma.$PresupuestoRubroPayload<ExtArgs>[]
     lotesMaterial: Prisma.$LoteMaterialPayload<ExtArgs>[]
+    desembolsos: Prisma.$DesembolsoProyectoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2200,6 +2377,7 @@ export interface Prisma__ProyectoClient<T, Null = never, ExtArgs extends runtime
   planillas<T extends Prisma.Proyecto$planillasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Proyecto$planillasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanillaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   presupuestoRubros<T extends Prisma.Proyecto$presupuestoRubrosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Proyecto$presupuestoRubrosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PresupuestoRubroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lotesMaterial<T extends Prisma.Proyecto$lotesMaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Proyecto$lotesMaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoteMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  desembolsos<T extends Prisma.Proyecto$desembolsosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Proyecto$desembolsosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesembolsoProyectoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2729,6 +2907,30 @@ export type Proyecto$lotesMaterialArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.LoteMaterialScalarFieldEnum | Prisma.LoteMaterialScalarFieldEnum[]
+}
+
+/**
+ * Proyecto.desembolsos
+ */
+export type Proyecto$desembolsosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DesembolsoProyecto
+   */
+  select?: Prisma.DesembolsoProyectoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DesembolsoProyecto
+   */
+  omit?: Prisma.DesembolsoProyectoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DesembolsoProyectoInclude<ExtArgs> | null
+  where?: Prisma.DesembolsoProyectoWhereInput
+  orderBy?: Prisma.DesembolsoProyectoOrderByWithRelationInput | Prisma.DesembolsoProyectoOrderByWithRelationInput[]
+  cursor?: Prisma.DesembolsoProyectoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DesembolsoProyectoScalarFieldEnum | Prisma.DesembolsoProyectoScalarFieldEnum[]
 }
 
 /**

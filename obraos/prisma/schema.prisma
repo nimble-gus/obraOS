@@ -184,6 +184,7 @@ model Proyecto {
   planillas              Planilla[]
   presupuestoRubros      PresupuestoRubro[]
   lotesMaterial          LoteMaterial[]
+  desembolsos            DesembolsoProyecto[]
 }
 
 // Límite de presupuesto por rubro (materiales, planilla, tipos de servicio). Flexible: agregar rubros sin migraciones.
@@ -198,6 +199,22 @@ model PresupuestoRubro {
 
   @@unique([proyectoId, rubro])
   @@index([proyectoId])
+}
+
+// Registro de fondos desembolsados al proyecto (por tramo o por unidad)
+model DesembolsoProyecto {
+  id          String    @id @default(cuid())
+  proyectoId  String    @map("proyecto_id")
+  proyecto    Proyecto  @relation(fields: [proyectoId], references: [id], onDelete: Cascade)
+  unidadId    String?   @map("unidad_id")
+  unidad      Unidad?   @relation(fields: [unidadId], references: [id], onDelete: SetNull)
+  monto       Float
+  fecha       DateTime  @default(now())
+  descripcion String?   @map("descripcion")
+  rubro       String?   // opcional: "materiales" | "planilla" | "otros"
+
+  @@index([proyectoId])
+  @@index([unidadId])
 }
 
 // =============================================================================
@@ -540,6 +557,7 @@ model Unidad {
   planillasRegistroAsignadas PlanillaRegistroAsignadoTarea[]
   planillasBloqueAsignadas PlanillaAsignadaTarea[]
   serviciosAsignadosTarea ServicioAsignadoTarea[]
+  desembolsosProyecto   DesembolsoProyecto[]
 
   @@unique([proyectoId, numero])
   @@index([proyectoId])
