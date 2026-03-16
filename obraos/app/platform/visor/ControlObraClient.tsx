@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { WizardCrearBloque } from "./WizardCrearBloque";
+import { ComprasDashboard } from "./ComprasDashboard";
 
 type Fase = {
   id: string;
@@ -63,6 +64,15 @@ export function ControlObraClient({
 
   return (
     <div className="mt-6 space-y-6">
+      <ComprasDashboard
+        proyectoId={proyectoId}
+        unidades={proyecto.unidades.map((u) => ({
+          id: u.id,
+          etiqueta: u.etiqueta,
+          numero: u.numero,
+        }))}
+      />
+
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold" style={{ color: "var(--text)" }}>
           Bloques (unidades) — {proyecto.nombre}

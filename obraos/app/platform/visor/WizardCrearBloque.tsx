@@ -69,6 +69,9 @@ export function WizardCrearBloque({
       ? String(unidadEditar.fechaEntregaEstimada).slice(0, 10)
       : ""
   );
+  const [nombresFase, setNombresFase] = useState<Record<string, string>>({});
+  const [fasesEliminadas, setFasesEliminadas] = useState<string[]>([]);
+  const [nombresFasePaso1, setNombresFasePaso1] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -137,6 +140,29 @@ export function WizardCrearBloque({
     setLoading(true);
     try {
       if (step === 1) {
+        if (modoEdicion) {
+          for (const f of fasesExistentesVisibles) {
+            const nombreNuevo = (nombresFasePaso1[f.id] ?? f.nombre).trim();
+            if (nombreNuevo !== f.nombre) {
+              const res = await fetch(`/api/fases/${f.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nombre: nombreNuevo }),
+              });
+              if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error ?? "Error al actualizar fase");
+              }
+            }
+          }
+          for (const id of fasesEliminadas) {
+            const res = await fetch(`/api/fases/${id}`, { method: "DELETE" });
+            if (!res.ok) {
+              const data = await res.json().catch(() => ({}));
+              throw new Error(data.error ?? "Error al eliminar fase");
+            }
+          }
+        }
         if (fasesSeleccionadas.length > 0) {
           const creadas: { id: string; nombre: string }[] = [];
           for (const f of fasesSeleccionadas) {
@@ -165,9 +191,26 @@ export function WizardCrearBloque({
 
       if (step === 2) {
         const todasFases = [
-          ...fasesExistentes.map((f) => ({ id: f.id, nombre: f.nombre })),
+          ...fasesExistentesVisibles.map((f) => ({
+            id: f.id,
+            nombre: nombresFasePaso1[f.id] ?? f.nombre,
+          })),
           ...fasesCreadas,
         ];
+        for (const fase of todasFases) {
+          const nombreNuevo = (nombresFase[fase.id] ?? fase.nombre).trim();
+          if (fase.id && nombreNuevo !== fase.nombre) {
+            const resFase = await fetch(`/api/fases/${fase.id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ nombre: nombreNuevo }),
+            });
+            if (!resFase.ok) {
+              const data = await resFase.json().catch(() => ({}));
+              throw new Error(data.error ?? "Error al actualizar fase");
+            }
+          }
+        }
         for (const fase of todasFases) {
           const tareas = tareasPorFase[fase.id] ?? [];
           for (const t of tareas) {
@@ -236,12 +279,16 @@ export function WizardCrearBloque({
     }
   };
 
+  const fasesExistentesVisibles = fasesExistentes.filter((f) => !fasesEliminadas.includes(f.id));
   const puedeAvanzarStep1 =
-    fasesExistentes.length > 0 || fasesSeleccionadas.length > 0;
+    fasesExistentesVisibles.length > 0 || fasesSeleccionadas.length > 0;
   const fasesParaUsar =
     step === 2
       ? [
-          ...fasesExistentes.map((f) => ({ id: f.id, nombre: f.nombre })),
+          ...fasesExistentesVisibles.map((f) => ({
+            id: f.id,
+            nombre: nombresFasePaso1[f.id] ?? f.nombre,
+          })),
           ...fasesCreadas,
         ]
       : [];
@@ -274,28 +321,32 @@ export function WizardCrearBloque({
         </div>
 
         <div className="mb-6 flex gap-2">
-          <div
-            className={`flex-1 rounded-lg py-2 text-center text-sm font-semibold ${
+          <button
+            type="button"
+            className={`flex-1 rounded-lg py-2 text-center text-sm font-semibold transition ${
               step === 1 ? "opacity-100" : "opacity-50"
-            }`}
+            } ${modoEdicion ? "cursor-pointer hover:opacity-90" : "cursor-default"}`}
             style={{
               background: step === 1 ? "var(--accent)" : "var(--bg3)",
               color: step === 1 ? "#000" : "var(--text2)",
             }}
+            onClick={() => modoEdicion && setStep(1)}
           >
             Paso 1: Fases
-          </div>
-          <div
-            className={`flex-1 rounded-lg py-2 text-center text-sm font-semibold ${
+          </button>
+          <button
+            type="button"
+            className={`flex-1 rounded-lg py-2 text-center text-sm font-semibold transition ${
               step === 2 ? "opacity-100" : "opacity-50"
-            }`}
+            } ${modoEdicion ? "cursor-pointer hover:opacity-90" : "cursor-default"}`}
             style={{
               background: step === 2 ? "var(--accent)" : "var(--bg3)",
               color: step === 2 ? "#000" : "var(--text2)",
             }}
+            onClick={() => modoEdicion && setStep(2)}
           >
             Paso 2: Tareas
-          </div>
+          </button>
         </div>
 
         {error && (
@@ -310,7 +361,9 @@ export function WizardCrearBloque({
         {step === 1 && (
           <div className="space-y-4">
             <p className="text-sm" style={{ color: "var(--text2)" }}>
-              Selecciona las fases del proyecto desde el catálogo o agrega custom.
+              {modoEdicion
+                ? "Edita el nombre de las fases, quita las que no uses o agrega nuevas desde el catálogo."
+                : "Selecciona las fases del proyecto desde el catálogo o agrega custom."}
             </p>
             <div className="flex flex-wrap gap-2">
               {catalogo.map((c) => (
@@ -353,16 +406,43 @@ export function WizardCrearBloque({
                 Agregar
               </button>
             </div>
-            {(fasesSeleccionadas.length > 0 || fasesExistentes.length > 0) && (
+            {(fasesSeleccionadas.length > 0 || fasesExistentesVisibles.length > 0) && (
               <div className="space-y-2">
                 <span className="text-xs font-semibold uppercase" style={{ color: "var(--text3)" }}>
                   Fases a usar
                 </span>
-                <ul className="space-y-1">
-                  {fasesExistentes.map((f) => (
-                    <li key={f.id} className="flex items-center gap-2 text-sm" style={{ color: "var(--text)" }}>
-                      <span className="rounded bg-green/20 px-1.5 text-xs" style={{ color: "var(--green)" }}>existente</span>
-                      {f.nombre}
+                <ul className="space-y-2">
+                  {fasesExistentesVisibles.map((f) => (
+                    <li key={f.id} className="flex items-center gap-2 text-sm">
+                      {modoEdicion && (
+                        <button
+                          type="button"
+                          onClick={() => setFasesEliminadas((prev) => [...prev, f.id])}
+                          className="shrink-0 text-xs hover:underline"
+                          style={{ color: "var(--red)" }}
+                        >
+                          quitar
+                        </button>
+                      )}
+                      {modoEdicion ? (
+                        <input
+                          value={nombresFasePaso1[f.id] ?? f.nombre}
+                          onChange={(e) =>
+                            setNombresFasePaso1((prev) => ({ ...prev, [f.id]: e.target.value }))
+                          }
+                          className="min-w-0 flex-1 rounded border px-2 py-1 text-sm outline-none focus:border-[var(--accent)]"
+                          style={{
+                            background: "var(--bg3)",
+                            borderColor: "var(--border)",
+                            color: "var(--text)",
+                          }}
+                        />
+                      ) : (
+                        <span style={{ color: "var(--text)" }}>{f.nombre}</span>
+                      )}
+                      <span className="shrink-0 rounded bg-green/20 px-1.5 text-xs" style={{ color: "var(--green)" }}>
+                        existente
+                      </span>
                     </li>
                   ))}
                   {fasesSeleccionadas.map((f, i) => (
@@ -426,10 +506,14 @@ export function WizardCrearBloque({
                   className="rounded-xl border p-4"
                   style={{ background: "var(--bg)", borderColor: "var(--border)" }}
                 >
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="font-semibold" style={{ color: "var(--text)" }}>
-                      {fase.nombre}
-                    </span>
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <input
+                      value={nombresFase[fid] ?? fase.nombre}
+                      onChange={(e) => setNombresFase((prev) => ({ ...prev, [fid]: e.target.value }))}
+                      placeholder="Nombre de la fase"
+                      className="min-w-0 flex-1 rounded border px-2 py-1.5 text-sm font-semibold outline-none focus:border-[var(--accent)]"
+                      style={{ background: "var(--bg3)", borderColor: "var(--border)", color: "var(--text)" }}
+                    />
                     <button
                       type="button"
                       onClick={() => addTarea(fid)}

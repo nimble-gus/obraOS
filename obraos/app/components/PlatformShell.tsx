@@ -83,13 +83,13 @@ export function PlatformShell({
         }}
       >
         <div className="flex flex-col items-center gap-4 py-6">
-          <Link href="/platform/proyectos" className="block">
+          <Link href="/platform/proyectos" className="block platform-sidebar-logo">
             <Image
               src="/obri.png"
               alt="obraOS"
               width={168}
               height={168}
-              className="h-[10.5rem] w-[10.5rem] object-contain dark:invert-0 invert"
+              className="h-[10.5rem] w-[10.5rem] object-contain"
             />
           </Link>
         </div>
