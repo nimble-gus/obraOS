@@ -417,7 +417,7 @@ export default async function ProyectoPage({
           className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:opacity-90"
           style={{ borderColor: "var(--border)", color: "var(--text)" }}
         >
-          Visor 3D
+          Control de Obra
         </Link>
         <Link
           href="/platform/materiales"
