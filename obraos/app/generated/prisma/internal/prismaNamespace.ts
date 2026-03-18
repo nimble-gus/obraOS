@@ -391,6 +391,7 @@ export const ModelName = {
   ConfiguracionPlataforma: 'ConfiguracionPlataforma',
   ContenidoPlataforma: 'ContenidoPlataforma',
   AuditLog: 'AuditLog',
+  CategoriaMaterialConfig: 'CategoriaMaterialConfig',
   Proyecto: 'Proyecto',
   PresupuestoRubro: 'PresupuestoRubro',
   DesembolsoProyecto: 'DesembolsoProyecto',
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "proyecto" | "presupuestoRubro" | "desembolsoProyecto" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "planillaAsignadaTarea" | "planillaRegistroAsignadoTarea" | "catalogoFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "servicioAsignadoTarea" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "loteMaterial" | "materialAsignadoTarea" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
+    modelProps: "usuario" | "rol" | "permiso" | "rolPermiso" | "configuracionPlataforma" | "contenidoPlataforma" | "auditLog" | "categoriaMaterialConfig" | "proyecto" | "presupuestoRubro" | "desembolsoProyecto" | "planilla" | "planillaRegistro" | "planillaAsignadaFase" | "planillaAsignadaTarea" | "planillaRegistroAsignadoTarea" | "catalogoFase" | "catalogoTipoServicio" | "catalogoServicio" | "servicioFase" | "servicioAsignadoTarea" | "fase" | "materialFase" | "materialFaseUnidad" | "catalogoMaterial" | "loteMaterial" | "materialAsignadoTarea" | "inventarioMovimiento" | "unidad" | "tarea" | "tareaCompletadaUnidad" | "avanceUnidadFase" | "modeloCasa" | "faseParte3D" | "parte3D"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -896,6 +897,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuditLogCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuditLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    CategoriaMaterialConfig: {
+      payload: Prisma.$CategoriaMaterialConfigPayload<ExtArgs>
+      fields: Prisma.CategoriaMaterialConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CategoriaMaterialConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CategoriaMaterialConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.CategoriaMaterialConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CategoriaMaterialConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        findMany: {
+          args: Prisma.CategoriaMaterialConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>[]
+        }
+        create: {
+          args: Prisma.CategoriaMaterialConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        createMany: {
+          args: Prisma.CategoriaMaterialConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CategoriaMaterialConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        update: {
+          args: Prisma.CategoriaMaterialConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.CategoriaMaterialConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CategoriaMaterialConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CategoriaMaterialConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoriaMaterialConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.CategoriaMaterialConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCategoriaMaterialConfig>
+        }
+        groupBy: {
+          args: Prisma.CategoriaMaterialConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoriaMaterialConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CategoriaMaterialConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoriaMaterialConfigCountAggregateOutputType> | number
         }
       }
     }
@@ -2808,6 +2875,19 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const CategoriaMaterialConfigScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  nombre: 'nombre',
+  orden: 'orden',
+  activa: 'activa',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoriaMaterialConfigScalarFieldEnum = (typeof CategoriaMaterialConfigScalarFieldEnum)[keyof typeof CategoriaMaterialConfigScalarFieldEnum]
+
+
 export const ProyectoScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -3304,6 +3384,15 @@ export const AuditLogOrderByRelevanceFieldEnum = {
 export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
 
 
+export const CategoriaMaterialConfigOrderByRelevanceFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  nombre: 'nombre'
+} as const
+
+export type CategoriaMaterialConfigOrderByRelevanceFieldEnum = (typeof CategoriaMaterialConfigOrderByRelevanceFieldEnum)[keyof typeof CategoriaMaterialConfigOrderByRelevanceFieldEnum]
+
+
 export const ProyectoOrderByRelevanceFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -3787,6 +3876,7 @@ export type GlobalOmitConfig = {
   configuracionPlataforma?: Prisma.ConfiguracionPlataformaOmit
   contenidoPlataforma?: Prisma.ContenidoPlataformaOmit
   auditLog?: Prisma.AuditLogOmit
+  categoriaMaterialConfig?: Prisma.CategoriaMaterialConfigOmit
   proyecto?: Prisma.ProyectoOmit
   presupuestoRubro?: Prisma.PresupuestoRubroOmit
   desembolsoProyecto?: Prisma.DesembolsoProyectoOmit

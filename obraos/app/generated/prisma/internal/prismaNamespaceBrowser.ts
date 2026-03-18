@@ -58,6 +58,7 @@ export const ModelName = {
   ConfiguracionPlataforma: 'ConfiguracionPlataforma',
   ContenidoPlataforma: 'ContenidoPlataforma',
   AuditLog: 'AuditLog',
+  CategoriaMaterialConfig: 'CategoriaMaterialConfig',
   Proyecto: 'Proyecto',
   PresupuestoRubro: 'PresupuestoRubro',
   DesembolsoProyecto: 'DesembolsoProyecto',
@@ -189,6 +190,19 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const CategoriaMaterialConfigScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  nombre: 'nombre',
+  orden: 'orden',
+  activa: 'activa',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoriaMaterialConfigScalarFieldEnum = (typeof CategoriaMaterialConfigScalarFieldEnum)[keyof typeof CategoriaMaterialConfigScalarFieldEnum]
 
 
 export const ProyectoScalarFieldEnum = {
@@ -685,6 +699,15 @@ export const AuditLogOrderByRelevanceFieldEnum = {
 } as const
 
 export type AuditLogOrderByRelevanceFieldEnum = (typeof AuditLogOrderByRelevanceFieldEnum)[keyof typeof AuditLogOrderByRelevanceFieldEnum]
+
+
+export const CategoriaMaterialConfigOrderByRelevanceFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  nombre: 'nombre'
+} as const
+
+export type CategoriaMaterialConfigOrderByRelevanceFieldEnum = (typeof CategoriaMaterialConfigOrderByRelevanceFieldEnum)[keyof typeof CategoriaMaterialConfigOrderByRelevanceFieldEnum]
 
 
 export const ProyectoOrderByRelevanceFieldEnum = {

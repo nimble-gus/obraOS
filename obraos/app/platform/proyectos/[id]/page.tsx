@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CapexPanel } from "../CapexPanel";
 import { FondosPanel } from "../FondosPanel";
+import { FondosChart } from "../FondosChart";
 
 const TIPO_LABEL: Record<string, string> = {
   RESIDENCIAL: "Residencial",
@@ -171,36 +172,75 @@ export default async function ProyectoPage({
 
   const totalDesembolsado = desembolsos.reduce((s, d) => s + d.monto, 0);
 
-  // Ejecución real (materiales + planilla + servicios)
+  // Ejecución real diaria (materiales + planilla + servicios)
   const [
-    matAgg,
-    planBloqueAgg,
-    planRegAgg,
-    servAgg,
+    matPorDia,
+    planBloquePorDia,
+    planRegPorDia,
+    servPorDia,
   ] = await Promise.all([
-    prisma.materialAsignadoTarea.aggregate({
+    prisma.materialAsignadoTarea.groupBy({
+      by: ["createdAt"],
       where: { unidad: { proyectoId: id } },
       _sum: { monto: true },
     }),
-    prisma.planillaAsignadaTarea.aggregate({
+    prisma.planillaAsignadaTarea.groupBy({
+      by: ["createdAt"],
       where: { unidad: { proyectoId: id } },
       _sum: { monto: true },
     }),
-    prisma.planillaRegistroAsignadoTarea.aggregate({
+    prisma.planillaRegistroAsignadoTarea.groupBy({
+      by: ["createdAt"],
       where: { unidad: { proyectoId: id } },
       _sum: { monto: true },
     }),
-    prisma.servicioAsignadoTarea.aggregate({
+    prisma.servicioAsignadoTarea.groupBy({
+      by: ["createdAt"],
       where: { unidad: { proyectoId: id } },
       _sum: { monto: true },
     }),
   ]);
 
-  const totalEjecutado =
-    (matAgg._sum.monto ?? 0) +
-    (planBloqueAgg._sum.monto ?? 0) +
-    (planRegAgg._sum.monto ?? 0) +
-    (servAgg._sum.monto ?? 0);
+  const ejecucionPorDiaMap = new Map<string, number>();
+  const addEjecucion = (rows: { createdAt: Date; _sum: { monto: number | null } }[]) => {
+    for (const r of rows) {
+      const dia = r.createdAt.toISOString().slice(0, 10);
+      ejecucionPorDiaMap.set(dia, (ejecucionPorDiaMap.get(dia) ?? 0) + (r._sum.monto ?? 0));
+    }
+  };
+  addEjecucion(matPorDia);
+  addEjecucion(planBloquePorDia);
+  addEjecucion(planRegPorDia);
+  addEjecucion(servPorDia);
+
+  const totalEjecutado = Array.from(ejecucionPorDiaMap.values()).reduce((s, v) => s + v, 0);
+
+  // Serie diaria para la gráfica: presupuesto (constante), fondos acumulados y ejecución acumulada
+  const fechasSet = new Set<string>();
+  for (const d of desembolsos) {
+    fechasSet.add(d.fecha.toISOString().slice(0, 10));
+  }
+  for (const dia of ejecucionPorDiaMap.keys()) {
+    fechasSet.add(dia);
+  }
+  const fechasOrdenadas = Array.from(fechasSet).sort();
+
+  let acumuladoFondos = 0;
+  let acumuladoEjecucion = 0;
+  const serieFondos = fechasOrdenadas.map((dia) => {
+    const fondosDelDia = desembolsos
+      .filter((d) => d.fecha.toISOString().slice(0, 10) === dia)
+      .reduce((s, d) => s + d.monto, 0);
+    const ejecDelDia = ejecucionPorDiaMap.get(dia) ?? 0;
+    acumuladoFondos += fondosDelDia;
+    acumuladoEjecucion += ejecDelDia;
+    return {
+      fecha: dia,
+      presupuesto: presupuestoObra,
+      fondos: acumuladoFondos,
+      ejecucion: acumuladoEjecucion,
+    };
+  });
 
   return (
     <div>
@@ -229,6 +269,8 @@ export default async function ProyectoPage({
           Control de Obra →
         </Link>
       </div>
+
+      <FondosChart series={serieFondos} />
 
       <CapexPanel
         proyectoId={id}

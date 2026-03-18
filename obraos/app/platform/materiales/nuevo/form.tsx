@@ -2,22 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
-const CATEGORIAS = [
-  { value: "MAMPOSTERIA", label: "Mampostería" },
-  { value: "CIMENTACION", label: "Cimentación" },
-  { value: "ESTRUCTURA", label: "Estructura" },
-  { value: "ACABADOS", label: "Acabados" },
-  { value: "MEZCLAS", label: "Mezclas" },
-  { value: "INSTALACIONES", label: "Instalaciones" },
-];
+import { useEffect, useState } from "react";
 
 const UNIDADES = [
   { value: "m²", label: "m²" },
   { value: "m³", label: "m³" },
   { value: "un", label: "unidad" },
   { value: "kg", label: "kg" },
+  { value: "qq", label: "quintal" },
+  { value: "t", label: "tonelada" },
   { value: "lt", label: "litro" },
   { value: "gl", label: "galón" },
 ];
@@ -25,6 +18,44 @@ const UNIDADES = [
 export function CrearMaterialForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [categorias, setCategorias] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  useEffect(() => {
+    fetch("/api/admin/materiales/categorias?activa=true")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: { slug: string; nombre: string }[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCategorias(
+            data.map((c) => ({
+              value: c.slug,
+              label: c.nombre,
+            })),
+          );
+        } else {
+          // Fallback a categorías estáticas si aún no hay config en admin
+          setCategorias([
+            { value: "MAMPOSTERIA", label: "Mampostería" },
+            { value: "CIMENTACION", label: "Cimentación" },
+            { value: "ESTRUCTURA", label: "Estructura" },
+            { value: "ACABADOS", label: "Acabados" },
+            { value: "MEZCLAS", label: "Mezclas" },
+            { value: "INSTALACIONES", label: "Instalaciones" },
+          ]);
+        }
+      })
+      .catch(() => {
+        setCategorias([
+          { value: "MAMPOSTERIA", label: "Mampostería" },
+          { value: "CIMENTACION", label: "Cimentación" },
+          { value: "ESTRUCTURA", label: "Estructura" },
+          { value: "ACABADOS", label: "Acabados" },
+          { value: "MEZCLAS", label: "Mezclas" },
+          { value: "INSTALACIONES", label: "Instalaciones" },
+        ]);
+      });
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -102,7 +133,7 @@ export function CrearMaterialForm() {
               color: "var(--text)",
             }}
           >
-            {CATEGORIAS.map((c) => (
+            {categorias.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
               </option>

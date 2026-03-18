@@ -53,6 +53,11 @@ export type ContenidoPlataforma = Prisma.ContenidoPlataformaModel
  */
 export type AuditLog = Prisma.AuditLogModel
 /**
+ * Model CategoriaMaterialConfig
+ * 
+ */
+export type CategoriaMaterialConfig = Prisma.CategoriaMaterialConfigModel
+/**
  * Model Proyecto
  * 
  */

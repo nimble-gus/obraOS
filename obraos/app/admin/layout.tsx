@@ -77,6 +77,13 @@ export default async function AdminLayout({
             Tipos de servicio
           </Link>
           <Link
+            href="/admin/materiales-categorias"
+            className="rounded-lg px-3 py-2.5 text-sm transition hover:bg-[var(--sidebar-hover)]"
+            style={{ color: "var(--sidebar-text-muted)" }}
+          >
+            Categorías de materiales
+          </Link>
+          <Link
             href="/admin/auditoria"
             className="rounded-lg px-3 py-2.5 text-sm transition hover:bg-[var(--sidebar-hover)]"
             style={{ color: "var(--sidebar-text-muted)" }}
