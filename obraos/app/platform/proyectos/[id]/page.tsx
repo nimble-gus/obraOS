@@ -26,6 +26,12 @@ function fmtQ(n: number): string {
   return `Q${Math.round(n).toLocaleString()}`;
 }
 
+function toLocalDate(date: Date): string {
+  // Ajustar a fecha local (según timezone del servidor) evitando el desfase por UTC
+  const d = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return d.toISOString().slice(0, 10);
+}
+
 export default async function ProyectoPage({
   params,
 }: {
@@ -218,7 +224,7 @@ export default async function ProyectoPage({
   // Serie diaria para la gráfica: presupuesto (constante), fondos acumulados y ejecución acumulada
   const fechasSet = new Set<string>();
   for (const d of desembolsos) {
-    fechasSet.add(d.fecha.toISOString().slice(0, 10));
+    fechasSet.add(toLocalDate(d.fecha));
   }
   for (const dia of ejecucionPorDiaMap.keys()) {
     fechasSet.add(dia);
@@ -229,7 +235,7 @@ export default async function ProyectoPage({
   let acumuladoEjecucion = 0;
   const serieFondos = fechasOrdenadas.map((dia) => {
     const fondosDelDia = desembolsos
-      .filter((d) => d.fecha.toISOString().slice(0, 10) === dia)
+      .filter((d) => toLocalDate(d.fecha) === dia)
       .reduce((s, d) => s + d.monto, 0);
     const ejecDelDia = ejecucionPorDiaMap.get(dia) ?? 0;
     acumuladoFondos += fondosDelDia;
@@ -287,7 +293,7 @@ export default async function ProyectoPage({
         proyectoId={id}
         desembolsos={desembolsos.map((d) => ({
           id: d.id,
-          fecha: d.fecha.toISOString().slice(0, 10),
+          fecha: toLocalDate(d.fecha),
           monto: d.monto,
           descripcion: d.descripcion,
           unidad: d.unidad

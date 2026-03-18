@@ -122,7 +122,7 @@ export function FondosPanel({
             <input
               type="number"
               min={0}
-              step={1}
+              step={0.01}
               value={monto === "" ? "" : monto}
               onChange={(e) => setMonto(e.target.value ? Number(e.target.value) : "")}
               className="mt-1 w-full rounded-lg border px-3 py-1.5 text-sm"
