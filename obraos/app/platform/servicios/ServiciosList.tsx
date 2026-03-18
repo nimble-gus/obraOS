@@ -15,6 +15,20 @@ export function ServiciosList({
   servicios: Servicio[];
   puedeAgregar: boolean;
 }) {
+  async function eliminar(id: string) {
+    if (!confirm("¿Eliminar este servicio del catálogo?")) return;
+    const res = await fetch(`/api/servicios?id=${encodeURIComponent(id)}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error ?? "Error al eliminar servicio");
+      return;
+    }
+    // Recargar la página para ver la lista actualizada
+    window.location.reload();
+  }
+
   return (
     <div
       className="overflow-hidden rounded-xl border"
@@ -44,6 +58,11 @@ export function ServiciosList({
               <th className="px-4 py-2.5 text-left font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>
                 Costo unitario
               </th>
+              {puedeAgregar && (
+                <th className="px-4 py-2.5 text-right font-mono text-[9px] uppercase tracking-wider" style={{ color: "var(--text3)" }}>
+                  Acciones
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -63,6 +82,17 @@ export function ServiciosList({
                 <td className="px-4 py-3 font-mono" style={{ color: "var(--accent)" }}>
                   Q{s.costoUnitario.toFixed(2)} / {s.unidad}
                 </td>
+                {puedeAgregar && (
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      type="button"
+                      onClick={() => eliminar(s.id)}
+                      className="text-sm text-red-500 hover:underline"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

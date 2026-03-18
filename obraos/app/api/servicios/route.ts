@@ -60,3 +60,36 @@ export async function POST(req: Request) {
 
   return NextResponse.json(servicio);
 }
+
+export async function DELETE(req: Request) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
+  const { puedeAgregarMateriales } = await import("@/lib/permissions");
+  if (!puedeAgregarMateriales(session.user.role ?? "")) {
+    return NextResponse.json(
+      { error: "No tienes permiso para eliminar servicios" },
+      { status: 403 },
+    );
+  }
+
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json(
+      { error: "ID de servicio requerido" },
+      { status: 400 },
+    );
+  }
+
+  // Eliminación suave: marcar inactivo para no romper referencias
+  await prisma.catalogoServicio.update({
+    where: { id },
+    data: { activo: false },
+  });
+
+  return NextResponse.json({ ok: true });
+}
+
