@@ -46,7 +46,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { slug, nombre, orden } = body ?? {};
-    if (typeof slug !== "string" || !CATEGORIA_ENUM_VALUES.includes(slug)) {
+    const slugStr = typeof slug === "string" ? slug : "";
+    if (!CATEGORIA_ENUM_VALUES.includes(slugStr as (typeof CATEGORIA_ENUM_VALUES)[number])) {
       return NextResponse.json(
         { error: "Slug de categoría inválido" },
         { status: 400 },
