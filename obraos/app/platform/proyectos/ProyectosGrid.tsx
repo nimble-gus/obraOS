@@ -115,13 +115,13 @@ export function ProyectosGrid({
       {proyectos.map((p) => {
         const pct = p.pctTotal;
         const status = pct >= 80 ? "done" : pct >= 20 ? "active" : "planning";
-        const colorCss = status === "done" ? "var(--green)" : status === "active" ? "var(--accent)" : "var(--blue)";
+        const colorCss = status === "done" ? "var(--green)" : status === "active" ? "var(--accent)" : "var(--text2)";
         const bgGradient =
           status === "done"
-            ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+            ? "linear-gradient(135deg, rgba(39,201,63,0.15), rgba(39,201,63,0.05))"
             : status === "active"
-              ? "linear-gradient(135deg, rgba(92,149,255,0.15), rgba(92,149,255,0.05))"
-              : "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05))";
+              ? "linear-gradient(135deg, rgba(204,255,0,0.15), rgba(204,255,0,0.05))"
+              : "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))";
 
         return (
           <div
@@ -262,16 +262,15 @@ export function ProyectosGrid({
           <button
             type="button"
             onClick={() => setShowModalNuevo(true)}
-            className="flex min-h-[240px] flex-col items-center justify-center rounded-xl border border-dashed p-6 transition hover:-translate-y-0.5 hover:shadow-md"
+            className="flex min-h-[240px] flex-col items-center justify-center rounded-2xl border border-dashed p-6 transition hover:border-[var(--accent)] hover:shadow-[0_0_20px_rgba(204,255,0,0.05)] bg-[var(--bg3)]"
             style={{
-              borderColor: "rgba(148,163,184,0.6)",
-              background: "radial-gradient(circle at top left, rgba(59,130,246,0.12), transparent 60%)",
+              borderColor: "var(--border2)",
               color: "var(--text)",
             }}
           >
             <div
-              className="mb-3 flex h-14 w-14 items-center justify-center rounded-full"
-              style={{ background: "rgba(59,130,246,0.12)", color: "var(--accent)" }}
+              className="mb-4 flex h-14 w-14 items-center justify-center rounded-full"
+              style={{ background: "rgba(204,255,0,0.1)", color: "var(--accent)" }}
             >
               <AddIcon />
             </div>

@@ -724,15 +724,19 @@ export function UnidadDetalleClient({
                           padding: "2px",
                         }}
                       >
-                        <span className="block h-4 w-4 rounded-full bg-white shadow" />
+                        <span className="block h-4 w-4 shrink-0 rounded-full bg-white shadow" />
                       </button>
-                      <span className={`flex-1 font-medium ${t.completada ? "line-through opacity-70" : ""}`} style={{ color: seleccionada ? "#000" : "var(--text)" }}>
+                      <span
+                        className={`flex-1 truncate font-medium ${t.completada ? "line-through opacity-70" : ""}`}
+                        style={{ color: seleccionada ? "#000" : "var(--text)" }}
+                        title={t.nombre}
+                      >
                         {t.nombre}
                       </span>
                       <button
                         type="button"
                         onClick={() => setEditandoTarea(editandoTarea === t.id ? null : t.id)}
-                        className="text-xs font-medium"
+                        className="shrink-0 text-xs font-medium"
                         style={{ color: "var(--accent)" }}
                       >
                         {editandoTarea === t.id ? "Cerrar" : "Editar"}

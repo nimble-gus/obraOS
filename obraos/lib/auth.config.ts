@@ -28,13 +28,7 @@ export const authConfig = {
         return Response.redirect(new URL("/platform", nextUrl));
       }
 
-      // Raíz: redirigir a login o platform
-      if (nextUrl.pathname === "/" && isLoggedIn) {
-        return Response.redirect(new URL("/platform", nextUrl));
-      }
-      if (nextUrl.pathname === "/" && !isLoggedIn) {
-        return Response.redirect(new URL("/auth/login", nextUrl));
-      }
+
 
       return true;
     },

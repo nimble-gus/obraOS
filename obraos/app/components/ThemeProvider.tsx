@@ -10,16 +10,16 @@ const ThemeContext = createContext<{
 } | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem("obrit-theme") as Theme | null;
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (stored && (stored === "light" || stored === "dark")) {
-      setThemeState(stored);
-    } else if (prefersDark) {
+    if (stored && stored === "dark") {
+      setThemeState("dark");
+    } else {
       setThemeState("dark");
     }
   }, []);

@@ -114,7 +114,7 @@ export function FondosPanel({
       </div>
 
       {puedeEditar && (
-        <form onSubmit={handleAdd} className="mb-4 grid gap-3 md:grid-cols-[1.2fr,1fr,2fr,auto] items-end">
+        <form onSubmit={handleAdd} className="mb-4 grid gap-4 md:grid-cols-[1.2fr_1fr_2fr_auto] items-end">
           <div>
             <label className="text-xs font-medium" style={{ color: "var(--text3)" }}>
               Monto desembolsado (Q)
@@ -162,7 +162,7 @@ export function FondosPanel({
           <button
             type="submit"
             disabled={saving || !monto}
-            className="rounded-lg px-3 py-2 text-xs font-semibold text-black disabled:opacity-60"
+            className="rounded-lg px-6 py-2.5 text-sm font-bold text-black disabled:opacity-60 w-full md:w-auto justify-self-end shadow-lg transition hover:opacity-90 active:scale-95"
             style={{ background: "var(--accent)" }}
           >
             {saving ? "Guardando..." : "Agregar"}

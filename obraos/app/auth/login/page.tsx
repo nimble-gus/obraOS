@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { BlocksBackground } from "@/app/components/BlocksBackground";
 
 function LoginForm() {
   const router = useRouter();
@@ -38,35 +39,31 @@ function LoginForm() {
   }
 
   return (
-    <div
-      className="flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat px-4"
-      style={{ backgroundImage: "url(/login.jpg)" }}
-    >
-      <div className="absolute inset-0 bg-black/20" aria-hidden />
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-4 overflow-hidden bg-[#09090b]">
+      <BlocksBackground />
       <div
-        className="relative z-10 w-full max-w-sm rounded-2xl border border-white/20 p-8 shadow-2xl backdrop-blur-xl"
-        style={{ background: "rgba(55,55,55,0.5)" }}
+        className="relative z-10 w-full max-w-sm rounded-3xl border border-white/10 p-10 shadow-2xl backdrop-blur-xl bg-black/40"
       >
         <div className="mb-6 flex justify-center">
           <Image
             src="/obri.png"
             alt="obrit"
-            width={308}
-            height={168}
-            className="h-[6.3rem] w-[12.6rem] object-contain"
+            width={160}
+            height={48}
+            className="h-10 w-auto object-contain"
           />
         </div>
-        <h2 className="mb-1 text-center text-xl font-bold text-gray-300">
+        <h2 className="mb-1 text-center text-xl font-bold text-white">
           Iniciar sesión
         </h2>
-        <p className="mb-6 text-center text-sm text-gray-400">
+        <p className="mb-8 text-center text-sm text-neutral-400">
           Gestión de proyectos de construcción
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
             <div
               role="alert"
-              className="rounded-lg bg-red-500/20 px-3 py-2 text-sm text-red-200"
+              className="rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-400 border border-red-500/20"
             >
               {error}
             </div>
@@ -74,7 +71,7 @@ function LoginForm() {
           <div>
             <label
               htmlFor="email"
-              className="mb-1 block text-sm font-medium text-gray-300"
+              className="mb-1.5 block text-sm font-medium text-neutral-300"
             >
               Email
             </label>
@@ -85,13 +82,14 @@ function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="w-full rounded-xl border border-white/30 bg-white/90 px-3 py-2.5 text-black outline-none transition placeholder:text-black/50 focus:ring-2 focus:ring-white/50"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-neutral-500 focus:ring-2 focus:ring-[#ccff00]/50"
+              placeholder="tu@correo.com"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="mb-1 block text-sm font-medium text-gray-300"
+              className="mb-1.5 block text-sm font-medium text-neutral-300"
             >
               Contraseña
             </label>
@@ -102,16 +100,17 @@ function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="w-full rounded-xl border border-white/30 bg-white/90 px-3 py-2.5 text-black outline-none transition placeholder:text-black/50 focus:ring-2 focus:ring-white/50"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-neutral-500 focus:ring-2 focus:ring-[#ccff00]/50"
+              placeholder="••••••••"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl px-4 py-2.5 font-medium text-white transition hover:opacity-90 focus:outline-none focus:ring-2 disabled:opacity-60"
+            className="w-full mt-2 rounded-xl px-4 py-3.5 font-bold text-black transition hover:opacity-90 hover:scale-[1.02] focus:outline-none focus:ring-2 disabled:opacity-60 shadow-lg"
             style={{ background: "var(--accent)" }}
           >
-            {loading ? "Entrando..." : "Entrar"}
+            {loading ? "Verificando..." : "Entrar"}
           </button>
         </form>
       </div>
@@ -123,11 +122,8 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div
-          className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/login.jpg)" }}
-        >
-          <span className="text-white drop-shadow">Cargando...</span>
+        <div className="flex min-h-screen items-center justify-center bg-[#09090b]">
+          <span className="text-[#ccff00] font-semibold animate-pulse">Cargando plataforma...</span>
         </div>
       }
     >

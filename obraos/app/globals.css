@@ -8,56 +8,41 @@
   --radius-lg: 16px;
 }
 
-/* ═══ LIGHT THEME: sidebar claro, contenido claro ═══ */
+/* ═══ GLOBAL THEME: Dark + Neon Green ═══ */
 [data-theme="light"],
-:root {
-  --sidebar-bg: #ffffff;
-  --sidebar-text: #1e293b;
-  --sidebar-text-muted: #64748b;
-  --sidebar-border: #e2e8f0;
-  --sidebar-hover: rgba(0, 0, 0, 0.04);
-  --modal-overlay: rgba(0, 0, 0, 0.35);
-  --accent: #4C84F8;
-  --accent-hover: #3a6ed6;
-  --accent-muted: rgba(76, 132, 248, 0.12);
-  --accent2: #6b9aff;
-  --bg: #f5f6f8;
-  --bg2: #ffffff;
-  --bg3: #f0f1f4;
-  --border: #e8eaed;
-  --border2: #d1d5db;
-  --text: #333333;
-  --text2: #666666;
-  --text3: #888888;
-  --green: #22c55e;
-  --blue: #4C84F8;
-  --red: #dc2626;
-  --purple: #8b5cf6;
-}
-
-/* ═══ DARK THEME: sidebar oscuro ═══ */
+:root,
 [data-theme="dark"] {
-  --sidebar-bg: #1a1f2e;
+  --sidebar-bg: #09090b;
   --sidebar-text: #f1f5f9;
   --sidebar-text-muted: rgba(255, 255, 255, 0.6);
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-hover: rgba(255, 255, 255, 0.06);
-  --modal-overlay: rgba(0, 0, 0, 0.6);
-  --accent: #5c95ff;
-  --accent-hover: #7aa8ff;
-  --accent-muted: rgba(92, 149, 255, 0.15);
-  --accent2: #7eb3ff;
-  --bg: #0f1218;
-  --bg2: #181c24;
-  --bg3: #222830;
-  --border: #2d3544;
-  --border2: #3d4756;
-  --text: #e8ecf0;
-  --text2: #9ca3af;
-  --text3: #6b7280;
-  --green: #22c55e;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-hover: rgba(204, 255, 0, 0.08);
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  
+  /* Acentos Neon Green de obrit */
+  --accent: #ccff00;
+  --accent-hover: #b8e600;
+  --accent-muted: rgba(204, 255, 0, 0.15);
+  --accent2: #e0ff4d;
+  
+  /* Fondos globales del platform */
+  --bg: #09090b;
+  --bg2: #111113;
+  --bg3: #161618;
+  
+  /* Bordes */
+  --border: rgba(255, 255, 255, 0.08);
+  --border2: rgba(255, 255, 255, 0.12);
+  
+  /* Tipografía */
+  --text: #ffffff;
+  --text2: #a1a1aa;
+  --text3: #71717a;
+  
+  /* Status Colors (Opcionales para charts, badges, etc.) */
+  --green: #27c93f;
   --blue: #5c95ff;
-  --red: #ef4444;
+  --red: #ff5f56;
   --purple: #a855f7;
 }
 
@@ -89,10 +74,7 @@ body {
   font-family: var(--font-poppins), 'Poppins', system-ui, sans-serif !important;
 }
 
-/* Logo blanco: invertir en light mode para que se vea sobre fondo claro */
-[data-theme="light"] .platform-sidebar-logo img {
-  filter: invert(1);
-}
+
 
 /* Scrollbar */
 ::-webkit-scrollbar {
