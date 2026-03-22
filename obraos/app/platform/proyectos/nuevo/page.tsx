@@ -1,10 +1,22 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
 import { CrearProyectoForm } from "./form";
+import { auth } from "@/auth";
 
 export default async function NuevoProyectoPage() {
+  const session = await auth();
+
+  // -- Multi-Tenant Logic --
+  // @ts-expect-error - custom property
+  const rootAdminId = session?.user?.creadoPorId || session?.user?.id;
+  const tenantUsers = await prisma.usuario.findMany({
+    where: { OR: [{ id: rootAdminId }, { creadoPorId: rootAdminId }] },
+    select: { id: true }
+  });
+  const tenantUserIds = tenantUsers.map(u => u.id);
+
   const pms = await prisma.usuario.findMany({
-    where: { rol: "PROJECT_MANAGER", estado: "ACTIVO" },
+    where: { id: { in: tenantUserIds }, rol: "PROJECT_MANAGER", estado: "ACTIVO" },
     select: { id: true, nombre: true },
   });
 

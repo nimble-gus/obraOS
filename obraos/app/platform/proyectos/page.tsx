@@ -15,27 +15,44 @@ export default async function ProyectosPage() {
   const session = await auth();
   const puedeCrear = puedeCrearProyectos(session?.user?.role ?? "");
 
+  // -- Multi-Tenant Logic (Workspace Isolation) --
+  // El rootAdminId es el id del creador de la empresa o el del mismo usuario si es root admin
+  // @ts-expect-error - custom property
+  const rootAdminId = session?.user?.creadoPorId || session?.user?.id;
+  
+  // Obtenemos a todos los usuarios de este workspace (el root admin y los que él creó)
+  const tenantUsers = await prisma.usuario.findMany({
+    where: { OR: [{ id: rootAdminId }, { creadoPorId: rootAdminId }] },
+    select: { id: true }
+  });
+  const tenantUserIds = tenantUsers.map(u => u.id);
+
   const [proyectos, pms] = await Promise.all([
     prisma.proyecto.findMany({
-    include: {
-      pmAsignado: { select: { nombre: true } },
-      unidades: {
-        where: { activa: true },
-        orderBy: { numero: "asc" },
-        select: { id: true, numero: true, etiqueta: true },
-      },
-      fases: {
-        orderBy: { orden: "asc" },
-        include: {
-          tareas: { include: { completadas: { select: { unidadId: true } } } },
-          avancesUnidad: { select: { unidadId: true, pctAvance: true } },
+      where: { pmAsignadoId: { in: tenantUserIds } }, // Filtro Tenant
+      include: {
+        pmAsignado: { select: { nombre: true } },
+        unidades: {
+          where: { activa: true },
+          orderBy: { numero: "asc" },
+          select: { id: true, numero: true, etiqueta: true },
+        },
+        fases: {
+          orderBy: { orden: "asc" },
+          include: {
+            tareas: { include: { completadas: { select: { unidadId: true } } } },
+            avancesUnidad: { select: { unidadId: true, pctAvance: true } },
+          },
         },
       },
-    },
-    orderBy: { createdAt: "desc" },
-  }),
+      orderBy: { createdAt: "desc" },
+    }),
     prisma.usuario.findMany({
-      where: { rol: "PROJECT_MANAGER", estado: "ACTIVO" },
+      where: { 
+        id: { in: tenantUserIds }, // Filtro Tenant
+        rol: "PROJECT_MANAGER", 
+        estado: "ACTIVO" 
+      },
       select: { id: true, nombre: true },
     }),
   ]);

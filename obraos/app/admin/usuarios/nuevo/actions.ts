@@ -4,8 +4,14 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import type { RolEnum } from "@/app/generated/prisma/enums";
+import { auth } from "@/auth";
 
 export async function crearUsuario(formData: FormData) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("No autenticado");
+  // @ts-expect-error - custom property
+  const rootAdminId = session.user.creadoPorId || session.user.id;
+
   const nombre = formData.get("nombre") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -28,6 +34,7 @@ export async function crearUsuario(formData: FormData) {
       email,
       passwordHash,
       rol,
+      creadoPorId: rootAdminId,
     },
   });
 

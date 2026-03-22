@@ -39,6 +39,7 @@ export const authConfig = {
         token.nombre = user.nombre;
         token.email = user.email;
         token.modulosAcceso = (user as { modulosAcceso?: string[] }).modulosAcceso ?? [];
+        token.creadoPorId = (user as { creadoPorId?: string | null }).creadoPorId;
       }
       return token;
     },
@@ -49,6 +50,8 @@ export const authConfig = {
         session.user.nombre = token.nombre as string;
         session.user.email = token.email as string;
         session.user.modulosAcceso = (token.modulosAcceso as string[]) ?? [];
+        // @ts-expect-error - Custom property para multi-tenant (Workspace)
+        session.user.creadoPorId = (token.creadoPorId as string | null | undefined);
       }
       return session;
     },

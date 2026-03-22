@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 const ROL_LABELS: Record<string, string> = {
   ADMIN: "Admin",
@@ -15,7 +16,14 @@ const ESTADO_LABELS: Record<string, string> = {
 };
 
 export default async function UsuariosPage() {
+  const session = await auth();
+
+  // -- Multi-Tenant Logic --
+  // @ts-expect-error - custom property
+  const rootAdminId = session?.user?.creadoPorId || session?.user?.id;
+
   const usuarios = await prisma.usuario.findMany({
+    where: { OR: [{ id: rootAdminId }, { creadoPorId: rootAdminId }] },
     orderBy: { createdAt: "desc" },
     select: {
       id: true,

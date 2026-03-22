@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 export function LandingNav({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,12 +52,21 @@ export function LandingNav({ isLoggedIn }: { isLoggedIn: boolean }) {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             {isLoggedIn ? (
-              <Link
-                href="/platform"
-                className="text-sm font-semibold px-5 py-2.5 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] transition-colors shadow-lg"
-              >
-                Ir al Portal
-              </Link>
+              <>
+                <Link
+                  href="/platform"
+                  className="text-sm font-semibold px-5 py-2.5 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] transition-colors shadow-lg"
+                >
+                  Ir al Portal
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-sm font-medium text-neutral-300 hover:text-white transition-colors ml-2"
+                >
+                  Cerrar sesión
+                </button>
+              </>
             ) : (
               <>
                 <Link
@@ -66,7 +76,7 @@ export function LandingNav({ isLoggedIn }: { isLoggedIn: boolean }) {
                   Log in
                 </Link>
                 <Link
-                  href="/auth/login"
+                  href="/auth/register"
                   className="text-sm font-semibold px-5 py-2.5 rounded-full bg-[#ccff00] text-black hover:bg-[#b8e600] transition-colors shadow-lg"
                 >
                   Sign up
@@ -105,13 +115,25 @@ export function LandingNav({ isLoggedIn }: { isLoggedIn: boolean }) {
           <Link href="#pricing" onClick={() => setIsOpen(false)} className="hover:text-[#ccff00] transition-colors w-full text-center py-2">Precios</Link>
           
           {isLoggedIn ? (
-            <Link
-              href="/platform"
-              onClick={() => setIsOpen(false)}
-              className="mt-6 px-10 py-4 rounded-full bg-[#ccff00] text-black font-bold shadow-[0_0_20px_rgba(204,255,0,0.3)] w-full max-w-xs text-center text-lg"
-            >
-              Ir al Portal
-            </Link>
+            <div className="mt-4 flex flex-col items-center gap-3 w-full max-w-xs">
+              <Link
+                href="/platform"
+                onClick={() => setIsOpen(false)}
+                className="w-full px-10 py-4 rounded-full bg-[#ccff00] text-black font-bold shadow-[0_0_20px_rgba(204,255,0,0.3)] text-center text-lg"
+              >
+                Ir al Portal
+              </Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  signOut({ callbackUrl: "/" });
+                }}
+                className="w-full text-center py-3.5 text-neutral-300 hover:text-white transition-colors font-medium border border-white/10 rounded-full"
+              >
+                Cerrar sesión
+              </button>
+            </div>
           ) : (
             <div className="mt-4 flex flex-col items-center gap-3 w-full max-w-xs">
               <Link
@@ -122,7 +144,7 @@ export function LandingNav({ isLoggedIn }: { isLoggedIn: boolean }) {
                 Log in
               </Link>
               <Link
-                href="/auth/login"
+                href="/auth/register"
                 onClick={() => setIsOpen(false)}
                 className="w-full text-center py-3.5 rounded-full bg-[#ccff00] text-black font-bold shadow-[0_0_20px_rgba(204,255,0,0.3)]"
               >

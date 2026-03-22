@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { auth } from "@/auth";
 import { ProyectoSelector } from "./ProyectoSelector";
 import { ControlObraClient } from "./ControlObraClient";
 
@@ -7,9 +8,20 @@ export default async function VisorPage({
 }: {
   searchParams: Promise<{ proyecto?: string }>;
 }) {
+  const session = await auth();
+  
+  // -- Multi-Tenant Logic --
+  // @ts-expect-error - custom property
+  const rootAdminId = session?.user?.creadoPorId || session?.user?.id;
+  const tenantUsers = await prisma.usuario.findMany({
+    where: { OR: [{ id: rootAdminId }, { creadoPorId: rootAdminId }] },
+    select: { id: true }
+  });
+  const tenantUserIds = tenantUsers.map(u => u.id);
+
   const { proyecto: proyectoId } = await searchParams;
   const proyectos = await prisma.proyecto.findMany({
-    where: { status: "ACTIVO" },
+    where: { pmAsignadoId: { in: tenantUserIds }, status: "ACTIVO" },
     orderBy: { nombre: "asc" },
     select: { id: true, nombre: true },
   });
